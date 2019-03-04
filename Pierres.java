@@ -2,7 +2,6 @@ public class Pierres{
     int numero ;
     public Pierres(int numero){
         this.numero = numero ;
-        action();
     }
     public void action(){
         switch (this.numero) { ;
