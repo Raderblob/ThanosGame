@@ -61,7 +61,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
         bouton3.addActionListener(this);
 
         logo = new JLabel();
-        logo.setIcon(new ImageIcon("images//photo.png"));
+        logo.setIcon(new ImageIcon("images/photo.png"));
         logo.setLocation(0,0);
         logo.setSize(getWidth(),getHeight());
 
