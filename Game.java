@@ -88,6 +88,8 @@ public class Game extends Application {
 
         gc.fillRect(0,0,1000,1000);
 
+
+        gameWorlds.get(selectedWorld).renderWorld(gc);
     }
     @Override
     public void stop(){
