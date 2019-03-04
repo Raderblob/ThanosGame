@@ -4,7 +4,7 @@ public class Pierres{
         this.numero = numero ;
     }
     public void action(){
-        switch (this.numero) { ;
+        switch (this.numero) {
             case 0 : 
             case 1 : 
             case 2 : 
