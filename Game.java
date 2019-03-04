@@ -44,9 +44,20 @@ public class Game extends Application {
             if(key.getCode()== KeyCode.ESCAPE) {
                 System.exit(0);
             }else if(key.getCode()==KeyCode.A){
-
+                thanos.movingState=-1;
             }else if(key.getCode() == KeyCode.D){
+                thanos.movingState=1;
+            }else if(key.getCode()==KeyCode.W){
+                thanos.movingState = 1;
+            }else if(key.getCode() == KeyCode.S){
 
+            }
+        });
+        scene.addEventHandler(KeyEvent.KEY_RELEASED, (key) -> {
+            if(key.getCode()==KeyCode.A){
+                thanos.movingState=0;
+            }else if(key.getCode() == KeyCode.D){
+                thanos.movingState=0;
             }else if(key.getCode()==KeyCode.W){
 
             }else if(key.getCode() == KeyCode.S){
