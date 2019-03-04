@@ -2,7 +2,9 @@
 public class Main {
 
     public static void main(String[] args) {
-        Game.launchGame();
+
+            MenuPrincipal mn = new MenuPrincipal();
+      //  Game.launchGame();
 
     }
 }
