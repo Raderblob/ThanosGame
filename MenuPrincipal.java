@@ -1,6 +1,9 @@
+        import java.io.File;
+        import java.io.IOException;
         import java.util.LinkedList;
         import java.awt.*;
         import java.awt.event.*;
+        import javax.imageio.ImageIO;
         import javax.swing.*;
         import javax.swing.ImageIcon;
 
@@ -61,7 +64,9 @@ public class MenuPrincipal extends JFrame implements ActionListener{
         bouton3.addActionListener(this);
 
         logo = new JLabel();
-        logo.setIcon(new ImageIcon("images/photo.png"));
+
+        logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground.png")));
+
         logo.setLocation(0,0);
         logo.setSize(getWidth(),getHeight());
 
@@ -83,6 +88,8 @@ public class MenuPrincipal extends JFrame implements ActionListener{
         if(e.getSource() == bouton){
             compteur1++;
             setTitle("Partie lancée "+compteur1+" fois.");
+            setVisible(false);
+            Game.launchGame();
         }
         if(e.getSource() == bouton2){
             compteur2++;

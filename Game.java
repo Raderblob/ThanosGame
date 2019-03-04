@@ -89,6 +89,11 @@ public class Game extends Application {
         gc.fillRect(0,0,1000,1000);
 
     }
+    @Override
+    public void stop(){
+        System.out.println("Stage is closing");
+        System.exit(0);
+    }
 
     public static void launchGame(){
         launch();
