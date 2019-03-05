@@ -16,8 +16,8 @@ public class World {
 
         switch (worldType){
             case 0 :
-                geny= new SimplexNoise(   (int)System.currentTimeMillis(),8,0.1,0.5);
-                genlim = new SimplexNoise(   (int)System.currentTimeMillis()+1,8,0.1,0.5);
+                geny= new SimplexNoise(   (int)System.currentTimeMillis(),8,0.0015,0.5);
+                genlim = new SimplexNoise(   (int)System.currentTimeMillis()+1,8,0.005,0.4);
             break;
             default:
 
@@ -33,9 +33,9 @@ public class World {
         gc.clearRect(0,0,6000,6000);
         for(int x = 0 ;x <500;x++){
             for(int y = 0;y<500;y++){
-                if((y/500d)>Math.abs(genlim.getNoise(x*0.015,0))) {
-                    double a = Math.abs(geny.getNoise(x * 0.05, y * 0.05)) ;
-                    gc.setFill(new Color(a, a, a, 1));
+                if((y/500d)>(genlim.getNoise(x,0)+1)*0.5*0.6+0.5) {
+                    double a = Math.abs(geny.getNoise(x , y )) ;
+                    gc.setFill(new Color(a, 0, 0, 1));
                     gc.fillRect(x, y, 1, 1);
 
                 }
