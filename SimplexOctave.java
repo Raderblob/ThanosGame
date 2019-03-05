@@ -23,7 +23,7 @@ import javax.imageio.ImageIO;
  *
  */
 
-public class PerlinNoise {  // Simplex noise in 2D, 3D and 4D
+public class SimplexOctave {  // Simplex noise in 2D, 3D and 4D
 
     public static int RANDOMSEED=0;
     private static int NUMBEROFSWAPS=400;
@@ -60,7 +60,7 @@ public class PerlinNoise {  // Simplex noise in 2D, 3D and 4D
     // To remove the need for index wrapping, double the permutation table length
     private short perm[] = new short[512];
     private short permMod12[] = new short[512];
-    public PerlinNoise(int seed) {
+    public SimplexOctave(int seed) {
         p=p_supply.clone();
 
         if (seed==RANDOMSEED){
