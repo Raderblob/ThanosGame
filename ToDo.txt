@@ -1,0 +1,8 @@
+-Finish options menu
+-add main character to game
+-add gravity
+-add connection between options menu and game
+-add function to retrieve mouse position
+-create npc class
+-create Ai class
+-add generation of npcs to game
