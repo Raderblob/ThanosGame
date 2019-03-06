@@ -19,9 +19,6 @@ public class MenuPrincipal extends JFrame implements ActionListener{
     private int hauteurBouton = 50;
     private int longueurTitre = 800;
     private int hauteurTitre = 125;
-    private int compteur1 = 0;
-    private int compteur2 = 0;
-    private int compteur3 = 0;
     private String texteTitre = "Téthanos";
 
     public MenuPrincipal(){
@@ -86,18 +83,12 @@ public class MenuPrincipal extends JFrame implements ActionListener{
 
     public void actionPerformed(ActionEvent e){
         if(e.getSource() == bouton){
-            compteur1++;
-            setTitle("Partie lancée "+compteur1+" fois.");
             setVisible(false);
             Game.launchGame();
         }
         if(e.getSource() == bouton2){
-            compteur2++;
-            setTitle("Partie relancée "+compteur2+" fois.");
         }
         if(e.getSource() == bouton3){
-            compteur3++;
-            setTitle("Options lancés "+compteur3+" fois.");
         }
     }
 
