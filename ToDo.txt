@@ -6,3 +6,10 @@
 -create npc class
 -create Ai class
 -add generation of npcs to game
+-create animation class for 2d characters
+-finish options menu
+-allow game to be paused
+-allow game to return to menu and resume
+-add buildings to terrain
+-add special effects (explosions etc)
+-to do
