@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class Game extends Application {
     private PlayerClass thanos;
-    private final Point2D winParam = new Point2D(800,600);
+    private final Point2D winParam = new Point2D(800,500);
     private ArrayList<World> gameWorlds = new ArrayList<World>();
     private int selectedWorld;
 
@@ -79,14 +79,17 @@ public class Game extends Application {
             }
         }.start();
         //Displaying the contents of the stage
+        stage.setResizable(false);
         stage.show();
+
+
     }
 
     public void gameLoop(double currentNanoTime,GraphicsContext gc )
     {
         gameWorlds.get(selectedWorld).runWorld();
 
-        gc.fillRect(0,0,1000,1000);
+        gc.clearRect(0,0,1000,1000);
 
 
         gameWorlds.get(selectedWorld).renderWorld(gc);
