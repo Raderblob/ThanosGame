@@ -21,7 +21,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
     private int hauteurTitre = 125;
     private String texteTitre = "Téthanos";
 
-    public MenuPrincipal(){
+    MenuPrincipal(){
         setTitle(texteTitre +": DEBOTTE Adrien, LE GALL Louise, GILLES Killian, MARCHANT Richard");
         setLayout(null);
         setSize(1500,800);
@@ -87,8 +87,11 @@ public class MenuPrincipal extends JFrame implements ActionListener{
             Game.launchGame();
         }
         if(e.getSource() == bouton2){
+
         }
         if(e.getSource() == bouton3){
+            setVisible(false);
+            new MenuOption(this);
         }
     }
 
