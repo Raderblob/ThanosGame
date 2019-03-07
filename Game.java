@@ -1,5 +1,6 @@
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -40,32 +41,41 @@ public class Game extends Application {
         thanos= new PlayerClass();
 
 
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            if(key.getCode()== KeyCode.ESCAPE) {
-                System.exit(0);
-            }else if(key.getCode()==KeyCode.A){
-                thanos.movingState=-1;
-            }else if(key.getCode() == KeyCode.D){
-                thanos.movingState=1;
-            }else if(key.getCode()==KeyCode.W){
-                thanos.movingState = 1;
-            }else if(key.getCode() == KeyCode.S){
+        scene.addEventHandler(KeyEvent.KEY_PRESSED, new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent key) {
+                if(key.getCode()== KeyCode.ESCAPE) {
+                    System.exit(0);
+                }else if(key.getCode()==KeyCode.A){
+                    thanos.movingState=-1;
+                }else if(key.getCode() == KeyCode.D){
+                    thanos.movingState=1;
+                }else if(key.getCode()==KeyCode.W){
+                    thanos.movingState = 1;
+                }else if(key.getCode() == KeyCode.S){
 
+                }
             }
         });
-        scene.addEventHandler(KeyEvent.KEY_RELEASED, (key) -> {
-            if(key.getCode()==KeyCode.A){
-                thanos.movingState=0;
-            }else if(key.getCode() == KeyCode.D){
-                thanos.movingState=0;
-            }else if(key.getCode()==KeyCode.W){
+        scene.addEventHandler(KeyEvent.KEY_RELEASED,  new EventHandler<KeyEvent>()  {
+            @Override
+            public void handle(KeyEvent key) {
+                if(key.getCode()==KeyCode.A){
+                    thanos.movingState=0;
+                }else if(key.getCode() == KeyCode.D){
+                    thanos.movingState=0;
+                }else if(key.getCode()==KeyCode.W){
 
-            }else if(key.getCode() == KeyCode.S){
+                }else if(key.getCode() == KeyCode.S){
 
+                }
             }
         });
-        scene.addEventHandler(MouseEvent.MOUSE_PRESSED, (mouse) -> {
+        scene.addEventHandler(MouseEvent.MOUSE_PRESSED, new EventHandler<MouseEvent>()  {
+            @Override
+            public void handle(MouseEvent mouse){
 
+            }
         });
 
 
