@@ -20,7 +20,7 @@ public class World {
     }
 
     public void runWorld(){
-        thanos.run();
+        thanos.run(terrain);
     }
 
     public void renderWorld(GraphicsContext gc){

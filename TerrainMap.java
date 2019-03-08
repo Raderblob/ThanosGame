@@ -61,10 +61,10 @@ public class TerrainMap{
     private void setTerrainVal(int x, int y, byte val){
         chunk[x/(int)TerrainChunck.chunkParam.getX()].setVal(x,y,val);
     }
-    private byte getTerrainVal(int x, int y){
+    public byte getTerrainVal(double x, double y){
         int nX,nY;
-        nX = x/4;
-        nY= y/4;
+        nX = (int)(x/4);
+        nY= (int)(y/4);
         return chunk[nX/(int)TerrainChunck.chunkParam.getX()].getVal(nX,nY);
     }
 
