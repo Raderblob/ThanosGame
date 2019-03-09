@@ -20,8 +20,11 @@ public class MenuPrincipal extends JFrame implements ActionListener{
     private int longueurTitre = 800;
     private int hauteurTitre = 125;
     private String texteTitre = "Téthanos";
+    private int nbPierres=0; //VARIABLE A RAJOUTER DANS GANT (PRESENT POUR LE TEST)
 
     MenuPrincipal(){
+        
+        //Création de la fenêtre et son entête
         setTitle(texteTitre +": DEBOTTE Adrien, LE GALL Louise, GILLES Killian, MARCHANT Richard");
         setLayout(null);
         setSize(1500,800);
@@ -29,6 +32,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
+        //Titre
         titre = new JLabel(texteTitre,SwingConstants.CENTER);
         titre.setSize(longueurTitre,hauteurTitre);
         titre.setLocation(0,0);
@@ -36,34 +40,64 @@ public class MenuPrincipal extends JFrame implements ActionListener{
         Font police = new Font(" Arial ",Font.BOLD,125);
         titre.setFont(police);
 
+        //JPanel pour centrer texte
         cadre = new JPanel();
         cadre.setLayout(null);
         cadre.setBounds((getWidth()-longueurTitre)/2,50,longueurTitre,hauteurTitre);
         cadre.setBackground(new Color(10,25,130));
         cadre.add(titre);
 
+
+        //Bouton start
         bouton = new JButton("Start");
         bouton.setBounds((getWidth()-longueurBouton)/2,500,longueurBouton,hauteurBouton);
         bouton.setBackground(Color.blue);
         bouton.setForeground(Color.white);
         bouton.addActionListener(this);
 
+
+        //Bouton Resume
         bouton2 = new JButton("Resume");
         bouton2.setBounds((getWidth()-longueurBouton)/2,600,longueurBouton,hauteurBouton);
         bouton2.setBackground(Color.green);
         bouton2.setForeground(Color.white);
         bouton2.addActionListener(this);
 
+        //Bouton Option
         bouton3 = new JButton("Options");
         bouton3.setBounds((getWidth()-longueurBouton)/2,700,longueurBouton,hauteurBouton);
         bouton3.setBackground(Color.red);
         bouton3.setForeground(Color.white);
         bouton3.addActionListener(this);
 
+        //Fond d'écran (avec choix en fonction de l'avancé du jeu
         logo = new JLabel();
-
-        logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground.png")));
-
+        switch (nbPierres) {
+            case 0 : 
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground0.png")));
+                break;
+            case 1 : 
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground1.png")));
+                break;
+            case 2 : 
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground2.png")));
+                break;
+            case 3 : 
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground3.png")));
+                break;
+            case 4 : 
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground4.png")));
+                break;
+            case 5 : 
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground5.png")));
+                break;
+            case 6 :
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground6.png")));
+                break;
+            default:
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground6.png")));
+                break;
+        }
         logo.setLocation(0,0);
         logo.setSize(getWidth(),getHeight());
 
@@ -98,8 +132,3 @@ public class MenuPrincipal extends JFrame implements ActionListener{
 
 
 }
-
-
-
-
-
