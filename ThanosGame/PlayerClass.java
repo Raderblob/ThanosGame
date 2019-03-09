@@ -1,8 +1,11 @@
 package ThanosGame;
 
+import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+
+import java.util.LinkedList;
 
 public class PlayerClass {
     public int movingState;
@@ -10,10 +13,12 @@ public class PlayerClass {
     public Point2D myPosition;
     private Point2D mySpeed;
     private Point2D mySize;
+    private Point2D destroyAt;
     public PlayerClass(){
         myPosition = new Point2D(50,50);
         mySize = new Point2D(10,10);
         mySpeed = new Point2D(0,0);
+        destroyAt = new Point2D(-1,-1);
     }
 
     public void draw(GraphicsContext gc){
@@ -21,11 +26,17 @@ public class PlayerClass {
         gc.fillRect(myPosition.getX()-mySize.getX()-getCameraPosition().getX(),myPosition.getY()-mySize.getY()-getCameraPosition().getY(),mySize.getX()*2,mySize.getY()*2);
     }
 
+    public void fireAt(double fX, double fY){
+        destroyAt = new Point2D(fX,fY);
+    }
+
+
+
     public Point2D getCameraPosition(){
         return new Point2D(Math.max(myPosition.getX()-200,0),0);
     }
 
-    public void run(TerrainMap currentTerrain){
+    public void run(TerrainMap currentTerrain,World currentWorld){
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
         mySpeed = mySpeed.add(0, 0.5*(tUnderFoot ? 0 : 1));
 
@@ -53,6 +64,27 @@ public class PlayerClass {
             myPosition = myPosition.add(2*movingState*(terrainIsObstacleLeft(currentTerrain)?0:1),0);
         }
         myPosition=   myPosition.add(mySpeed);
+
+        if(destroyAt.getX() !=-1){
+            useTestStone(currentTerrain,currentWorld);
+        }
+    }
+
+    private void useTestStone(TerrainMap currentTerrain,World currentWorld){
+        destroyAt = destroyAt.add(getCameraPosition());
+
+        LinkedList<Point2D> pTD = new LinkedList<>();
+        for(double angle = 0;angle<360;angle++){
+            for(int radius = 0;radius<40;radius++){
+                pTD.add(new Point2D(Math.cos(angle)*radius,Math.sin(angle)*radius).add(destroyAt));
+            }
+        }
+        byte bTD[] = new byte[pTD.size()];
+        for (int i=0;i<bTD.length;i++){
+            bTD[i]=0;
+        }
+        currentTerrain.changeTerrain( pTD.toArray(new Point2D[pTD.size()]),bTD);
+        destroyAt = new Point2D(-1,-1);
     }
 
     public void jump(){

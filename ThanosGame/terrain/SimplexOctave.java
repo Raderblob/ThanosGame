@@ -1,4 +1,4 @@
-package ThanosGame;
+package ThanosGame.terrain;
 
 import java.util.Random;
 

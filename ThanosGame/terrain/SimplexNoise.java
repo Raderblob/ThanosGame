@@ -1,4 +1,4 @@
-package ThanosGame;
+package ThanosGame.terrain;
 
 public class SimplexNoise {
     private int numOct;

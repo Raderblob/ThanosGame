@@ -1,5 +1,6 @@
 package ThanosGame;
 
+import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -22,7 +23,7 @@ public class World {
     }
 
     public void runWorld(){
-        thanos.run(terrain);
+        thanos.run(terrain,this);
     }
 
     public void renderWorld(GraphicsContext gc){

@@ -1,4 +1,7 @@
-package ThanosGame;import javafx.embed.swing.SwingFXUtils;
+package ThanosGame.terrain;
+
+import ThanosGame.Game;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
@@ -37,6 +40,8 @@ public class TerrainMap{
 
     }
 
+
+
     public void createRender(){
         if(terrainRendered == false) {
             genTerrainImage();
@@ -54,7 +59,9 @@ public class TerrainMap{
     public void draw(GraphicsContext gc, Point2D pos){
         for(int i = 0;i<chunk.length;i++)
         {
-            gc.drawImage( chunk[i].imageToDraw,-Math.min(pos.getX(),numChunks * TerrainChunck.chunkParam.getX()*4 - 1000)+i*TerrainChunck.chunkParam.getX()*4 ,0);
+           double drawPos = -Math.min(pos.getX(),numChunks * TerrainChunck.chunkParam.getX()*4 - 1000)+i*TerrainChunck.chunkParam.getX()*4;
+           if(drawPos+TerrainChunck.chunkParam.getX()*4 >=0 && drawPos<Game.winParam.getX())
+           gc.drawImage( chunk[i].imageToDraw,drawPos,0);
         }
     }
 
@@ -66,6 +73,23 @@ public class TerrainMap{
         nX = (int)(x/4);
         nY= (int)(y/4);
         return chunk[nX/(int)TerrainChunck.chunkParam.getX()].getVal(nX,nY);
+    }
+
+    public void changeTerrain(Point2D pointToChange[],byte futurVals[]){
+        Point2D pTC[] = new Point2D[pointToChange.length];
+         for(int i=0;i<pointToChange.length;i++){
+            pTC[i] = pointToChange[i].multiply(0.25);
+            setTerrainVal((int)pTC[i].getX(),(int)pTC[i].getY(),futurVals[i]);
+         }
+         int indice = (int)pTC[0].getX()/(int)TerrainChunck.chunkParam.getX();
+         chunk[indice].genTerrainImage();
+         if(indice -1 >-1){
+             chunk[indice-1].genTerrainImage();
+         }
+         if(indice+1<chunk.length){
+             chunk[indice+1].genTerrainImage();
+         }
+        System.out.println(pTC[0].toString());
     }
 
     private void genTerrainImage(){

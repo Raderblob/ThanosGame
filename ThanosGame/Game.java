@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class Game extends Application {
     private PlayerClass thanos;
-    private final Point2D winParam = new Point2D(800,500);
+    public static final Point2D winParam = new Point2D(800,500);
     private ArrayList<World> gameWorlds = new ArrayList<World>();
     private int selectedWorld;
 
@@ -62,6 +62,9 @@ public class Game extends Application {
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouse -> {
+            thanos.fireAt(mouse.getSceneX(),mouse.getSceneY());
+        });
+        scene.addEventHandler(MouseEvent.MOUSE_DRAGGED,mouse->{
 
         });
 
@@ -91,7 +94,7 @@ public class Game extends Application {
 
 
         gameWorlds.get(selectedWorld).renderWorld(gc);
-        System.out.println("Frame time :" + (System.nanoTime()-lastTime)*0.000001);
+       // System.out.println("Frame time :" + (System.nanoTime()-lastTime)*0.000001);
     }
     @Override
     public void stop(){
