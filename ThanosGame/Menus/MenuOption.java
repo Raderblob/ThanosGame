@@ -12,7 +12,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 	private MenuPrincipal myMenu;
 	private JLabel Titan;
 	private JPanel option;
-	private JButton clavier, son,niveau, cancel, valid;
+	private JButton clavier, son, niveau, cancel, valid;
 	private JSlider volume;
 	private JRadioButton azerty, qwerty;
 	private ButtonGroup bg;
@@ -31,6 +31,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		cancel = new JButton( "X");
 		valid = new JButton("O");
 		volume = new JSlider(JSlider.HORIZONTAL,0,100,50);
+		volume.setOpaque(false);
 
 		// FENETRE 
 
@@ -69,6 +70,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		azerty.setForeground(new Color(233,56,63)); azerty.setFont(g);
 
 		qwerty = new JRadioButton("QWERTY");
+		qwerty.setSelected(true);
 		qwerty.addActionListener(this);
 		bg.add(qwerty);
 		qwerty.setVisible(false);
@@ -115,6 +117,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		easy.setForeground(new Color(233,56,63)); easy.setFont(g);
 
 		normal = new JRadioButton("NORMAL");
+		normal.setSelected(true);
 		normal.addActionListener(this);
 		normal.setVisible(false);
 		niv.add(normal);
