@@ -6,31 +6,29 @@ import java.awt.event.*;
 
 public class MenuOption extends JFrame implements ActionListener  {
 	// FENETRE 
-	private JLabel Titan;
-	private JPanel option;
-	private JButton clavier;
-	private JButton son;
-	private JButton niveau; 
-	private JButton cancel;
-	private JButton valid;
-	private JSlider barreson; 
-	private JRadioButton azerty;
-	private JRadioButton qwerty;
-	private ButtonGroup bg; 
+	
 	private MenuPrincipal myMenu;
 	
 	
 	MenuOption(MenuPrincipal mMenu){
+		private JLabel Titan;
+		private JPanel option;
+		private JButton clavier, son,niveau, cancel, valid;
+		private JSlider volume; 
+		private JRadioButton azerty, qwerty;
+		private ButtonGroup bg; 
+		private JRadioButton easy, hard, normal; 
 		myMenu =mMenu;
-			JLabel Titan = new JLabel(); 
-			JPanel option = new JPanel(); 
-			JButton clavier = new JButton("KEYBOARD" ); 
-			JButton son = new JButton("SOUND"); 
-			JButton niveau = new JButton("LEVEL"); 
-			JButton cancel = new JButton( new ImageIcon(getClass().getResource("images\\OptionsMenu\\Cancel.jpg")));
-			JButton valid = new JButton("VALID"); 
-			JSlider volume = new JSlider(JSlider.HORIZONTAL,0,100,50); 
-
+			Font f=new Font("Arial", Font.BOLD, 28); 
+			Font g=new Font("Arial", Font.BOLD, 20); 
+			Titan = new JLabel(); 
+			option = new JPanel(); 
+			clavier = new JButton("KEYBOARD" ); 
+			son = new JButton("SOUND"); 
+			niveau = new JButton("LEVEL"); 
+			cancel = new JButton( "X"); 
+			valid = new JButton("O"); 
+			volume = new JSlider(JSlider.HORIZONTAL,0,100,50); 
 			
 		// FENETRE 
 	
@@ -175,6 +173,18 @@ public class MenuOption extends JFrame implements ActionListener  {
 				myMenu.setVisible(true);
 				this.setVisible(false);
 		}
+		
+						
+		// Phase 2 NIVEAU 
+			if (easy.isSelected()){}
+			if (easy.isSelected()){}
+			if (hard.isSelected()){}
+		
+		// Phase 2 CLAVIER 
+			if (azerty.isSelected()){}
+			if (qwerty.isSelected()){}
+			
+		// Phase 2 SON 
 	}
 	
 
