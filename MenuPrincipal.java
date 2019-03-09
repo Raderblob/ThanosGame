@@ -1,11 +1,7 @@
-        import java.io.File;
-        import java.io.IOException;
-        import java.util.LinkedList;
-        import java.awt.*;
-        import java.awt.event.*;
-        import javax.imageio.ImageIO;
-        import javax.swing.*;
-        import javax.swing.ImageIcon;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MenuPrincipal extends JFrame implements ActionListener{
     private JButton bouton;
@@ -74,28 +70,28 @@ public class MenuPrincipal extends JFrame implements ActionListener{
         logo = new JLabel();
         switch (nbPierres) {
             case 0 : 
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground0.png")));
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground0.jpg")));
                 break;
             case 1 : 
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground1.png")));
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground1.jpg")));
                 break;
             case 2 : 
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground2.png")));
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground2.jpg")));
                 break;
             case 3 : 
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground3.png")));
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground3.jpg")));
                 break;
             case 4 : 
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground4.png")));
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground4.jpg")));
                 break;
             case 5 : 
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground5.png")));
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground5.jpg")));
                 break;
             case 6 :
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground6.png")));
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground6.jpg")));
                 break;
             default:
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground6.png")));
+                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground6.jpg")));
                 break;
         }
         logo.setLocation(0,0);
