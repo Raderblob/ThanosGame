@@ -27,7 +27,7 @@ public class PlayerClass {
     }
 
     public void fireAt(double fX, double fY){
-        destroyAt = new Point2D(fX,fY);
+        destroyAt = new Point2D(fX,fY).add(getCameraPosition());
     }
 
 
@@ -63,7 +63,7 @@ public class PlayerClass {
         }else if(movingState<0){
             myPosition = myPosition.add(2*movingState*(terrainIsObstacleLeft(currentTerrain)?0:1),0);
         }
-        myPosition=   myPosition.add(mySpeed);
+        myPosition=  currentTerrain.clampPoint( myPosition.add(mySpeed),mySize);
 
         if(destroyAt.getX() !=-1){
             useTestStone(currentTerrain,currentWorld);
@@ -71,12 +71,10 @@ public class PlayerClass {
     }
 
     private void useTestStone(TerrainMap currentTerrain,World currentWorld){
-        destroyAt = destroyAt.add(getCameraPosition());
-
         LinkedList<Point2D> pTD = new LinkedList<>();
         for(double angle = 0;angle<360;angle++){
             for(int radius = 0;radius<40;radius++){
-                pTD.add(new Point2D(Math.cos(angle)*radius,Math.sin(angle)*radius).add(destroyAt));
+                pTD.add(currentTerrain.clampPoint(new Point2D(Math.cos(angle)*radius,Math.sin(angle)*radius).add(destroyAt)));
             }
         }
         byte bTD[] = new byte[pTD.size()];

@@ -12,9 +12,13 @@ public class TerrainMap{
     private SimplexNoise geny;
     private TerrainChunck chunk[];
     private int numChunks;
+    private int maxPixelsX;
+    private  int maxPixelsY;
     public boolean terrainRendered;
     public TerrainMap(int numC) {
         numChunks = numC;
+        maxPixelsX = (int)(TerrainChunck.chunkParam.getX()*4*(numChunks+1)-1);
+        maxPixelsY =(int)(TerrainChunck.chunkParam.getY()*4-1);
         terrainRendered = false;
         geny = new SimplexNoise((int) System.currentTimeMillis(), 8, 0.0035, 0.5);
 
@@ -97,6 +101,31 @@ public class TerrainMap{
         {
             chunk[i].genTerrainImage();
         }
+    }
+
+    public Point2D clampPoint(Point2D pIn){
+        return new Point2D(Math.min(Math.max(0,pIn.getX()),maxPixelsX),Math.min(Math.max(0,pIn.getY()),maxPixelsY));
+    }
+    public Point2D clampPoint(double x,double y){
+        return clampPoint(new Point2D(x,y));
+    }
+    public Point2D clampPoint(Point2D pIn,Point2D pSize){
+        Point2D delta = new Point2D(0,0);
+        if(pIn.getX()-pSize.getX()<0){
+            delta = new Point2D(-pIn.getX()+pSize.getX(),0);
+        }
+        if(pIn.getY() - pSize.getY()<0){
+            delta= delta.add(0,-pIn.getY()+pSize.getY());
+        }
+        if(pIn.getX()+pSize.getX()>maxPixelsX){
+            delta = delta.add(maxPixelsX-pIn.getX()-pSize.getX(),0);
+        }
+        if(pIn.getY()+pSize.getY()>maxPixelsY){
+            delta = delta.add(0,maxPixelsY-pIn.getY()-pSize.getY());
+        }
+
+
+        return pIn.add(delta);
     }
 
 }
