@@ -1,3 +1,5 @@
+package ThanosGame;
+
 public class Pierres{
     int numero ;
     public Pierres(int numero){

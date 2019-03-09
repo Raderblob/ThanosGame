@@ -1,4 +1,6 @@
-import javafx.geometry.Point2D ;
+package ThanosGame;
+
+import javafx.geometry.Point2D;
 public class Thanos{
     int PV ; 
     Gant Infinité ;

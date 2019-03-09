@@ -1,3 +1,5 @@
+package ThanosGame;
+
 public class SimplexNoise {
     private int numOct;
     private double frequency,pertinance;

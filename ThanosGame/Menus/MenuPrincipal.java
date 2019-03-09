@@ -1,3 +1,7 @@
+package ThanosGame.Menus;
+
+import ThanosGame.Game;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,7 +22,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
     private String texteTitre = "Téthanos";
     private int nbPierres=0; //VARIABLE A RAJOUTER DANS GANT (PRESENT POUR LE TEST)
 
-    MenuPrincipal(){
+    public MenuPrincipal(){
         
         //Création de la fenêtre et son entête
         setTitle(texteTitre +": DEBOTTE Adrien, LE GALL Louise, GILLES Killian, MARCHANT Richard");
@@ -51,7 +55,6 @@ public class MenuPrincipal extends JFrame implements ActionListener{
         bouton.setForeground(Color.white);
         bouton.addActionListener(this);
 
-
         //Bouton Resume
         bouton2 = new JButton("Resume");
         bouton2.setBounds((getWidth()-longueurBouton)/2,600,longueurBouton,hauteurBouton);
@@ -73,7 +76,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
                 logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground0.jpg")));
                 break;
             case 1 : 
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground1.jpg")));
+                logo.setIcon(new ImageIcon(getClass().getResource(".images\\menuBackground1.jpg")));
                 break;
             case 2 : 
                 logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground2.jpg")));

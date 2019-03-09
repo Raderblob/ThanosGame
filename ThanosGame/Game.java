@@ -1,3 +1,5 @@
+package ThanosGame;
+
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -23,7 +25,7 @@ public class Game extends Application {
     public void start(Stage stage) {
         Group root = new Group();
         Scene scene = new Scene(root, winParam.getX() , winParam.getY());
-        stage.setTitle("Thanos rules the world");
+        stage.setTitle("ThanosGame.Thanos rules the world");
         stage.setScene(scene);
 
         Canvas canvas = new Canvas( winParam.getX(), winParam.getY() );
@@ -82,15 +84,14 @@ public class Game extends Application {
 
     public void gameLoop(double currentNanoTime,GraphicsContext gc )
     {
-        long lastTime = System.currentTimeMillis();
+        long lastTime = System.nanoTime();
         gameWorlds.get(selectedWorld).runWorld();
 
         gc.clearRect(0,0,1000,1000);
 
 
         gameWorlds.get(selectedWorld).renderWorld(gc);
-
-        System.out.println("Frame time :" + (System.currentTimeMillis()-lastTime));
+        System.out.println("Frame time :" + (System.nanoTime()-lastTime)*0.000001);
     }
     @Override
     public void stop(){

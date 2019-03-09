@@ -1,9 +1,6 @@
-import java.awt.Color;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+package ThanosGame;
+
 import java.util.Random;
-import javax.imageio.ImageIO;
 
 
 /*

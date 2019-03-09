@@ -1,4 +1,4 @@
-import javafx.embed.swing.SwingFXUtils;
+package ThanosGame;import javafx.embed.swing.SwingFXUtils;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 

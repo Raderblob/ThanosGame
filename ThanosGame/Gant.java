@@ -1,3 +1,5 @@
+package ThanosGame;
+
 public class Gant{
     Pierres [] Stones ;
     public Gant(Pierres [] Stones){

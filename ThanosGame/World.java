@@ -1,3 +1,5 @@
+package ThanosGame;
+
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 

@@ -1,3 +1,5 @@
+package ThanosGame;
+
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -38,11 +40,11 @@ public class PlayerClass {
         }
 
         if(playerTrimmingTerrain(currentTerrain)){
-            myPosition = myPosition.add(0,-1);
+            myPosition = myPosition.add(0,-4);
         }
         if(terrainIsObstacleOverhead(currentTerrain)){
             mySpeed = new Point2D(mySpeed.getX(),0);
-            myPosition = myPosition.add(0,1);
+            myPosition = myPosition.add(0,4);
         }
 
         if(movingState>0){
@@ -62,7 +64,7 @@ public class PlayerClass {
     }
 
     private boolean terrainUnderFoot(TerrainMap currentTerrain){
-        for(int x =(int)( myPosition.getX()-mySize.getX());x<myPosition.getX()+mySize.getX();x++){
+        for(int x =(int)( myPosition.getX()-mySize.getX());x<myPosition.getX()+mySize.getX();x+=4){
             if(currentTerrain.getTerrainVal(x,myPosition.getY()+mySize.getY())!=0){
                 return true;
             }
@@ -70,7 +72,7 @@ public class PlayerClass {
         return false;
     }
     private boolean terrainIsObstacleRight(TerrainMap currentTerrain){
-        for(int y =(int)( myPosition.getY()-mySize.getY());y<myPosition.getY();y++){
+        for(int y =(int)( myPosition.getY()-mySize.getY());y<myPosition.getY();y+=4){
             if(currentTerrain.getTerrainVal(myPosition.getX()+mySize.getX(),y)!=0){
                 return true;
             }
@@ -78,7 +80,7 @@ public class PlayerClass {
         return false;
     }
     private boolean terrainIsObstacleLeft(TerrainMap currentTerrain){
-        for(int y =(int)( myPosition.getY()-mySize.getY());y<myPosition.getY();y++){
+        for(int y =(int)( myPosition.getY()-mySize.getY());y<myPosition.getY();y+=4){
             if(currentTerrain.getTerrainVal(myPosition.getX()-mySize.getX(),y)!=0){
                 return true;
             }
@@ -86,7 +88,7 @@ public class PlayerClass {
         return false;
     }
     private boolean terrainIsObstacleOverhead(TerrainMap currentTerrain){
-        for(int x =(int)( myPosition.getX()-mySize.getX());x<myPosition.getX()+mySize.getX();x++){
+        for(int x =(int)( myPosition.getX()-mySize.getX());x<myPosition.getX()+mySize.getX();x+=4){
             if(currentTerrain.getTerrainVal(x,myPosition.getY()-mySize.getY())!=0){
                 return true;
             }
@@ -95,7 +97,7 @@ public class PlayerClass {
     }
 
     private boolean playerTrimmingTerrain(TerrainMap currentTerrain){
-        for(int x =(int)( myPosition.getX()-mySize.getX());x<myPosition.getX()+mySize.getX();x++){
+        for(int x =(int)( myPosition.getX()-mySize.getX());x<myPosition.getX()+mySize.getX();x+=4){
             if(currentTerrain.getTerrainVal(x,myPosition.getY()+mySize.getY()-1)!=0){
                 return true;
             }
