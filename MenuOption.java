@@ -52,25 +52,32 @@ public class MenuOption extends JFrame implements ActionListener  {
 		// BOUTON CLAVIER 
 		
 		option.add(clavier);
-		clavier.setBounds ( 1200,50,200, 100);
-		//clavier.addActionListener(this);
+		clavier.setBounds ( 1225,50,200, 100);
+		clavier.addActionListener(this);
+		clavier.setBorderPainted(false);
+		clavier.setContentAreaFilled(false);
+		clavier.setFocusPainted(false);
+		clavier.setForeground(new Color(191,48,48));	
+		ButtonGroup  bg = new ButtonGroup(); clavier.setFont(f);
 		
-		ButtonGroup  bg = new ButtonGroup();
-		JRadioButton azerty = new JRadioButton("AZERTY");
+		azerty = new JRadioButton("AZERTY");
 		azerty.addActionListener(this);
-		JRadioButton qwerty = new JRadioButton("QWERTY");
-		qwerty.addActionListener(this);
-		// ajout des boutons radio dans le groupe bg
 		bg.add(azerty);
-		bg.add(qwerty);
-		
 		azerty.setVisible(false);
+		azerty.setBounds( 950,50,225,50);
+		azerty.setBorderPainted(false); azerty.setContentAreaFilled(false); azerty.setFocusPainted(false);
+		azerty.setForeground(new Color(233,56,63)); azerty.setFont(g);
+		
+		qwerty = new JRadioButton("QWERTY");
+		qwerty.addActionListener(this);
+		bg.add(qwerty);
 		qwerty.setVisible(false);
+		qwerty.setBounds( 950,100,225,50); 
+		qwerty.setBorderPainted(false); qwerty.setContentAreaFilled(false);qwerty.setFocusPainted(false);
+		qwerty.setForeground(new Color(233,56,63)); qwerty.setFont(g);
 		
 		option.add(azerty);
 		option.add(qwerty);
-		azerty.setBounds( 950,50,225,50);
-		qwerty.setBounds( 950,100,225,50);
 		
 		
 
@@ -80,48 +87,67 @@ public class MenuOption extends JFrame implements ActionListener  {
 		option.add(son);
 		son.setBounds ( 1200,180,200, 100);
 		son.addActionListener(this);
+		son.setBorderPainted(false); son.setContentAreaFilled(false); son.setFocusPainted(false);
+		son.setForeground(new Color(191,48,48));	son.setFont(f);
 		
 		option.add(volume);
 		volume.setVisible(false);
 		volume.setBounds(950,205, 225,50);
+		/*volume.setBorderPainted(false); 	volume.setContentAreaFilled(false);	volume.setFocusPainted(false);*/
+	
 		
 		//BOUTON NIVEAU 
 		option.add(niveau);
 		niveau.setBounds ( 1200,310,200, 100);
 		niveau.addActionListener(this);
+		niveau.setBorderPainted(false); 	niveau.setContentAreaFilled(false);	niveau.setFocusPainted(false);
+		niveau.setForeground(new Color(191,48,48)); niveau.setFont(f);
 		
 		ButtonGroup  niv= new ButtonGroup();
-		JRadioButton easy = new JRadioButton("EASY !");
+		
+		easy = new JRadioButton("EASY !");
 		easy.addActionListener(this);
 		easy.setVisible(false);
-		JRadioButton normal = new JRadioButton("NORMAL");
+		niv.add(easy);
+		option.add(easy);
+		easy.setBounds( 950,300,225,33);
+		easy.setBorderPainted(false); 	easy.setContentAreaFilled(false);	easy.setFocusPainted(false);
+		easy.setForeground(new Color(233,56,63)); easy.setFont(g);
+		
+		normal = new JRadioButton("NORMAL");
 		normal.addActionListener(this);
 		normal.setVisible(false);
-		JRadioButton hard = new JRadioButton("HARD !!! ");
+		niv.add(normal);
+		option.add(normal);
+		normal.setBounds( 950,343,225,33);
+		normal.setBorderPainted(false); normal.setContentAreaFilled(false);normal.setFocusPainted(false);
+		normal.setForeground(new Color(233,56,63)); normal.setFont(g);
+		
+		hard = new JRadioButton("HARD !!! ");
 		hard.addActionListener(this);
 		hard.setVisible(false);
-		// ajout des boutons radio dans le groupe 
-		niv.add(easy);
-		niv.add(normal);
 		niv.add(hard);
-		
-		option.add(easy);
-		option.add(normal);
 		option.add(hard);
-		easy.setBounds( 950,310,225,33);
-		normal.setBounds( 950,343,225,33);
-		hard.setBounds( 950,376,225,34);
+		hard.setBounds( 950,386,225,34);
+		hard.setBorderPainted(false); hard.setContentAreaFilled(false);hard.setFocusPainted(false);
+		hard.setForeground(new Color(233,56,63)); hard.setFont(g);
+		
 		
 		// BOUTON CANCEL 
 		option.add(cancel);
-		cancel.setBounds ( 1350, 700 ,50, 50);
+		cancel.setBounds ( 1400, 680 ,70, 70);
+		cancel.addActionListener(this);
+		cancel.setBorderPainted(false); cancel.setContentAreaFilled(false); cancel.setFocusPainted(false);
+		cancel.setForeground(new Color(207,10,29)); cancel.setFont(f);
 		
 		cancel.addActionListener(this);
 		
 		// BOUTON VALID 
 		option.add(valid);
-		valid.setBounds ( 1250,700,50, 50);
+		valid.setBounds ( 1350,680,70, 70);
 		valid.addActionListener(this);
+		valid.setBorderPainted(false); valid.setContentAreaFilled(false);  valid.setFocusPainted(false);
+       		 valid.setForeground(new Color(22,184,78)); valid.setFont(f);
 		
 		// AJOUT
 		option.add(Titan);
@@ -132,12 +158,23 @@ public class MenuOption extends JFrame implements ActionListener  {
 }
 
 	public void actionPerformed (ActionEvent e){
-			if (e.getSource() == son) {
-				//volume.setVisible(true);
-			}else{
+		if (e.getSource() == son){
+			volume.setVisible(true);
+		}
+		if (e.getSource() == clavier){
+			azerty.setVisible(true);
+			qwerty.setVisible(true);
+		}
+		if (e.getSource() == niveau){
+			easy.setVisible(true);
+			normal.setVisible(true);
+			hard.setVisible(true);
+				
+		}
+		if (e.getSource() == valid){
 				myMenu.setVisible(true);
 				this.setVisible(false);
-			}
+		}
 	}
 	
 
