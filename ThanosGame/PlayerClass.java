@@ -37,6 +37,14 @@ public class PlayerClass {
     }
 
     public void run(TerrainMap currentTerrain,World currentWorld){
+       doPlayerMovement(currentTerrain,currentWorld);
+
+        if(destroyAt.getX() !=-1){
+            useTestStone(currentTerrain,currentWorld);
+        }
+    }
+
+    private void doPlayerMovement(TerrainMap currentTerrain,World currentWorld){
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
         mySpeed = mySpeed.add(0, 0.5*(tUnderFoot ? 0 : 1));
 
@@ -64,24 +72,23 @@ public class PlayerClass {
             myPosition = myPosition.add(2*movingState*(terrainIsObstacleLeft(currentTerrain)?0:1),0);
         }
         myPosition=  currentTerrain.clampPoint( myPosition.add(mySpeed),mySize);
-
-        if(destroyAt.getX() !=-1){
-            useTestStone(currentTerrain,currentWorld);
-        }
     }
 
     private void useTestStone(TerrainMap currentTerrain,World currentWorld){
         LinkedList<Point2D> pTD = new LinkedList<>();
-        for(double angle = 0;angle<360;angle++){
-            for(int radius = 0;radius<40;radius++){
-                pTD.add(currentTerrain.clampPoint(new Point2D(Math.cos(angle)*radius,Math.sin(angle)*radius).add(destroyAt)));
+
+        for(int x = -40;x<40;x++){
+            for(int y = -40;y<+40;y++){
+                if(Main.getMagnitudeSquared(x,y)<Math.pow(40,2)){
+                    pTD.add(currentTerrain.clampPoint(new Point2D(x,y).add(destroyAt)));
+                }
             }
         }
         byte bTD[] = new byte[pTD.size()];
         for (int i=0;i<bTD.length;i++){
             bTD[i]=0;
         }
-        currentTerrain.changeTerrain( pTD.toArray(new Point2D[pTD.size()]),bTD);
+        currentTerrain.changeTerrain( pTD.toArray(new Point2D[pTD.size()]),bTD,true);
         destroyAt = new Point2D(-1,-1);
     }
 
