@@ -20,7 +20,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
     private int longueurTitre = 800;
     private int hauteurTitre = 125;
     private String texteTitre = "Téthanos";
-    private int nbPierres=0; //VARIABLE A RAJOUTER DANS GANT (PRESENT POUR LE TEST)
+    private int nbPierres=6; //VARIABLE A RAJOUTER DANS GANT (PRESENT POUR LE TEST)
 
     public MenuPrincipal(){
         

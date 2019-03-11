@@ -2,6 +2,7 @@ package ThanosGame;
 
 public class Gant{
     Pierres [] Stones ;
+    int nbPierres ;
     public Gant(Pierres [] Stones){
         this.Stones = Stones ;
     }
