@@ -6,7 +6,7 @@ import java.io.IOException;
 
 public class BuildingSaves {
     private static final int MODULEDIMENSION = 20;
-    public static byte[][][] moduleTemplates = new byte[1][MODULEDIMENSION][MODULEDIMENSION];
+    public static byte[][][] moduleTemplates = new byte[2][MODULEDIMENSION][MODULEDIMENSION];
 
     public static void loadBuildings(){
         for(int i =0;i<moduleTemplates.length;i++){
