@@ -24,6 +24,7 @@ public class PlayerClass {
     public void draw(GraphicsContext gc){
         gc.setFill(Color.PURPLE);
         gc.fillRect(myPosition.getX()-mySize.getX()-getCameraPosition().getX(),myPosition.getY()-mySize.getY()-getCameraPosition().getY(),mySize.getX()*2,mySize.getY()*2);
+       /* gc.drawImage(this.Thanos.getImgThanos()myPosition.getX()-mySize.getX()-getCameraPosition().getX(),myPosition.getY()-mySize.getY()-getCameraPosition().getY());*/
     }
 
     public void fireAt(double fX, double fY){
