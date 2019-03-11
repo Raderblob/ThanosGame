@@ -21,9 +21,10 @@ public class MenuPrincipal extends JFrame implements ActionListener{
     private int hauteurTitre = 125;
     private String texteTitre = "Téthanos";
     private int nbPierres=6; //VARIABLE A RAJOUTER DANS GANT (PRESENT POUR LE TEST)
-
+    private MenuOption oMenu;
     public MenuPrincipal(){
-        
+        oMenu = new MenuOption(this);
+        oMenu.setVisible(false);
         //Création de la fenêtre et son entête
         setTitle(texteTitre +": DEBOTTE Adrien, LE GALL Louise, GILLES Killian, MARCHANT Richard");
         setLayout(null);
@@ -123,8 +124,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
 
         }
         if(e.getSource() == bouton3){
-            setVisible(false);
-            new MenuOption(this);
+           oMenu.setVisible(true);
         }
     }
 

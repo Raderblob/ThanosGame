@@ -1,5 +1,5 @@
 package ThanosGame;
 
-public class HealthItem extends {
+public class HealthItem  {
     int VieRendue;
 }
