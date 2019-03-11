@@ -44,7 +44,7 @@ public class Game extends Application {
                 thanos.movingState=-1;
             }else if(key.getCode() == KeyCode.D){
                 thanos.movingState=1;
-            }else if(key.getCode()==KeyCode.W){
+            }else if(key.getCode()==KeyCode.SPACE){
                 thanos.jump();
             }else if(key.getCode() == KeyCode.S){
 
@@ -55,7 +55,7 @@ public class Game extends Application {
                 thanos.movingState=0;
             }else if(key.getCode() == KeyCode.D){
                 thanos.movingState=0;
-            }else if(key.getCode()==KeyCode.W){
+            }else if(key.getCode()==KeyCode.SPACE){
 
             }else if(key.getCode() == KeyCode.S){
 
