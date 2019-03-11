@@ -14,9 +14,9 @@ public class Building {
     public Building(Point2D mPos) {
         myPosition = mPos;
         baseModel = 0;
-        myModules = new BuildingModule[1];
+        myModules = new BuildingModule[2];
         myModules[0] = new BuildingModule(baseModel,mPos);
-
+        myModules[1] = new BuildingModule(baseModel,mPos.add(80,0));
     }
 
     public void changeTerrain(TerrainMap theTerrain){
