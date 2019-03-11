@@ -1,8 +1,8 @@
 package ThanosGame;
 
 public class Gant{
-    Pierres [] Stones ;
-    int nbPierres;
+    public Pierres [] Stones ;
+    public int nbPierres;
     public Gant(Pierres [] Stones){
         this.Stones = Stones ;
         this.nbPierres = 0 ;
