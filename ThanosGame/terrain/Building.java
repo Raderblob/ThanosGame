@@ -14,9 +14,13 @@ public class Building {
     public Building(Point2D mPos) {
         myPosition = mPos;
         baseModel = 0;
-        myModules = new BuildingModule[2];
-        myModules[0] = new BuildingModule(baseModel,mPos);
-        myModules[1] = new BuildingModule(baseModel,mPos.add(80,0));
+        myModules = new BuildingModule[Main.numberGenerator.nextInt(3)+1];
+        Point2D cPos = new Point2D(myPosition.getX(),myPosition.getY());
+
+        for(int i =0;i<myModules.length;i++){
+            myModules[i] = new BuildingModule(baseModel,cPos);
+            cPos = cPos.add(80,0);
+        }
     }
 
     public void changeTerrain(TerrainMap theTerrain){
@@ -58,9 +62,12 @@ class BuildingModule {
         byte res[][];
         switch (bModel) {
             case 0:
-                switch (Main.numberGenerator.nextInt(1)) {
+                switch (Main.numberGenerator.nextInt(2)) {
                     case 0:
                         moduleModel = 0;
+                        break;
+                    case 1:
+                        moduleModel =1;
                         break;
                     default:
                         System.out.println("Error module not known");
