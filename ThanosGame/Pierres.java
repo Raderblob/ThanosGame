@@ -10,7 +10,6 @@ public class Pierres{
             case 0 : 
             case 1 : 
             case 2 :
-                System.out.println("hi");
             case 3 : 
             case 4 : 
             case 5 : 
