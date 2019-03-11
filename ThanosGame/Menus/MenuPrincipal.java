@@ -1,6 +1,7 @@
 package ThanosGame.Menus;
 
 import ThanosGame.Game;
+import ThanosGame.Gant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +21,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
     private int longueurTitre = 800;
     private int hauteurTitre = 125;
     private String texteTitre = "Téthanos";
-    private int nbPierres=6; //VARIABLE A RAJOUTER DANS GANT (PRESENT POUR LE TEST)
+    private int nbPierres = 8; //ATTENTION MODIFIER POUR FAIRE EN SORTE D'AVOIR LE NBPIERRES CORRESPONDANT
 
     public MenuPrincipal(){
         
