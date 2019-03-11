@@ -163,20 +163,38 @@ public class MenuOption extends JFrame implements ActionListener  {
 	public void actionPerformed (ActionEvent e){
 		if (e.getSource() == son){
 			volume.setVisible(true);
+			easy.setVisible(false);
+			normal.setVisible(false);
+			hard.setVisible(false);
+			azerty.setVisible(false);
+			qwerty.setVisible(false);
 		}
 		if (e.getSource() == clavier){
 			azerty.setVisible(true);
 			qwerty.setVisible(true);
+			volume.setVisible(false);
+			easy.setVisible(false);
+			normal.setVisible(false);
+			hard.setVisible(false);
 		}
 		if (e.getSource() == niveau){
 			easy.setVisible(true);
 			normal.setVisible(true);
 			hard.setVisible(true);
+			azerty.setVisible(false);
+			qwerty.setVisible(false);
+			volume.setVisible(false);
 
 		}
 		if (e.getSource() == valid){
 			myMenu.setVisible(true);
 			this.setVisible(false);
+		}
+		if (e.getSource() == cancel){
+			myMenu.setVisible(true);
+			this.setVisible(false);
+			niv.setSelected(easy);
+
 		}
 
 
