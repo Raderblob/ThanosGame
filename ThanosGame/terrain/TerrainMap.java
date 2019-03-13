@@ -43,14 +43,13 @@ public class TerrainMap{
         }
 
 
-        for(int i =400 ;i<(int)TerrainChunck.chunkParam.getX()*chunk.length*4-400;i+=400){
+        for(int i =400 ;i<(int)TerrainChunck.chunkParam.getX()*chunk.length*4-400;i+=500){
             if(Main.numberGenerator.nextInt(100)>10){
                 int y=0;
                 int x =Main.numberGenerator.nextInt(200)+i;
                 do{
                     y+=1;
                 }while(getTerrainVal(x,y)==0);
-                y-=60;
                 new Building(new Point2D(x,y)).changeTerrain(this);
             }
         }

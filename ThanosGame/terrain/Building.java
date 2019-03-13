@@ -13,18 +13,19 @@ public class Building {
     public Building(Point2D mPos) {
         myPosition = mPos;
         myModules = new BuildingModule[Main.numberGenerator.nextInt(3) + 1];
-        Point2D cPos = new Point2D(myPosition.getX(), myPosition.getY());
+        Point2D cPos = new Point2D(myPosition.getX(), myPosition.getY()-80);
 
       /*  for (int i = 0; i < myModules.length; i++) {
             myModules[i] = new BuildingModule(cPos);
             cPos = cPos.add(80, 0);
         }*/
-        int b = (int) ((TerrainChunck.chunkParam.getY() * 4 - 1) / 80)-1;
-        BuildingModule[][] buildingPlan = new BuildingModule[6][b];
+        int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4 - 1) / 80)-1;
+        int doorPlacement = Math.max((int)cPos.getY()/80,0);
+        BuildingModule[][] buildingPlan = new BuildingModule[6][potentialBuildingHeight];
         LinkedList<BuildingModule> plannedBuilding = new LinkedList<>();
         boolean buildingComplete;
-        buildingPlan[1][1] = new EntranceModule(new Point2D(cPos.getX(), 80));
-        plannedBuilding.add(buildingPlan[1][1]);
+        buildingPlan[1][doorPlacement] = new EntranceModule(new Point2D(cPos.getX(), cPos.getY()));
+        plannedBuilding.add(buildingPlan[1][doorPlacement]);
         do {
             buildingComplete = true;
             System.out.println("start loop");
@@ -150,7 +151,7 @@ public class Building {
             case 1:
                 return new TrapDoorModule(mP);
             case 2:
-                return new EntranceModule(mP);
+                return new CorridorModule(mP);
             case 3:
                 return new OpenModule(mP);
             case 4:
@@ -319,6 +320,7 @@ class EntranceModule extends BuildingModule {
         super(mPos, true, false, true, true, true, false, false, false);
         setModule(indexes);
     }
+
 }
 
 class CorridorModule extends BuildingModule {
@@ -349,7 +351,7 @@ class LadderModule extends BuildingModule {
 }
 
 class OpenModule extends BuildingModule {
-    private final int[] indexes = {1};
+    private final int[] indexes = {5};
 
     public OpenModule(Point2D mPos) {
         super(mPos, true, true, true, true, true, true, true, true);
