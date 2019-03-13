@@ -27,7 +27,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
         
         //Création de la fenêtre et son entête
         setTitle(texteTitre +": DEBOTTE Adrien, LE GALL Louise, GILLES Killian, MARCHANT Richard");
-        setLayout(null);
+        setLayout(null);//c null
         setSize(1500,800);
         setLocation(0,0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
