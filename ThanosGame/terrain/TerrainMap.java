@@ -43,7 +43,7 @@ public class TerrainMap{
         }
 
 
-        for(int i =400 ;i<(int)TerrainChunck.chunkParam.getX()*chunk.length*4-2;i+=400){
+        for(int i =400 ;i<(int)TerrainChunck.chunkParam.getX()*chunk.length*4-400;i+=400){
             if(Main.numberGenerator.nextInt(100)>10){
                 int y=0;
                 int x =Main.numberGenerator.nextInt(200)+i;
