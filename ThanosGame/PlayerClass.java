@@ -11,8 +11,8 @@ public class PlayerClass {
     public int movingState;
     public int jumpingState;
     public Point2D myPosition;
+    public Point2D mySize;
     private Point2D mySpeed;
-    private Point2D mySize;
     private Point2D destroyAt;
     public PlayerClass(){
         myPosition = new Point2D(50,50);
