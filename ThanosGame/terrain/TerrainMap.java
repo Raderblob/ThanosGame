@@ -43,8 +43,8 @@ public class TerrainMap{
         }
 
 
-        for(int i =400 ;i<(int)TerrainChunck.chunkParam.getX()*chunk.length*4-400;i+=500){
-            if(Main.numberGenerator.nextInt(100)>10){
+        for(int i =400 ;i<(int)TerrainChunck.chunkParam.getX()*chunk.length*4-1000;i+=700){
+            if(Main.numberGenerator.nextInt(100)>50){
                 int y=0;
                 int x =Main.numberGenerator.nextInt(200)+i;
                 do{
@@ -178,8 +178,11 @@ class TerrainChunck{
                 byte a =getTVal(x,y);
                 if(a==1) {
                     terrainDrawer.setColor(new java.awt.Color((int) (Math.random() * 255), 0, 0));
-                }else if(a==10){
+                }else if(a==10) {
                     terrainDrawer.setColor(new java.awt.Color(0, 0, 0));
+                }else if(a==11){
+                    terrainDrawer.setColor(new java.awt.Color(0, 254, 0));
+
                 }else{
                     terrainDrawer.setColor(java.awt.Color.blue);
                 }

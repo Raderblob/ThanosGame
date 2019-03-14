@@ -13,15 +13,15 @@ public class Building {
     public Building(Point2D mPos) {
         myPosition = mPos;
         myModules = new BuildingModule[Main.numberGenerator.nextInt(3) + 1];
-        Point2D cPos = new Point2D(myPosition.getX(), myPosition.getY()-80);
+        Point2D cPos = new Point2D(myPosition.getX(), myPosition.getY() - 80);
 
       /*  for (int i = 0; i < myModules.length; i++) {
             myModules[i] = new BuildingModule(cPos);
             cPos = cPos.add(80, 0);
         }*/
-        int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4 - 1) / 80)-1;
-        int doorPlacement = Math.max((int)cPos.getY()/80,0);
-        BuildingModule[][] buildingPlan = new BuildingModule[6][potentialBuildingHeight];
+        int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4 - 1) / 80) - 1;
+        int doorPlacement = Math.max((int) cPos.getY() / 80, 0);
+        BuildingModule[][] buildingPlan = new BuildingModule[10][potentialBuildingHeight];
         LinkedList<BuildingModule> plannedBuilding = new LinkedList<>();
         boolean buildingComplete;
         buildingPlan[1][doorPlacement] = new EntranceModule(new Point2D(cPos.getX(), cPos.getY()));
@@ -29,118 +29,69 @@ public class Building {
         do {
             buildingComplete = true;
             System.out.println("start loop");
-            for (int x = 0; x < buildingPlan.length; x++) {
-                for (int y = 0; y < buildingPlan[x].length; y++) {
-                    if (buildingPlan[x][y] != null) {
+            for (int x = 1; x < buildingPlan.length - 1; x++) {
+                for (int y = 1; y < buildingPlan[x].length - 1; y++) {
+                    if (buildingPlan[x][y] == null) {
                         System.out.println(x + " " + y);
-
-                        if (x < buildingPlan.length - 1 && buildingPlan[x + 1][y] == null) {
-                            if (buildingPlan[x][y].needRight) {
-                                if (x + 1 < buildingPlan.length - 1) {
-                                    buildingPlan[x + 1][y] = getAllowLeft(buildingPlan[x][y].myPosition.add(80, 0));
-                                } else {
-                                    buildingPlan[x + 1][y] = getAllowLeftEnd(buildingPlan[x][y].myPosition.add(80, 0));
-                                }
-                                plannedBuilding.add(buildingPlan[x + 1][y]);
-                                buildingComplete = false;
-                            }
-                            if (buildingPlan[x][y].allowRight) {
-                                if (Main.numberGenerator.nextInt(2) == 0) {
-                                    if (x + 1 < buildingPlan.length - 1) {
-                                        buildingPlan[x + 1][y] = getAllowLeft(buildingPlan[x][y].myPosition.add(80, 0));
-                                    } else {
-                                        buildingPlan[x + 1][y] = getAllowLeftEnd(buildingPlan[x][y].myPosition.add(80, 0));
-                                    }
-                                    plannedBuilding.add(buildingPlan[x + 1][y]);
-                                    buildingComplete = false;
-                                } else {
-                                    buildingPlan[x + 1][y] = new EndModule();
-                                }
-                            }
+                        if (buildingPlan[x - 1][y] != null && buildingPlan[x - 1][y].canRight) {
+                            buildingPlan[x][y] = getCanLeft(buildingPlan[x - 1][y].myPosition.add(80, 0));
+                            plannedBuilding.add(buildingPlan[x][y]);
+                            buildingComplete = false;
                         }
-
-                        if (x > 0 && buildingPlan[x - 1][y] == null) {
-                            if (buildingPlan[x][y].needLeft) {
-                                if (x - 1 > 0) {
-                                    buildingPlan[x - 1][y] = getAllowRight(buildingPlan[x][y].myPosition.add(-80, 0));
-                                } else {
-                                    buildingPlan[x - 1][y] = getAllowRightEnd(buildingPlan[x][y].myPosition.add(-80, 0));
-                                }
-                                plannedBuilding.add(buildingPlan[x - 1][y]);
-                                buildingComplete = false;
-                            }
-                            if (buildingPlan[x][y].allowLeft) {
-                                if (Main.numberGenerator.nextInt(2) == 0) {
-                                    if (x - 1 > 0) {
-                                        buildingPlan[x - 1][y] = getAllowRight(buildingPlan[x][y].myPosition.add(-80, 0));
-                                    } else {
-                                        buildingPlan[x - 1][y] = getAllowRightEnd(buildingPlan[x][y].myPosition.add(-80, 0));
-                                    }
-                                    plannedBuilding.add(buildingPlan[x - 1][y]);
-                                    buildingComplete = false;
-                                } else {
-                                    buildingPlan[x - 1][y] = new EndModule();
-                                }
-                            }
+                        if (buildingPlan[x + 1][y] != null && buildingPlan[x + 1][y].canLeft) {
+                            buildingPlan[x][y] = getCanRight(buildingPlan[x + 1][y].myPosition.add(-80, 0));
+                            plannedBuilding.add(buildingPlan[x][y]);
+                            buildingComplete = false;
+                        }
+                        if (buildingPlan[x][y + 1] != null && buildingPlan[x][y + 1].canUp) {
+                            buildingPlan[x][y] = getCanDown(buildingPlan[x][y + 1].myPosition.add(0, -80));
+                            plannedBuilding.add(buildingPlan[x][y]);
+                            buildingComplete = false;
+                        }
+                        if (buildingPlan[x][y - 1] != null && buildingPlan[x][y - 1].canDown) {
+                            buildingPlan[x][y] = getCanUp(buildingPlan[x][y - 1].myPosition.add(0, 80));
+                            plannedBuilding.add(buildingPlan[x][y]);
+                            buildingComplete = false;
                         }
 
 
-                        if (y > 0 && buildingPlan[x][y - 1] == null) {
-                            if (buildingPlan[x][y].needTop) {
-                                if(y-1>0) {
-                                    buildingPlan[x][y - 1] = getAllowBottom(buildingPlan[x][y].myPosition.add(0, -80));
-                                }else{
-                                    buildingPlan[x][y - 1] = getAllowBottomEnd(buildingPlan[x][y].myPosition.add(0, -80));
-                                }
-                                plannedBuilding.add(buildingPlan[x][y - 1]);
-                                buildingComplete = false;
-                            }
-                            if (buildingPlan[x][y].allowTop){
-                                if (Main.numberGenerator.nextInt(2) == 0) {
-                                    if(y-1>0) {
-                                        buildingPlan[x][y - 1] = getAllowBottom(buildingPlan[x][y].myPosition.add(0, -80));
-                                    }else{
-                                        buildingPlan[x][y - 1] = getAllowBottomEnd(buildingPlan[x][y].myPosition.add(0, -80));
-                                    }
-                                    plannedBuilding.add(buildingPlan[x][y - 1]);
-                                    buildingComplete = false;
-                                } else {
-                                    buildingPlan[x ][y-1] = new EndModule();
-                                }
-                            }
-                        }
-
-
-                        if (y < buildingPlan[x].length - 1 && buildingPlan[x][y + 1] == null) {
-                            if (buildingPlan[x][y].needBottom) {
-                                if(y+1<buildingPlan[x].length-1) {
-                                    buildingPlan[x][y + 1] = getAllowTop(buildingPlan[x][y].myPosition.add(0, +80));
-                                }else{
-                                    buildingPlan[x][y + 1] = getAllowTopEnd(buildingPlan[x][y].myPosition.add(0, +80));
-                                }
-                                plannedBuilding.add(buildingPlan[x][y + 1]);
-                                buildingComplete = false;
-                            }
-                            if (buildingPlan[x][y].allowBottom) {
-                                if (Main.numberGenerator.nextInt(2) == 0) {
-                                    if(y+1<buildingPlan[x].length-1) {
-                                        buildingPlan[x][y + 1] = getAllowTop(buildingPlan[x][y].myPosition.add(0, +80));
-                                    }else{
-                                        buildingPlan[x][y + 1] = getAllowTopEnd(buildingPlan[x][y].myPosition.add(0, +80));
-                                    }
-                                    plannedBuilding.add(buildingPlan[x][y + 1]);
-                                    buildingComplete = false;
-                                } else {
-                                    buildingPlan[x][y+1] = new EndModule();
-                                }
-                            }
-                        }
                     } else {
                         System.out.println(x + " " + y + " null");
                     }
                 }
             }
         } while (!buildingComplete);
+        for (int x = 0; x < buildingPlan.length; x++) {
+            for (int y = 0; y < buildingPlan[x].length; y++) {
+                if (buildingPlan[x][y] == null) {
+                    if (x > 0) {
+                        if (buildingPlan[x - 1][y] != null && buildingPlan[x - 1][y].shouldCover) {
+                            buildingPlan[x][y] = new WallLeftModule(buildingPlan[x - 1][y].myPosition.add(80, 0));
+                            plannedBuilding.add(buildingPlan[x][y]);
+                        }
+                    }
+                    if (x < buildingPlan.length - 1) {
+                        if (buildingPlan[x + 1][y] != null && buildingPlan[x + 1][y].shouldCover) {
+                            buildingPlan[x][y] = new WallRightModule(buildingPlan[x + 1][y].myPosition.add(-80, 0));
+                            plannedBuilding.add(buildingPlan[x][y]);
+                        }
+                    }
+                    if (y < buildingPlan[x].length - 1) {
+                        if (buildingPlan[x][y + 1] != null && buildingPlan[x][y + 1].shouldCover) {
+                            buildingPlan[x][y] = new CeilingModule(buildingPlan[x][y + 1].myPosition.add(0, -80));
+                            plannedBuilding.add(buildingPlan[x][y]);
+                        }
+                    }
+                    if (y > 0) {
+                        if (buildingPlan[x][y - 1] != null && buildingPlan[x][y - 1].shouldCover) {
+                            buildingPlan[x][y] = new FloorModule(buildingPlan[x][y - 1].myPosition.add(0, 80));
+                            plannedBuilding.add(buildingPlan[x][y]);
+                        }
+                    }
+                }
+            }
+        }
+
         myModules = plannedBuilding.toArray(new BuildingModule[plannedBuilding.size()]);
     }
 
@@ -164,67 +115,38 @@ public class Building {
         }
     }
 
-    private BuildingModule getAllowLeft(Point2D mP) {
+    private BuildingModule getCanLeft(Point2D mP) {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.allowLeft);
+        } while (!potBuilding.canLeft);
         return potBuilding;
     }
 
-    private BuildingModule getAllowLeftEnd(Point2D mP) {
-        BuildingModule potBuilding;
-        do {
-            potBuilding = getAllowLeft(mP);
-        } while (potBuilding.needRight);
-        return potBuilding;
-    }
 
-    private BuildingModule getAllowRight(Point2D mP) {
+    private BuildingModule getCanRight(Point2D mP) {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.allowRight);
+        } while (!potBuilding.canRight);
         return potBuilding;
     }
 
-    private BuildingModule getAllowRightEnd(Point2D mP) {
-        BuildingModule potBuilding;
-        do {
-            potBuilding = getAllowRight(mP);
-        } while (potBuilding.needLeft);
-        return potBuilding;
-    }
 
-    private BuildingModule getAllowTop(Point2D mP) {
+    private BuildingModule getCanUp(Point2D mP) {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.allowTop);
+        } while (!potBuilding.canUp);
         return potBuilding;
     }
 
-    private BuildingModule getAllowTopEnd(Point2D mP) {
-        BuildingModule potBuilding;
-        do {
-            potBuilding = getAllowTop(mP);
-        } while (potBuilding.needBottom);
-        return potBuilding;
-    }
 
-    private BuildingModule getAllowBottom(Point2D mP) {
+    private BuildingModule getCanDown(Point2D mP) {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.allowBottom);
-        return potBuilding;
-    }
-
-    private BuildingModule getAllowBottomEnd(Point2D mP) {
-        BuildingModule potBuilding;
-        do {
-            potBuilding = getAllowBottom(mP);
-        } while (potBuilding.needTop);
+        } while (!potBuilding.canDown);
         return potBuilding;
     }
 
@@ -236,14 +158,16 @@ public class Building {
         for (int i = 0; i < myModules.length; i++) {
             for (int x = 0; x < myModules[i].blocks.length; x++) {
                 for (int y = 0; y < myModules[i].blocks[x].length; y++) {
-                    PToChange.add(new Point2D(x * 4, y * 4).add(myModules[i].myPosition));
-                    fVals.add(myModules[i].blocks[x][y]);
+                    if(myModules[i].blocks[x][y] != -1) {
+                        PToChange.add(new Point2D(x * 4, y * 4).add(myModules[i].myPosition));
+                        fVals.add(myModules[i].blocks[x][y]);
+                    }
                 }
             }
         }
         byte fValsFinal[] = new byte[fVals.size()];
         for (int i = 0; i < fValsFinal.length; i++) {
-            fValsFinal[i] = fVals.get(i).byteValue();
+            fValsFinal[i] = fVals.get(i);
         }
         theTerrain.changeTerrain(PToChange.toArray(new Point2D[PToChange.size()]), fValsFinal, false);
     }
@@ -255,6 +179,7 @@ class BuildingModule {
     public byte blocks[][];
     public boolean allowRight, allowLeft, allowBottom, allowTop;
     public boolean needRight, needLeft, needBottom, needTop;
+    public boolean canRight, canLeft, canUp, canDown, shouldCover;
     public Point2D myPosition;
     private int myModel;
 
@@ -264,16 +189,13 @@ class BuildingModule {
 
     }
 
-    public BuildingModule(Point2D mPos, boolean aR, boolean aL, boolean aB, boolean aT, boolean nR, boolean nL, boolean nB, boolean nT) {
+    public BuildingModule(Point2D mPos, boolean cR, boolean cL, boolean cD, boolean cU, boolean sC) {
         myPosition = mPos;
-        allowLeft = aL;
-        allowRight = aR;
-        allowBottom = aB;
-        allowTop = aT;
-        needBottom = nB;
-        needLeft = nL;
-        needRight = nR;
-        needTop = nT;
+        canRight = cR;
+        canLeft = cL;
+        canUp = cU;
+        canDown = cD;
+        shouldCover = sC;
     }
 
 
@@ -317,7 +239,7 @@ class EntranceModule extends BuildingModule {
     private final int[] indexes = {1};
 
     public EntranceModule(Point2D mPos) {
-        super(mPos, true, false, true, true, true, false, false, false);
+        super(mPos, true, false, false, false, false);
         setModule(indexes);
     }
 
@@ -327,7 +249,7 @@ class CorridorModule extends BuildingModule {
     private final int[] indexes = {0};
 
     public CorridorModule(Point2D mPos) {
-        super(mPos, true, true, true, true, true, true, false, false);
+        super(mPos, true, true, false, false, false);
         setModule(indexes);
     }
 }
@@ -336,7 +258,7 @@ class TrapDoorModule extends BuildingModule {
     private final int[] indexes = {4};
 
     public TrapDoorModule(Point2D mPos) {
-        super(mPos, true, true, true, true, false, false, true, false);
+        super(mPos, true, true, true, false, false);
         setModule(indexes);
     }
 }
@@ -345,7 +267,7 @@ class LadderModule extends BuildingModule {
     private final int[] indexes = {2};
 
     public LadderModule(Point2D mPos) {
-        super(mPos, true, true, true, true, false, false, false, false);
+        super(mPos, true, true, false, true, false);
         setModule(indexes);
     }
 }
@@ -354,7 +276,7 @@ class OpenModule extends BuildingModule {
     private final int[] indexes = {5};
 
     public OpenModule(Point2D mPos) {
-        super(mPos, true, true, true, true, true, true, true, true);
+        super(mPos, true, true, true, true, true);
         setModule(indexes);
     }
 }
@@ -363,16 +285,38 @@ class CeilingModule extends BuildingModule {
     private final int[] indexes = {6};
 
     public CeilingModule(Point2D mPos) {
-        super(mPos, true, true, true, false, false, false, true, false);
+        super(mPos, false, false, false, false, false);
+        setModule(indexes);
+    }
+}
+
+class WallLeftModule extends BuildingModule {
+    private final int[] indexes = {7};
+
+    public WallLeftModule(Point2D mPos) {
+        super(mPos, false, false, false, false, false);
+        setModule(indexes);
+    }
+}
+
+class WallRightModule extends BuildingModule {
+    private final int[] indexes = {8};
+
+    public WallRightModule(Point2D mPos) {
+        super(mPos, false, false, false, false, false);
+        setModule(indexes);
+    }
+}
+
+class FloorModule extends BuildingModule {
+    private final int[] indexes = {9};
+
+    public FloorModule(Point2D mPos) {
+        super(mPos, false, false, false, false, false);
         setModule(indexes);
     }
 }
 
 
-class EndModule extends BuildingModule {
-    public EndModule() {
-        super(null, false, false, false, false, false, false, false, false);
-        isVoid = true;
-    }
-}
+
 

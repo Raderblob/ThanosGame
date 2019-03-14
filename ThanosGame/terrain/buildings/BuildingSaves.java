@@ -1,17 +1,19 @@
 package ThanosGame.terrain.buildings;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 public class BuildingSaves {
     private static final int MODULEDIMENSION = 20;
-    public static byte[][][] moduleTemplates = new byte[7][MODULEDIMENSION][MODULEDIMENSION];
+    public static byte[][][] moduleTemplates = new byte[10][MODULEDIMENSION][MODULEDIMENSION];
 
     public static void loadBuildings(){
         for(int i =0;i<moduleTemplates.length;i++){
             moduleTemplates[i]=readModule("module" + i + ".png");
         }
+        readModule("module9.png");
     }
 
     private static byte[][] readModule(String str) {
@@ -26,10 +28,13 @@ public class BuildingSaves {
         for (int x = 0; x < MODULEDIMENSION; x++) {
             for (int y = 0; y < MODULEDIMENSION; y++) {
                 int myRGB = img.getRGB(x, y);
-                System.out.println(myRGB);
+                System.out.println(myRGB + " " + new Color(myRGB).toString());
                 switch (myRGB) {
                     case -16777216:
                         res[x][y] = 10;
+                        break;
+                    case -6737152:
+                        res[x][y] = -1;
                         break;
                     default:
                         res[x][y] = 0;
