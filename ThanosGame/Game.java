@@ -1,5 +1,6 @@
 package ThanosGame;
 
+import ThanosGame.graphics.images.ImagesSaves;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -23,6 +24,7 @@ public class Game extends Application {
 
     @Override
     public void start(Stage stage) {
+        ImagesSaves.loadImages();
         Group root = new Group();
         Scene scene = new Scene(root, winParam.getX() , winParam.getY());
         stage.setTitle("ThanosGame.Thanos rules the world");

@@ -1,29 +1,34 @@
 package ThanosGame;
 
+import ThanosGame.graphics.AnimatedImage;
+import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 import java.util.LinkedList;
 
 public class PlayerClass {
     public int movingState;
-    public int jumpingState;
+    private int jumpingState;
+    private boolean doubleJumped;
     public Point2D myPosition;
     public Point2D mySize;
     private Point2D mySpeed;
     private Point2D destroyAt;
+    protected AnimatedImage myAnimation;
     public PlayerClass(){
         myPosition = new Point2D(50,50);
         mySize = new Point2D(10,10);
         mySpeed = new Point2D(0,0);
         destroyAt = new Point2D(-1,-1);
+
+
+        myAnimation = new AnimatedImage(ImagesSaves.thanosWalkingRight,new Point2D(400,400),100);
     }
 
     public void draw(GraphicsContext gc){
-        gc.setFill(Color.PURPLE);
-        gc.fillRect(myPosition.getX()-mySize.getX()-getCameraPosition().getX(),myPosition.getY()-mySize.getY()-getCameraPosition().getY(),mySize.getX()*2,mySize.getY()*2);
+       myAnimation.draw(gc,new Point2D(myPosition.getX()-mySize.getX()-getCameraPosition().getX(),myPosition.getY()-mySize.getY()-getCameraPosition().getY()), new Point2D(mySize.getX()*2,mySize.getY()*2));
     }
 
     public void fireAt(double fX, double fY){
@@ -51,17 +56,18 @@ public class PlayerClass {
 
         if(tUnderFoot){
             if(jumpingState==2) {
-                jumpingState=1;
+                jumpingState-=1;
             }else{
                 mySpeed = new Point2D(mySpeed.getX(),0);
                 jumpingState=0;
+                doubleJumped = false;
             }
         }
 
         if(playerTrimmingTerrain(currentTerrain)){
             myPosition = myPosition.add(0,-4);
         }
-        if(terrainIsObstacleOverhead(currentTerrain)){
+        if(terrainIsObstacleOverhead(currentTerrain)|| myPosition.getY()-mySize.getY()==0){
             mySpeed = new Point2D(mySpeed.getX(),0);
             myPosition = myPosition.add(0,4);
         }
@@ -95,14 +101,20 @@ public class PlayerClass {
     public void jump(){
         if(jumpingState ==0)
         {
-            mySpeed = mySpeed.add(0,-10);
+            mySpeed = new Point2D(mySpeed.getX(),-10);
             jumpingState = 2;
+        }else if(!doubleJumped){
+            mySpeed = new Point2D(mySpeed.getX(),-10);
+            doubleJumped = true;
         }
     }
 
     private boolean terrainUnderFoot(TerrainMap currentTerrain){
         for(int x =(int)( myPosition.getX()-mySize.getX());x<myPosition.getX()+mySize.getX();x+=4){
             if(currentTerrain.getTerrainVal(x,myPosition.getY()+mySize.getY())!=0){
+                return true;
+            }
+            if(currentTerrain.getTerrainVal(x-1,myPosition.getY()+mySize.getY())!=0){
                 return true;
             }
         }
