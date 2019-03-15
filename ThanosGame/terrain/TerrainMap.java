@@ -42,21 +42,18 @@ public class TerrainMap{
             }
         }
 
-       Building b = new Building(new Point2D(100,200));
-        b.changeTerrain(this);
 
-        for(int i = 0;i<(int)TerrainChunck.chunkParam.getX()*chunk.length*4;i+=400){
-            if(Main.numberGenerator.nextInt(100)>10){
+        for(int i =400 ;i<(int)TerrainChunck.chunkParam.getX()*chunk.length*4-1000;i+=700){
+            if(Main.numberGenerator.nextInt(100)>50){
                 int y=0;
                 int x =Main.numberGenerator.nextInt(200)+i;
                 do{
                     y+=1;
                 }while(getTerrainVal(x,y)==0);
-                y-=60;
                 new Building(new Point2D(x,y)).changeTerrain(this);
-
             }
         }
+
 
     }
 
@@ -160,7 +157,12 @@ class TerrainChunck{
     }
 
     public void setVal(int x, int y, byte val){
-        terrain[x%(int)chunkParam.getX()][y] = val;
+        try{
+            terrain[x%(int)chunkParam.getX()][y] = val;
+        }catch(Exception e){
+            System.out.println(e.toString());
+        }
+
     }
 
     public byte getVal(int x,int y){
@@ -176,8 +178,11 @@ class TerrainChunck{
                 byte a =getTVal(x,y);
                 if(a==1) {
                     terrainDrawer.setColor(new java.awt.Color((int) (Math.random() * 255), 0, 0));
-                }else if(a==10){
+                }else if(a==10) {
                     terrainDrawer.setColor(new java.awt.Color(0, 0, 0));
+                }else if(a==11){
+                    terrainDrawer.setColor(new java.awt.Color(0, 254, 0));
+
                 }else{
                     terrainDrawer.setColor(java.awt.Color.blue);
                 }

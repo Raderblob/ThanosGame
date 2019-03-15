@@ -1,6 +1,7 @@
 package ThanosGame.Menus;
 
 import ThanosGame.Game;
+import ThanosGame.Gant;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,12 +23,16 @@ public class MenuPrincipal extends JFrame implements ActionListener{
     private String texteTitre = "Téthanos";
     private int nbPierres=6; //VARIABLE A RAJOUTER DANS GANT (PRESENT POUR LE TEST)
     private MenuOption oMenu;
+
+    private int nbPierres = 8; //ATTENTION MODIFIER POUR FAIRE EN SORTE D'AVOIR LE NBPIERRES CORRESPONDANT
+
+
     public MenuPrincipal(){
         oMenu = new MenuOption(this);
         oMenu.setVisible(false);
         //Création de la fenêtre et son entête
         setTitle(texteTitre +": DEBOTTE Adrien, LE GALL Louise, GILLES Killian, MARCHANT Richard");
-        setLayout(null);
+        setLayout(null);//c null
         setSize(1500,800);
         setLocation(0,0);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

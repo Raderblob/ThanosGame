@@ -7,28 +7,25 @@ import javafx.scene.paint.Color;
 import javax.swing.*;
 import java.awt.*;
 
-public class Thanos{
-    private Image imgThanos;
-    private ImageIcon icoThanos;
-    int PV ; 
-    Gant Infinité ;
-    private Point2D MaPosition ;
+    public class Thanos extends PlayerClass{
+        private Image imgThanos;
+        private ImageIcon icoThanos;
+        int PV ;
+        Gant Infinité ;
+        private Point2D MaPosition ;
 
-    public Thanos(int PV, Gant Infinity){
-        this.PV = PV ;
-        this.Infinité = Infinity ;
-        this.icoThanos = new ImageIcon("CourseDroite1");
-        this.imgThanos = this.icoThanos.getImage();
-
-
-    }
-    public void draw(GraphicsContext gc){
-
-
+        public Thanos(int PV, Gant Infinity){
+            super();
+            this.PV = PV ;
+            this.Infinité = Infinity ;
+            this.icoThanos = new ImageIcon("CourseDroite1");
+            this.imgThanos = this.icoThanos.getImage();
     }
 
-    public Image getImgThanos() {
-        return imgThanos;
-    }
-}
+    //GETTERS
+         public Image getimgThanos(){return imgThanos}
+
+
+} 
+
  
