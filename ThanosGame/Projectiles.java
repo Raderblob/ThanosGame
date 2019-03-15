@@ -14,9 +14,9 @@ public class Projectiles extends Item{
         this.speed=speed;
     }
 
-    public void collisionThanos(Thanos Thanos1){
-        if(((Thanos1.myPosition.getX()+Thanos1.mySize.getX())>this.Position.getX())&&(Thanos1.myPosition.getX()<(this.Position.getX()-this.mySize.getX()))&&((Thanos1.myPosition.getY()+Thanos1.mySize.getY())>this.Position.getY())&&(Thanos1.myPosition.getY()<(this.Position.getY()-this.mySize.getY()))){
-            Thanos1.PV=Thanos1.PV-this.degats;
+    public void collisionThanos(Thanos thanos1){
+        if(((thanos1.myPosition.getX()+thanos1.mySize.getX())>this.Position.getX())&&(thanos1.myPosition.getX()<(this.Position.getX()-this.mySize.getX()))&&((thanos1.myPosition.getY()+thanos1.mySize.getY())>this.Position.getY())&&(thanos1.myPosition.getY()<(this.Position.getY()-this.mySize.getY()))){
+            thanos1.PV=thanos1.PV-this.degats;
             //Supprimer projectile ensuite
         }
     }
