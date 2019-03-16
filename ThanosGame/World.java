@@ -28,7 +28,7 @@ public class World {
 
     public void renderWorld(GraphicsContext gc){
        terrain.draw(gc,new Point2D((float)thanos.getCameraPosition().getX(),0f));
-        thanos.draw(gc);
+       thanos.draw(gc);
         counter +=0.5;
     }
 }

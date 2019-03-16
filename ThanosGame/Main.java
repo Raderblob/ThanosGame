@@ -1,7 +1,6 @@
 package ThanosGame;
 
-import ThanosGame.Menus.MenuPrincipal;
-import ThanosGame.terrain.TerrainMap;
+import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.terrain.buildings.BuildingSaves;
 
 import java.awt.geom.Point2D;
@@ -13,7 +12,6 @@ public class Main {
     public static void main(String[] args) {
         numberGenerator = new Random(System.nanoTime());
         BuildingSaves.loadBuildings();
-        new TerrainMap(10);
         MenuPrincipal mn = new MenuPrincipal();
       //  ThanosGame.Game.launchGame();
 
