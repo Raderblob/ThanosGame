@@ -10,3 +10,4 @@ public class ImagesSaves {
         thanosSprites = new Image(ImagesSaves.class.getResource("thanosSprites.png").toExternalForm());
     }
 }
+

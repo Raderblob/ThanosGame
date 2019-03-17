@@ -12,7 +12,6 @@ public class AnimatedPerson extends AnimatedImage {
     }
 
     public void setWalkingMode(double xDir){
-        System.out.println(xDir);
         if(xDir<0){
             this.myMode =1;
             lastDir = xDir;

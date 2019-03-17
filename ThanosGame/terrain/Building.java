@@ -20,7 +20,6 @@ public class Building {
         }*/
         int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4) / 80) ;
         int doorPlacement = (int) (cPos.getY() / 80);
-        System.out.println(cPos.getY() + " " + doorPlacement);
         BuildingModule[][] buildingPlan = new BuildingModule[10][potentialBuildingHeight];
         LinkedList<BuildingModule> plannedBuilding = new LinkedList<>();
         boolean buildingComplete;
