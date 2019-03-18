@@ -17,7 +17,8 @@ public class World {
 
     public World(int worldType, PlayerClass p) {
         thanos = p;
-
+        worldProjectiles=new LinkedList<>();
+        worldExplosions= new LinkedList<>();
         switch (worldType) {
             case 0:
                 terrain = new TerrainMap(30);

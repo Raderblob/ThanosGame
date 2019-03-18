@@ -7,7 +7,7 @@ public class Heal extends Item{
     private int vieRendue;
 
     public Heal(Point2D position, Point2D Size,int vieRendue){
-        super(position, Size);
+        super(position, Size,null,new Point2D(0,0),100);
         this.vieRendue=vieRendue;
     }
 
