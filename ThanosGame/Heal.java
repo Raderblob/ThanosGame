@@ -11,7 +11,7 @@ public class Heal extends Item{
         this.vieRendue=vieRendue;
     }
 
-    public void Healing(Thanos Thanos1){
+   /* public void Healing(Thanos Thanos1){
         if(((Thanos1.myPosition.getX()+Thanos1.mySize.getX())>this.position.getX())&&(Thanos1.myPosition.getX()<(this.position.getX()-this.mySize.getX()))&&((Thanos1.myPosition.getY()+Thanos1.mySize.getY())>this.position.getY())&&(Thanos1.myPosition.getY()<(this.position.getY()-this.mySize.getY()))){
             if(Thanos1.PV<=Thanos1.PVmax-this.vieRendue){
                 Thanos1.PV=Thanos1.PV+this.vieRendue;
@@ -21,5 +21,5 @@ public class Heal extends Item{
             }
             //Supprimer Heal ensuite
         }
-    }
+    }*/
 }

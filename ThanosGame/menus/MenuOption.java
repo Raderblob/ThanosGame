@@ -14,9 +14,8 @@ public class MenuOption extends JFrame implements ActionListener  {
 	private JPanel option;
 	private JButton clavier, son, niveau, cancel, valid;
 	private JSlider volume;
-	private JRadioButton azerty, qwerty, UP, JUMP;
+	private JRadioButton azerty, qwerty;
 	private ButtonGroup bg;
-    private ButtonGroup jump;
 	private JRadioButton easy, hard, normal;
 
 	public MenuOption(MenuPrincipal mMenu){
@@ -34,7 +33,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		volume = new JSlider(JSlider.HORIZONTAL,0,100,50);
 		volume.setOpaque(false);
 
-		// FENETRE 
+		// FENETRE
 
 		setTitle("MenuOption");
 		setSize (1500,800);
@@ -45,13 +44,13 @@ public class MenuOption extends JFrame implements ActionListener  {
 		//CONTENEUR
 		option.setBounds(0,0,getWidth(),getHeight());
 		option.setLayout(null);
-		//FOND 
+		//FOND
 		Titan.setIcon (new ImageIcon(getClass().getResource("images\\OptionsMenu\\Titan.png")));
 		Titan.setSize(1500,800);
 		Titan.setLocation(0,0);
 
 
-		// BOUTON CLAVIER 
+		// BOUTON CLAVIER
 
 		option.add(clavier);
 		clavier.setBounds ( 1225,50,200, 100);
@@ -66,7 +65,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		azerty.addActionListener(this);
 		bg.add(azerty);
 		azerty.setVisible(false);
-		azerty.setBounds( 1050,50,225,50);
+		azerty.setBounds( 950,50,225,50);
 		azerty.setBorderPainted(false); azerty.setContentAreaFilled(false); azerty.setFocusPainted(false);
 		azerty.setForeground(new Color(233,56,63)); azerty.setFont(g);
 
@@ -75,38 +74,17 @@ public class MenuOption extends JFrame implements ActionListener  {
 		qwerty.addActionListener(this);
 		bg.add(qwerty);
 		qwerty.setVisible(false);
-		qwerty.setBounds( 1050,100,225,50);
+		qwerty.setBounds( 950,100,225,50);
 		qwerty.setBorderPainted(false); qwerty.setContentAreaFilled(false);qwerty.setFocusPainted(false);
 		qwerty.setForeground(new Color(233,56,63)); qwerty.setFont(g);
 
 		option.add(azerty);
 		option.add(qwerty);
 
-        // JUMP OU SAUT
 
-        ButtonGroup  jump = new ButtonGroup();
 
-        UP = new JRadioButton("UP");
-        UP.addActionListener(this);
-        jump.add(UP);
-        UP.setVisible(false);
-        UP.setBounds( 950,50,225,50);
-        UP.setBorderPainted(false); azerty.setContentAreaFilled(false); azerty.setFocusPainted(false);
-        UP.setForeground(new Color(233,56,63)); azerty.setFont(g);
 
-        JUMP = new JRadioButton("JUMP");
-        JUMP.setSelected(true);
-        JUMP.addActionListener(this);
-        jump.add(JUMP);
-        JUMP.setVisible(false);
-        JUMP.setBounds( 950,100,225,50);
-        JUMP.setBorderPainted(false); qwerty.setContentAreaFilled(false);qwerty.setFocusPainted(false);
-        JUMP.setForeground(new Color(233,56,63)); qwerty.setFont(g);
-
-        option.add(JUMP);
-        option.add(UP);
-
-		// BOUTON SON 
+		// BOUTON SON
 
 		option.add(son);
 		son.setBounds ( 1200,180,200, 100);
@@ -120,7 +98,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		/*volume.setBorderPainted(false); 	volume.setContentAreaFilled(false);	volume.setFocusPainted(false);*/
 
 
-		//BOUTON NIVEAU 
+		//BOUTON NIVEAU
 		option.add(niveau);
 		niveau.setBounds ( 1200,310,200, 100);
 		niveau.addActionListener(this);
@@ -158,7 +136,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		hard.setForeground(new Color(233,56,63)); hard.setFont(g);
 
 
-		// BOUTON CANCEL 
+		// BOUTON CANCEL
 		option.add(cancel);
 		cancel.setBounds ( 1400, 680 ,70, 70);
 		cancel.addActionListener(this);
@@ -167,7 +145,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 
 		cancel.addActionListener(this);
 
-		// BOUTON VALID 
+		// BOUTON VALID
 		option.add(valid);
 		valid.setBounds ( 1350,680,70, 70);
 		valid.addActionListener(this);
@@ -190,14 +168,10 @@ public class MenuOption extends JFrame implements ActionListener  {
 			hard.setVisible(false);
 			azerty.setVisible(false);
 			qwerty.setVisible(false);
-            UP.setVisible(false);
-            JUMP.setVisible(false);
 		}
 		if (e.getSource() == clavier){
 			azerty.setVisible(true);
 			qwerty.setVisible(true);
-            UP.setVisible(true);
-            JUMP.setVisible(true);
 			volume.setVisible(false);
 			easy.setVisible(false);
 			normal.setVisible(false);
@@ -210,8 +184,6 @@ public class MenuOption extends JFrame implements ActionListener  {
 			azerty.setVisible(false);
 			qwerty.setVisible(false);
 			volume.setVisible(false);
-            UP.setVisible(false);
-            JUMP.setVisible(false);
 
 			// Phase 2 NIVEAU
 			if (easy.isSelected()){}
@@ -239,7 +211,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 
 
 
-		// Phase 2 SON 
+		// Phase 2 SON
 	}
 
 
@@ -247,6 +219,3 @@ public class MenuOption extends JFrame implements ActionListener  {
 
 
 }
-
-		
-		

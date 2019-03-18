@@ -20,15 +20,10 @@ public class MenuPrincipal extends JFrame implements ActionListener{
     private int longueurTitre = 800;
     private int hauteurTitre = 125;
     private String texteTitre = "Téthanos";
-    private int nbPierres=6; //VARIABLE A RAJOUTER DANS GANT (PRESENT POUR LE TEST)
-    private MenuOption oMenu;
-
     private int nbPierres = 8; //ATTENTION MODIFIER POUR FAIRE EN SORTE D'AVOIR LE NBPIERRES CORRESPONDANT
 
-
     public MenuPrincipal(){
-        oMenu = new MenuOption(this);
-        oMenu.setVisible(false);
+
         //Création de la fenêtre et son entête
         setTitle(texteTitre +": DEBOTTE Adrien, LE GALL Louise, GILLES Killian, MARCHANT Richard");
         setLayout(null);//c null
@@ -77,22 +72,22 @@ public class MenuPrincipal extends JFrame implements ActionListener{
         //Fond d'écran (avec choix en fonction de l'avancé du jeu
         logo = new JLabel();
         switch (nbPierres) {
-            case 0 : 
+            case 0 :
                 logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground0.jpg")));
                 break;
-            case 1 : 
+            case 1 :
                 logo.setIcon(new ImageIcon(getClass().getResource(".images\\menuBackground1.jpg")));
                 break;
-            case 2 : 
+            case 2 :
                 logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground2.jpg")));
                 break;
-            case 3 : 
+            case 3 :
                 logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground3.jpg")));
                 break;
-            case 4 : 
+            case 4 :
                 logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground4.jpg")));
                 break;
-            case 5 : 
+            case 5 :
                 logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground5.jpg")));
                 break;
             case 6 :
@@ -128,7 +123,8 @@ public class MenuPrincipal extends JFrame implements ActionListener{
 
         }
         if(e.getSource() == bouton3){
-           oMenu.setVisible(true);
+            setVisible(false);
+            new MenuOption(this);
         }
     }
 

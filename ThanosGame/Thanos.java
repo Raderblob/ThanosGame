@@ -22,8 +22,6 @@ import java.awt.*;
             this.imgThanos = this.icoThanos.getImage();
     }
 
-    //GETTERS
-         public Image getimgThanos(){return imgThanos}
 
 
 } 
