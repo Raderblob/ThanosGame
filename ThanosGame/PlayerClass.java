@@ -114,7 +114,7 @@ public class PlayerClass {
             if (currentTerrain.getTerrainVal(x, myPosition.getY() + mySize.getY()) != 0) {
                 return true;
             }
-            if (currentTerrain.getTerrainVal(x - 1, myPosition.getY() + mySize.getY()) != 0) {
+            if (currentTerrain.getTerrainVal(x , myPosition.getY() + mySize.getY()-3) != 0) {
                 return true;
             }
         }

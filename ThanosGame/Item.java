@@ -4,11 +4,13 @@ package ThanosGame;
 import ThanosGame.graphics.AnimatedImage;
 import ThanosGame.graphics.AnimatedPerson;
 import javafx.geometry.Point2D;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class Item {
     public Point2D position;
     public Point2D mySize;
+    public double mylife;
     protected AnimatedImage myAnimation;
 
     public Item(Point2D maPosition, Point2D Size,Image myImg,Point2D imgSize,int imgDelay) {
@@ -24,5 +26,8 @@ public class Item {
         } else {
             return false;
         }
+    }
+    public void renderMe(GraphicsContext gc){
+        myAnimation.draw(gc,new Point2D(position.getX()-mySize.getX(),position.getY()-mySize.getY()),mySize.multiply(2));
     }
 }
