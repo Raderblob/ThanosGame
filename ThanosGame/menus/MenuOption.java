@@ -1,4 +1,4 @@
-package ThanosGame.menus;
+package ThanosGame.Menus;
 
 import ThanosGame.Keyboard;
 import javax.swing.*;

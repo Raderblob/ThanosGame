@@ -1,4 +1,4 @@
-package ThanosGame.menus;
+package ThanosGame.Menus;
 
 import ThanosGame.Game;
 import ThanosGame.Keyboard;
