@@ -13,7 +13,6 @@ public class BuildingSaves {
         for(int i =0;i<moduleTemplates.length;i++){
             moduleTemplates[i]=readModule("module" + i + ".png");
         }
-        readModule("module9.png");
     }
 
     private static byte[][] readModule(String str) {

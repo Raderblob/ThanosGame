@@ -41,17 +41,17 @@ public class PlayerClass {
         return new Point2D(Math.max(myPosition.getX() - 200, 0), 0);
     }
 
-    public void run(TerrainMap currentTerrain, World currentWorld) {
-        doPlayerMovement(currentTerrain, currentWorld);
+    public void run(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
+        doPlayerMovement(currentTerrain, currentWorld,currentNanoTime);
         myAnimation.setWalkingMode(movingState);
         if (destroyAt.getX() != -1) {
             useTestStone(currentTerrain, currentWorld);
         }
     }
 
-    private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld) {
+    private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
-        mySpeed = mySpeed.add(0, 0.5 * (tUnderFoot ? 0 : 1));
+        mySpeed = mySpeed.add(0, currentNanoTime * 0.5 * (tUnderFoot ? 0 : 1));
 
 
         if (tUnderFoot) {
@@ -73,11 +73,11 @@ public class PlayerClass {
         }
 
         if (movingState > 0) {
-            myPosition = myPosition.add(2 * movingState * (terrainIsObstacleRight(currentTerrain) ? 0 : 1), 0);
+            myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleRight(currentTerrain) ? 0 : 1), 0);
         } else if (movingState < 0) {
-            myPosition = myPosition.add(2 * movingState * (terrainIsObstacleLeft(currentTerrain) ? 0 : 1), 0);
+            myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleLeft(currentTerrain) ? 0 : 1), 0);
         }
-        myPosition = currentTerrain.clampPoint(myPosition.add(mySpeed), mySize);
+        myPosition = currentTerrain.clampPoint(myPosition.add(mySpeed.multiply(currentNanoTime)), mySize);
 
     }
 

@@ -23,8 +23,8 @@ public class World {
         }
     }
 
-    public void runWorld() {
-        thanos.run(terrain, this);
+    public void runWorld(double currentNanoTime) {
+        thanos.run(terrain, this,currentNanoTime);
     }
 
     public void renderWorld(GraphicsContext gc) {
