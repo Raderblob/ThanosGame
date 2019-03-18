@@ -1,3 +1,4 @@
+/*
 package ThanosGame;
 
 public class Shield {
@@ -44,3 +45,4 @@ import javax.swing.ImageIcon;
     }
 
 }
+*/
