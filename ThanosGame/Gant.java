@@ -6,10 +6,10 @@ public class Gant{
     public Gant(Pierres [] Stones){
         this.Stones = Stones ;
     }
-    public void action(int numero){
+    public void action(int numero, Thanos Thanos1){
         if(Stones[numero] != null){
             Pierres PierreUtilisée = new Pierres(numero) ;
-            PierreUtilisée.action() ;
+            PierreUtilisée.action(numero, Thanos1) ;
         }
     }
 }

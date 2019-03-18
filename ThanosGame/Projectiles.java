@@ -1,6 +1,7 @@
 package ThanosGame;
 
 //import ThanosGame.terrain.TerrainMap;
+import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 
 public class Projectiles extends Item{
@@ -22,6 +23,6 @@ public class Projectiles extends Item{
     }
 
 
-    public void collisionTerrain(){ //variable terrain
+    public void collisionTerrain(TerrainMap currentTerrain){
     }
 }
