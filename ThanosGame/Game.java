@@ -1,5 +1,6 @@
 package ThanosGame;
 
+import ThanosGame.graphics.images.ImagesSaves;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -23,6 +24,7 @@ public class Game extends Application {
 
     @Override
     public void start(Stage stage) {
+        ImagesSaves.loadImages();
         Group root = new Group();
         Scene scene = new Scene(root, winParam.getX() , winParam.getY());
         stage.setTitle("ThanosGame.Thanos rules the world");
@@ -94,7 +96,7 @@ public class Game extends Application {
 
 
         gameWorlds.get(selectedWorld).renderWorld(gc);
-       // System.out.println("Frame time :" + (System.nanoTime()-lastTime)*0.000001);
+       System.out.println("Fps :" + 1/((System.nanoTime()-lastTime)*0.000000001));
     }
     @Override
     public void stop(){

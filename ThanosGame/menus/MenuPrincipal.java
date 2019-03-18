@@ -1,7 +1,6 @@
-package ThanosGame.Menus;
+package ThanosGame.menus;
 
 import ThanosGame.Game;
-import ThanosGame.Gant;
 
 import javax.swing.*;
 import java.awt.*;

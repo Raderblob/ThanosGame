@@ -1,5 +1,6 @@
 package ThanosGame;
 
+//import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 
 public class Projectiles extends Item{
@@ -14,10 +15,13 @@ public class Projectiles extends Item{
         this.speed=speed;
     }
 
-    public void collisionThanos(Thanos Thanos1){
-        if(((Thanos1.myPosition.getX()+Thanos1.mySize.getX())>this.Position.getX())&&(Thanos1.myPosition.getX()<(this.Position.getX()-this.mySize.getX()))&&((Thanos1.myPosition.getY()+Thanos1.mySize.getY())>this.Position.getY())&&(Thanos1.myPosition.getY()<(this.Position.getY()-this.mySize.getY()))){
-            Thanos1.PV=Thanos1.PV-this.degats;
-            //Supprimer projectile ensuite
+    public void collisionThanos(Thanos Thanos1) {
+        if (((Thanos1.myPosition.getX() + Thanos1.mySize.getX()) > this.position.getX()) && (Thanos1.myPosition.getX() < (this.position.getX() - this.mySize.getX())) && ((Thanos1.myPosition.getY() + Thanos1.mySize.getY()) > this.position.getY()) && (Thanos1.myPosition.getY() < (this.position.getY() - this.mySize.getY()))) {
+            Thanos1.PV = Thanos1.PV - this.degats;
         }
+    }
+
+
+    public void collisionTerrain(){ //variable terrain
     }
 }

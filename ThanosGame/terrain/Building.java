@@ -12,15 +12,14 @@ public class Building {
 
     public Building(Point2D mPos) {
         myPosition = mPos;
-        myModules = new BuildingModule[Main.numberGenerator.nextInt(3) + 1];
-        Point2D cPos = new Point2D(myPosition.getX(), myPosition.getY() - 80);
+        Point2D cPos = new Point2D(myPosition.getX(), Math.max(myPosition.getY() - 80,1));
 
       /*  for (int i = 0; i < myModules.length; i++) {
             myModules[i] = new BuildingModule(cPos);
             cPos = cPos.add(80, 0);
         }*/
-        int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4 - 1) / 80) - 1;
-        int doorPlacement = Math.max((int) cPos.getY() / 80, 0);
+        int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4) / 80) ;
+        int doorPlacement = (int) (cPos.getY() / 80);
         BuildingModule[][] buildingPlan = new BuildingModule[10][potentialBuildingHeight];
         LinkedList<BuildingModule> plannedBuilding = new LinkedList<>();
         boolean buildingComplete;
@@ -28,11 +27,9 @@ public class Building {
         plannedBuilding.add(buildingPlan[1][doorPlacement]);
         do {
             buildingComplete = true;
-            System.out.println("start loop");
             for (int x = 1; x < buildingPlan.length - 1; x++) {
                 for (int y = 1; y < buildingPlan[x].length - 1; y++) {
                     if (buildingPlan[x][y] == null) {
-                        System.out.println(x + " " + y);
                         if (buildingPlan[x - 1][y] != null && buildingPlan[x - 1][y].canRight) {
                             buildingPlan[x][y] = getCanLeft(buildingPlan[x - 1][y].myPosition.add(80, 0));
                             plannedBuilding.add(buildingPlan[x][y]);
@@ -53,10 +50,6 @@ public class Building {
                             plannedBuilding.add(buildingPlan[x][y]);
                             buildingComplete = false;
                         }
-
-
-                    } else {
-                        System.out.println(x + " " + y + " null");
                     }
                 }
             }

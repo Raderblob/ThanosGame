@@ -8,28 +8,29 @@ public class World {
     PlayerClass thanos;
     TerrainMap terrain;
     double counter = 0;
-    public World(int worldType,PlayerClass p){
+
+    public World(int worldType, PlayerClass p) {
         thanos = p;
 
-        switch (worldType){
-            case 0 :
+        switch (worldType) {
+            case 0:
                 terrain = new TerrainMap(30);
                 terrain.createRender();
-            break;
+                break;
             default:
 
-            break;
+                break;
         }
     }
 
-    public void runWorld(){
-        thanos.run(terrain,this);
+    public void runWorld() {
+        thanos.run(terrain, this);
     }
 
-    public void renderWorld(GraphicsContext gc){
-       terrain.draw(gc,new Point2D((float)thanos.getCameraPosition().getX(),0f));
+    public void renderWorld(GraphicsContext gc) {
+        terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f));
         thanos.draw(gc);
-        counter +=0.5;
+        counter += 0.5;
     }
 }
 
