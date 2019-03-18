@@ -24,12 +24,14 @@ public class World {
     }
 
     public void runWorld(double currentNanoTime) {
-        thanos.run(terrain, this,currentNanoTime);
+        thanos.run(terrain, this,currentNanoTime);//run physics for the player
+
+        //run physics for AI
     }
 
     public void renderWorld(GraphicsContext gc) {
-        terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f));
-        thanos.draw(gc);
+        terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f));//draw terrain
+        thanos.draw(gc);//draw the player
         counter += 0.5;
     }
 }
