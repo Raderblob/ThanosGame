@@ -1,6 +1,6 @@
 package ThanosGame;
 
-import ThanosGame.menus.MenuPrincipal;
+import ThanosGame.Menus.MenuPrincipal;
 import ThanosGame.terrain.buildings.BuildingSaves;
 
 import java.awt.geom.Point2D;
