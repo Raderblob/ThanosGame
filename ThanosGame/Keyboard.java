@@ -3,13 +3,14 @@ package ThanosGame;
 import javafx.scene.input.KeyCode;
 
 public class Keyboard {
-    public static KeyCode right, left, jump, down;
+    public static KeyCode right, left, jump, down, punch;
     public static boolean isInQWERTY;
     public Keyboard(){
         right = KeyCode.D;
         left = KeyCode.A;
         jump = KeyCode.W;
         down = KeyCode.S;
+        punch = KeyCode.ENTER;
         isInQWERTY = true;
     }
     public static void setAZERTY(){

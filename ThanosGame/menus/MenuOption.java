@@ -201,20 +201,6 @@ public class MenuOption extends JFrame implements ActionListener  {
 			easy.setVisible(false);
 			normal.setVisible(false);
 			hard.setVisible(false);
-
-			// Phase 2 CLAVIER
-			if (azerty.isSelected()){
-				touches.setAZERTY();
-			}
-			if (qwerty.isSelected()){
-				touches.setQWERTY();
-			}
-			if (up.isSelected()){
-				touches.setUpJump();
-			}
-			if (space.isSelected()){
-				touches.setSpaceJump();
-			}
 		}
 		if (e.getSource() == niveau){
 			easy.setVisible(true);
@@ -225,14 +211,27 @@ public class MenuOption extends JFrame implements ActionListener  {
 			volume.setVisible(false);
 			space.setVisible(false);
 			up.setVisible(false);
-
-			// Phase 2 NIVEAU
-			if (easy.isSelected()){}
-			if (easy.isSelected()){}
-			if (hard.isSelected()){}
-
 		}
 		if (e.getSource() == valid){
+            // Phase 2 CLAVIER
+            if (azerty.isSelected()){
+                touches.setAZERTY();
+            }
+            if (qwerty.isSelected()){
+                touches.setQWERTY();
+            }
+            if (up.isSelected()){
+                touches.setUpJump();
+            }
+            if (space.isSelected()){
+                touches.setSpaceJump();
+            }
+
+            // Phase 2 NIVEAU
+            if (easy.isSelected()){}
+            if (easy.isSelected()){}
+            if (hard.isSelected()){}
+
 			myMenu.setVisible(true);
 			this.setVisible(false);
 		}
@@ -241,6 +240,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 			this.setVisible(false);
 			hard.setSelected(true);
 			qwerty.setSelected(true);
+			space.setSelected(true);
 			volume.setValue(10);
 
 		}
