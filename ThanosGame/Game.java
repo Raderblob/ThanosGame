@@ -96,7 +96,7 @@ public class Game extends Application {
 
 
         gameWorlds.get(selectedWorld).renderWorld(gc);
-       // System.out.println("Frame time :" + (System.nanoTime()-lastTime)*0.000001);
+       System.out.println("Fps :" + 1/((System.nanoTime()-lastTime)*0.000000001));
     }
     @Override
     public void stop(){
