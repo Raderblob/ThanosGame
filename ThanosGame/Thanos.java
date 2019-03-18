@@ -11,8 +11,8 @@ public class Thanos extends PlayerClass{
     int PV ;
     Gant Infinité ;
     private Point2D MaPosition ;
-    public int degats ;
-    public int range ;
+    public int degats = 50 ;
+    public int range = 50 ;
 
     public Thanos(int PV, int degats, int range, Gant Infinity){
         super();

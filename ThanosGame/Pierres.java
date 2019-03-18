@@ -12,8 +12,12 @@ public class Pierres{
     }
     public void action(int numero, Thanos Thanos1, TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
         switch (this.numero) {
-            case 0 : Thanos1.degats+=40;
-                     Thanos1.range+=100;
+            case 0 : if(Thanos1.degats!=150){
+                         Thanos1.degats+=100;
+                     }
+                     if (Thanos1.range!=150){
+                         Thanos1.range+=100;
+                     }
             case 1 : realityStone(currentTerrain, currentWorld, destroyAt) ;
             case 2 :
             case 3 : 
