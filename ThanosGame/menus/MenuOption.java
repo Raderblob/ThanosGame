@@ -35,7 +35,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		volume = new JSlider(JSlider.HORIZONTAL,0,100,50);
 		volume.setOpaque(false);
 
-		// FENETRE 
+		// FENETRE
 
 		setTitle("MenuOption");
 		setSize (1500,800);
@@ -46,13 +46,13 @@ public class MenuOption extends JFrame implements ActionListener  {
 		//CONTENEUR
 		option.setBounds(0,0,getWidth(),getHeight());
 		option.setLayout(null);
-		//FOND 
+		//FOND
 		Titan.setIcon (new ImageIcon(getClass().getResource("images\\OptionsMenu\\Titan.png")));
 		Titan.setSize(1500,800);
 		Titan.setLocation(0,0);
 
 
-		// BOUTON CLAVIER 
+		// BOUTON CLAVIER
 
 		option.add(clavier);
 		clavier.setBounds ( 1225,50,200, 100);
@@ -105,7 +105,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 
 
 
-		// BOUTON SON 
+		// BOUTON SON
 
 		option.add(son);
 		son.setBounds ( 1200,180,200, 100);
@@ -119,7 +119,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		/*volume.setBorderPainted(false); 	volume.setContentAreaFilled(false);	volume.setFocusPainted(false);*/
 
 
-		//BOUTON NIVEAU 
+		//BOUTON NIVEAU
 		option.add(niveau);
 		niveau.setBounds ( 1200,310,200, 100);
 		niveau.addActionListener(this);
@@ -157,7 +157,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		hard.setForeground(new Color(233,56,63)); hard.setFont(g);
 
 
-		// BOUTON CANCEL 
+		// BOUTON CANCEL
 		option.add(cancel);
 		cancel.setBounds ( 1400, 680 ,70, 70);
 		cancel.addActionListener(this);
@@ -166,7 +166,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 
 		cancel.addActionListener(this);
 
-		// BOUTON VALID 
+		// BOUTON VALID
 		option.add(valid);
 		valid.setBounds ( 1350,680,70, 70);
 		valid.addActionListener(this);
@@ -248,7 +248,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 
 
 
-		// Phase 2 SON 
+		// Phase 2 SON
 	}
 
 
@@ -256,6 +256,3 @@ public class MenuOption extends JFrame implements ActionListener  {
 
 
 }
-
-		
-		
