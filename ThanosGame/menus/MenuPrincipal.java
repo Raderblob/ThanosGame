@@ -1,7 +1,7 @@
 package ThanosGame.menus;
 
 import ThanosGame.Game;
-
+import ThanosGame.Keyboard;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,6 +21,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
     private int hauteurTitre = 125;
     private String texteTitre = "Téthanos";
     private int nbPierres = 8; //ATTENTION MODIFIER POUR FAIRE EN SORTE D'AVOIR LE NBPIERRES CORRESPONDANT
+    private MenuOption mOption = new MenuOption(this);
 
     public MenuPrincipal(){
 
@@ -124,7 +125,7 @@ public class MenuPrincipal extends JFrame implements ActionListener{
         }
         if(e.getSource() == bouton3){
             setVisible(false);
-            new MenuOption(this);
+            mOption.setVisible(true);
         }
     }
 

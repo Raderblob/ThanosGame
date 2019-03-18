@@ -42,25 +42,29 @@ public class Game extends Application {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, key -> {
             if(key.getCode()== KeyCode.ESCAPE) {
                 System.exit(0);
-            }else if(key.getCode()==KeyCode.A){
+            }else if(key.getCode()== Keyboard.left){
                 thanos.movingState=-1;
-            }else if(key.getCode() == KeyCode.D){
+            }else if(key.getCode() == Keyboard.right){
                 thanos.movingState=1;
-            }else if(key.getCode()==KeyCode.SPACE){
+            }else if(key.getCode()== Keyboard.jump){
                 thanos.jump();
-            }else if(key.getCode() == KeyCode.S){
-
+            }else if(key.getCode()== Keyboard.punch){
+                //Frapper
+            }else if(key.getCode() == Keyboard.down){
+                //PEUT SERVIR...
             }
         });
         scene.addEventHandler(KeyEvent.KEY_RELEASED, key -> {
-            if(key.getCode()==KeyCode.A){
+            if(key.getCode()==Keyboard.left){
                 thanos.movingState=0;
-            }else if(key.getCode() == KeyCode.D){
+            }else if(key.getCode() == Keyboard.right){
                 thanos.movingState=0;
-            }else if(key.getCode()==KeyCode.SPACE){
+            }else if(key.getCode()== Keyboard.jump){
 
-            }else if(key.getCode() == KeyCode.S){
-
+            }else if(key.getCode()== Keyboard.punch){
+                //thanos.fireAt(X,Y);
+            }else if(key.getCode() == Keyboard.down){
+                //PEUT SERVIR...
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouse -> {

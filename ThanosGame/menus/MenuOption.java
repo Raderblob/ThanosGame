@@ -1,5 +1,6 @@
 package ThanosGame.menus;
 
+import ThanosGame.Keyboard;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,9 +15,10 @@ public class MenuOption extends JFrame implements ActionListener  {
 	private JPanel option;
 	private JButton clavier, son, niveau, cancel, valid;
 	private JSlider volume;
-	private JRadioButton azerty, qwerty;
-	private ButtonGroup bg;
-	private JRadioButton easy, hard, normal;
+	private JRadioButton azerty, qwerty, up;
+	private ButtonGroup bg, bg2;
+	private JRadioButton easy, hard, normal, space;
+	private Keyboard touches = new Keyboard();
 
 	public MenuOption(MenuPrincipal mMenu){
 
@@ -59,13 +61,13 @@ public class MenuOption extends JFrame implements ActionListener  {
 		clavier.setContentAreaFilled(false);
 		clavier.setFocusPainted(false);
 		clavier.setForeground(new Color(191,48,48));
-		ButtonGroup  bg = new ButtonGroup(); clavier.setFont(f);
+		ButtonGroup  bg = new ButtonGroup(); ButtonGroup  bg2 = new ButtonGroup(); clavier.setFont(f);
 
 		azerty = new JRadioButton("AZERTY");
 		azerty.addActionListener(this);
 		bg.add(azerty);
 		azerty.setVisible(false);
-		azerty.setBounds( 950,50,225,50);
+		azerty.setBounds( 725,50,225,50);
 		azerty.setBorderPainted(false); azerty.setContentAreaFilled(false); azerty.setFocusPainted(false);
 		azerty.setForeground(new Color(233,56,63)); azerty.setFont(g);
 
@@ -74,12 +76,31 @@ public class MenuOption extends JFrame implements ActionListener  {
 		qwerty.addActionListener(this);
 		bg.add(qwerty);
 		qwerty.setVisible(false);
-		qwerty.setBounds( 950,100,225,50);
+		qwerty.setBounds( 725,100,225,50);
 		qwerty.setBorderPainted(false); qwerty.setContentAreaFilled(false);qwerty.setFocusPainted(false);
 		qwerty.setForeground(new Color(233,56,63)); qwerty.setFont(g);
 
+		up = new JRadioButton("Up");
+		up.addActionListener(this);
+		bg2.add(up);
+		up.setVisible(false);
+		up.setBounds( 950,50,225,50);
+		up.setBorderPainted(false); up.setContentAreaFilled(false); up.setFocusPainted(false);
+		up.setForeground(new Color(233,56,63)); up.setFont(g);
+
+		space = new JRadioButton("Space");
+		space.setSelected(true);
+		space.addActionListener(this);
+		bg2.add(space);
+		space.setVisible(false);
+		space.setBounds( 950,100,225,50);
+		space.setBorderPainted(false); space.setContentAreaFilled(false); space.setFocusPainted(false);
+		space.setForeground(new Color(233,56,63)); up.setFont(g);
+
 		option.add(azerty);
 		option.add(qwerty);
+		option.add(up);
+		option.add(space);
 
 
 
@@ -155,7 +176,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		// AJOUT
 		option.add(Titan);
 		add(option);
-		setVisible(true);
+		setVisible(false);
 
 
 	}
@@ -168,10 +189,14 @@ public class MenuOption extends JFrame implements ActionListener  {
 			hard.setVisible(false);
 			azerty.setVisible(false);
 			qwerty.setVisible(false);
+			space.setVisible(false);
+			up.setVisible(false);
 		}
 		if (e.getSource() == clavier){
 			azerty.setVisible(true);
 			qwerty.setVisible(true);
+			space.setVisible(true);
+			up.setVisible(true);
 			volume.setVisible(false);
 			easy.setVisible(false);
 			normal.setVisible(false);
@@ -184,18 +209,29 @@ public class MenuOption extends JFrame implements ActionListener  {
 			azerty.setVisible(false);
 			qwerty.setVisible(false);
 			volume.setVisible(false);
-
-			// Phase 2 NIVEAU
-			if (easy.isSelected()){}
-			if (easy.isSelected()){}
-			if (hard.isSelected()){}
-
-			// Phase 2 CLAVIER
-			if (azerty.isSelected()){}
-			if (qwerty.isSelected()){}
-
+			space.setVisible(false);
+			up.setVisible(false);
 		}
 		if (e.getSource() == valid){
+            // Phase 2 CLAVIER
+            if (azerty.isSelected()){
+                touches.setAZERTY();
+            }
+            if (qwerty.isSelected()){
+                touches.setQWERTY();
+            }
+            if (up.isSelected()){
+                touches.setUpJump();
+            }
+            if (space.isSelected()){
+                touches.setSpaceJump();
+            }
+
+            // Phase 2 NIVEAU
+            if (easy.isSelected()){}
+            if (easy.isSelected()){}
+            if (hard.isSelected()){}
+
 			myMenu.setVisible(true);
 			this.setVisible(false);
 		}
@@ -204,6 +240,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 			this.setVisible(false);
 			hard.setSelected(true);
 			qwerty.setSelected(true);
+			space.setSelected(true);
 			volume.setValue(10);
 
 		}
