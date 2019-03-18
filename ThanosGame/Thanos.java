@@ -1,14 +1,9 @@
 package ThanosGame;
 
 import javafx.geometry.Point2D;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Thanos extends PlayerClass{
-    int PV ;
+    public int PV ;
     Gant Infinité ;
     private Point2D MaPosition ;
     public int degats = 50 ;

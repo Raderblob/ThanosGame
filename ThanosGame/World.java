@@ -1,12 +1,18 @@
 package ThanosGame;
 
 import ThanosGame.terrain.TerrainMap;
+import ThanosGame.weapons.Explosion;
+import ThanosGame.weapons.Projectile;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
+import java.util.LinkedList;
+
 public class World {
-    PlayerClass thanos;
-    TerrainMap terrain;
+    public PlayerClass thanos;
+    private TerrainMap terrain;
+    private LinkedList<Explosion> worldExplosions;
+    private LinkedList<Projectile> worldProjectiles;
     double counter = 0;
 
     public World(int worldType, PlayerClass p) {
@@ -25,6 +31,13 @@ public class World {
 
     public void runWorld(double currentNanoTime) {
         thanos.run(terrain, this,currentNanoTime);//run physics for the player
+
+        for(Projectile cProjectile:worldProjectiles){
+
+        }
+        for(Explosion cExplosion:worldExplosions){
+
+        }
 
         //run physics for AI
     }
