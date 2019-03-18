@@ -48,6 +48,8 @@ public class Game extends Application {
                 thanos.movingState=1;
             }else if(key.getCode()== Keyboard.jump){
                 thanos.jump();
+            }else if(key.getCode()== Keyboard.punch){
+                //Frapper
             }else if(key.getCode() == Keyboard.down){
                 //PEUT SERVIR...
             }
@@ -59,8 +61,10 @@ public class Game extends Application {
                 thanos.movingState=0;
             }else if(key.getCode()== Keyboard.jump){
 
+            }else if(key.getCode()== Keyboard.punch){
+                //thanos.fireAt(X,Y);
             }else if(key.getCode() == Keyboard.down){
-
+                //PEUT SERVIR...
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouse -> {
