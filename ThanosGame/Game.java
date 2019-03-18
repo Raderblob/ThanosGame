@@ -88,18 +88,20 @@ public class Game extends Application {
 
     }
 
-    public void gameLoop(GraphicsContext gc) {
+    public void gameLoop(GraphicsContext gc) { //the game loop
         long lastTime = System.nanoTime();
-        gameWorlds.get(selectedWorld).runWorld(Math.min(lastLength * 0.0000001,3));
 
-        gc.clearRect(0, 0, 1000, 1000);
+        gameWorlds.get(selectedWorld).runWorld(Math.min(lastLength * 0.0000001,3));//run logic for the seletced world
+
+        gc.clearRect(0, 0, 1000, 1000);//clear the game screen
 
 
-        gameWorlds.get(selectedWorld).renderWorld(gc);
+        gameWorlds.get(selectedWorld).renderWorld(gc);//render the selected world
+
         System.out.println(lastLength * 0.0000001);
         lastLength = ((System.nanoTime() - lastTime));
         do {
-            lastLength = ((System.nanoTime() - lastTime));
+            lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength<10000000);
         System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
     }
