@@ -13,7 +13,7 @@ public class World {
     public PlayerClass thanos;
     private TerrainMap terrain;
     private LinkedList<Explosion> worldExplosions;
-    private LinkedList<Projectile> worldProjectiles;
+    public LinkedList<Projectile> worldProjectiles;
 
     public World(int worldType, PlayerClass p) {
         thanos = p;
@@ -34,7 +34,7 @@ public class World {
         thanos.run(terrain, this, currentNanoTime);//run physics for the player
 
         for (Projectile cProjectile : worldProjectiles) {
-            cProjectile.collisionWorld(this,terrain); //run collisions for projectiles
+            cProjectile.runLogic(this,terrain); //run collisions for projectiles
         }
         for (Explosion cExplosion : worldExplosions) {
             cExplosion.runExplosion(this); //run explosion logic (possible repulsion and animation)
@@ -62,10 +62,10 @@ public class World {
         terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f));//draw terrain
         thanos.draw(gc);//draw the player
         for (Projectile cProjectile : worldProjectiles) {
-            cProjectile.renderMe(gc);
+            cProjectile.renderMe(gc,thanos.getCameraPosition());
         }
         for (Explosion cExplosion : worldExplosions) {
-            cExplosion.renderMe(gc);
+            cExplosion.renderMe(gc,thanos.getCameraPosition());
         }
     }
 }

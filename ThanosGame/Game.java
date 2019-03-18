@@ -1,6 +1,7 @@
 package ThanosGame;
 
 import ThanosGame.graphics.images.ImagesSaves;
+import ThanosGame.weapons.Projectile;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -69,7 +70,12 @@ public class Game extends Application {
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouse -> {
-            thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
+            if(mouse.isPrimaryButtonDown()) {
+                thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
+            }else{
+                System.out.println("Right Click");
+                gameWorlds.get(selectedWorld).worldProjectiles.add(new Projectile(new Point2D(mouse.getSceneX(),mouse.getSceneY()).add(thanos.getCameraPosition()),new Point2D(10,10),10,new Point2D(1,0)));
+            }
         });
         scene.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouse -> {
 

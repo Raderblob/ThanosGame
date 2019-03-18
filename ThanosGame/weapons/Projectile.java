@@ -8,20 +8,21 @@ import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 
 public class Projectile extends Item {
-    private int vitesse;
     private int degats;
     private Point2D speed;
     protected boolean canDamage;
 
-    public Projectile(Point2D position, Point2D Size, int vitesse , int degats , Point2D speed){
+    public Projectile(Point2D position, Point2D Size, int degats , Point2D speed){
         super(position,Size,null,new Point2D(0,0),100);
-        this.vitesse=vitesse;
         this.degats=degats;
         this.speed=speed;
         canDamage =true;
+        mylife =1000;
     }
 
-    public void collisionWorld(World myWorld,TerrainMap myTerrain){
+    public void runLogic(World myWorld,TerrainMap myTerrain){
+        mylife-=1;
+        position = position.add(speed);
         if(isInRectangle(myWorld.thanos.myPosition,myWorld.thanos.mySize)){
             mylife=0;
             //create explosion (does not do the damage directly)
