@@ -6,7 +6,6 @@ import ThanosGame.weapons.Projectile;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class World {
@@ -34,23 +33,19 @@ public class World {
         thanos.run(terrain, this, currentNanoTime);//run physics for the player
 
         for (Projectile cProjectile : worldProjectiles) {
-            cProjectile.runLogic(this,terrain); //run collisions for projectiles
+            cProjectile.runLogic(this,terrain,currentNanoTime); //run collisions for projectiles
         }
         for (Explosion cExplosion : worldExplosions) {
             cExplosion.runExplosion(this); //run explosion logic (possible repulsion and animation)
         }
 
-        Iterator<Projectile> projs = worldProjectiles.iterator(); //dispose of old projectiles and explosions
-        while(projs.hasNext()){
-            Projectile p = projs.next();
-            if(p.mylife ==0){
+        for (Projectile p : worldProjectiles) {
+            if (p.mylife == 0) {
                 worldProjectiles.remove(p);
             }
         }
-        Iterator<Explosion> expls = worldExplosions.iterator();
-        while(expls.hasNext()){
-            Explosion e = expls.next();
-            if(e.mylife ==0){
+        for (Explosion e : worldExplosions) {
+            if (e.mylife == 0) {
                 worldExplosions.remove(e);
             }
         }

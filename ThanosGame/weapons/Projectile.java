@@ -20,9 +20,9 @@ public class Projectile extends Item {
         mylife =1000;
     }
 
-    public void runLogic(World myWorld,TerrainMap myTerrain){
+    public void runLogic(World myWorld,TerrainMap myTerrain,double nanoTime){
         mylife-=1;
-        position = position.add(speed);
+        position = position.add(speed.multiply(nanoTime));
         if(isInRectangle(myWorld.thanos.myPosition,myWorld.thanos.mySize)){
             mylife=0;
             //create explosion (does not do the damage directly)

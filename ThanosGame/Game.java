@@ -74,7 +74,7 @@ public class Game extends Application {
                 thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
             }else{
                 System.out.println("Right Click");
-                gameWorlds.get(selectedWorld).worldProjectiles.add(new Projectile(new Point2D(mouse.getSceneX(),mouse.getSceneY()).add(thanos.getCameraPosition()),new Point2D(10,10),10,new Point2D(1,0)));
+                gameWorlds.get(selectedWorld).worldProjectiles.add(new Projectile(new Point2D(mouse.getSceneX(),mouse.getSceneY()).add(thanos.getCameraPosition()),new Point2D(1,1),10,new Point2D(1,0)));
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouse -> {
@@ -104,12 +104,11 @@ public class Game extends Application {
 
         gameWorlds.get(selectedWorld).renderWorld(gc);//render the selected world
 
-        System.out.println(lastLength * 0.0000001);
         lastLength = ((System.nanoTime() - lastTime));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength<10000000);
-        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+      //  System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
     }
 
     @Override

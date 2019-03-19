@@ -28,14 +28,14 @@ public class TerrainMap {
 
         chunk = new TerrainChunck[numChunks];
         for (int i = 0; i < chunk.length; i++) {
-            chunk[i] = new TerrainChunck(i);
+            chunk[i] = new TerrainChunck();
         }
 
 
         for (int x = 0; x < (int) TerrainChunck.chunkParam.getX() * chunk.length; x++) {
             for (int y = 0; y < (int) TerrainChunck.chunkParam.getY(); y++) {
                 double a = Math.min(1, Math.abs(geny.getNoise(x, y)) * Math.pow(y / TerrainChunck.chunkParam.getY() + 0.6, 10));
-                double b = Math.abs(geny.getNoise(x, y));
+                double b = Math.abs(biomeGeny.getNoise(x, y));
                 if (y > TerrainChunck.chunkParam.getY() - 4) {
                     setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
                 } else if (a > 0.35) {//dirt stone
@@ -46,7 +46,7 @@ public class TerrainMap {
                         setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
                     }
 
-                }else if(a>0.29){
+                } else if (a > 0.29) {
                     if (b > 0.1) {
                         setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
                     } else {
@@ -163,18 +163,15 @@ public class TerrainMap {
     }
 
 
-
 }
 
 class TerrainChunck {
     final public static Point2D chunkParam = new Point2D(500, 125);
-    private int chunkNum;
     private byte terrain[][];
     private Graphics terrainDrawer;
     public javafx.scene.image.Image imageToDraw;
 
-    public TerrainChunck(int cN) {
-        chunkNum = cN;
+    public TerrainChunck() {
         terrain = new byte[(int) chunkParam.getX()][(int) chunkParam.getY()];
     }
 
@@ -192,20 +189,22 @@ class TerrainChunck {
     }
 
     public void genTerrainImage() {
+        long sTimer = System.currentTimeMillis();
         BufferedImage terrainImage;
         terrainImage = new BufferedImage((int) chunkParam.getX() * 4, (int) chunkParam.getY() * 4, BufferedImage.TYPE_3BYTE_BGR);
         terrainDrawer = terrainImage.getGraphics();
+        System.out.println(System.currentTimeMillis()-sTimer);
         for (int x = 0; x < terrainImage.getWidth(); x += 4) {
             for (int y = 0; y < terrainImage.getHeight(); y += 4) {
                 byte a = getTVal(x, y);
                 if (a == PixelBlockType.DIRT.getMyVal()) {
-                    terrainDrawer.setColor(new java.awt.Color(101+(int)(Math.random()*50-25), 67+(int)(Math.random()*50-25), 33+(int)(Math.random()*50-25)));
-                } else if (a ==PixelBlockType.GRASS.getMyVal()) {
+                    terrainDrawer.setColor(new java.awt.Color(101 + (int) (Math.random() * 50 - 25), 67 + (int) (Math.random() * 50 - 25), 33 + (int) (Math.random() * 50 - 25)));
+                } else if (a == PixelBlockType.GRASS.getMyVal()) {
                     terrainDrawer.setColor(new java.awt.Color(0, (int) (Math.random() * 255), 0));
                 } else if (a == PixelBlockType.BEDROCK.getMyVal()) {
                     terrainDrawer.setColor(new Color(29, 0, 29));
                 } else if (a == PixelBlockType.STONE.getMyVal()) {
-                    terrainDrawer.setColor(new Color(64 +(int)(Math.random()*50-25), 63+(int)(Math.random()*50-25), 64+(int)(Math.random()*50-25)));
+                    terrainDrawer.setColor(new Color(64 + (int) (Math.random() * 50 - 25), 63 + (int) (Math.random() * 50 - 25), 64 + (int) (Math.random() * 50 - 25)));
                 } else if (a == PixelBlockType.BRICK.getMyVal()) {
                     terrainDrawer.setColor(new java.awt.Color(0, 0, 0));
                 } else if (a == PixelBlockType.BRICK2.getMyVal()) {
@@ -218,8 +217,10 @@ class TerrainChunck {
 
             }
         }
+        System.out.println(System.currentTimeMillis()-sTimer);
+        // new Canvas(100,100).snapshot()
         imageToDraw = SwingFXUtils.toFXImage(terrainImage, null);
-
+        System.out.println(System.currentTimeMillis()-sTimer + " end");
     }
 
     public void disposeTerrainImage() {
