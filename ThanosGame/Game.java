@@ -102,13 +102,13 @@ public class Game extends Application {
         gc.clearRect(0, 0, 1000, 1000);//clear the game screen
 
 
-        gameWorlds.get(selectedWorld).renderWorld(gc,root);//render the selected world
+        gameWorlds.get(selectedWorld).renderWorld(gc, root);//render the selected world
 
         lastLength = ((System.nanoTime() - lastTime));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);
-         System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
     }
 
     @Override

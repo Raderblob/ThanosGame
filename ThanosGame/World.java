@@ -31,20 +31,27 @@ public class World {
 
     public void runWorld(double currentNanoTime) {
         thanos.run(terrain, this, currentNanoTime);//run physics for the player
-
+        LinkedList<Projectile> pToRemove = new LinkedList<>();
+        LinkedList<Explosion> eToRemove = new LinkedList<>();
         for (Projectile cProjectile : worldProjectiles) {
-            cProjectile.runLogic(this,terrain,currentNanoTime); //run collisions for projectiles
+            cProjectile.runLogic(this, terrain, currentNanoTime); //run collisions for projectiles
+            if (cProjectile.mylife == 0) {
+                pToRemove.add(cProjectile);
+            }
         }
         for (Explosion cExplosion : worldExplosions) {
             cExplosion.runExplosion(this); //run explosion logic (possible repulsion and animation)
+            if (cExplosion.mylife == 0) {
+                eToRemove.add(cExplosion);
+            }
         }
 
-        for (Projectile p : worldProjectiles) {
+        for (Projectile p : pToRemove) {
             if (p.mylife == 0) {
                 worldProjectiles.remove(p);
             }
         }
-        for (Explosion e : worldExplosions) {
+        for (Explosion e : eToRemove) {
             if (e.mylife == 0) {
                 worldExplosions.remove(e);
             }
@@ -53,14 +60,14 @@ public class World {
         //run physics for AI
     }
 
-    public void renderWorld(GraphicsContext gc,Group root) {
-        terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f),root);//draw terrain
+    public void renderWorld(GraphicsContext gc, Group root) {
+        terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain
         thanos.draw(gc);//draw the player
         for (Projectile cProjectile : worldProjectiles) {
-            cProjectile.renderMe(gc,thanos.getCameraPosition());
+            cProjectile.renderMe(gc, thanos.getCameraPosition());
         }
         for (Explosion cExplosion : worldExplosions) {
-            cExplosion.renderMe(gc,thanos.getCameraPosition());
+            cExplosion.renderMe(gc, thanos.getCameraPosition());
         }
     }
 }

@@ -30,6 +30,9 @@ public class Projectile extends Item {
         if(myTerrain.getTerrainVal(position.getX(),position.getY())!=0){
             mylife=0;
             //create explosion
+            Point2D[] ptT = new Point2D[1];
+            ptT[0] = new Point2D(position.getX(),position.getY());
+            myTerrain.changeTerrain(ptT,new byte[]{0});
         }
 
     }
