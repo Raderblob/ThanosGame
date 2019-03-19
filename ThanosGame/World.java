@@ -4,6 +4,7 @@ import ThanosGame.terrain.TerrainMap;
 import ThanosGame.weapons.Explosion;
 import ThanosGame.weapons.Projectile;
 import javafx.geometry.Point2D;
+import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
 
 import java.util.LinkedList;
@@ -21,7 +22,6 @@ public class World {
         switch (worldType) {
             case 0:
                 terrain = new TerrainMap(30);
-                terrain.createRender();
                 break;
             default:
 
@@ -53,8 +53,8 @@ public class World {
         //run physics for AI
     }
 
-    public void renderWorld(GraphicsContext gc) {
-        terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f));//draw terrain
+    public void renderWorld(GraphicsContext gc,Group root) {
+        terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f),root);//draw terrain
         thanos.draw(gc);//draw the player
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.renderMe(gc,thanos.getCameraPosition());

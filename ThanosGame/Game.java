@@ -23,11 +23,12 @@ public class Game extends Application {
     private ArrayList<World> gameWorlds = new ArrayList<World>();
     private int selectedWorld;
     private long lastLength;
+    private Group root;
 
     @Override
     public void start(Stage stage) {
         ImagesSaves.loadImages();
-        Group root = new Group();
+        root = new Group();
         Scene scene = new Scene(root, winParam.getX(), winParam.getY());
         stage.setTitle("ThanosGame.Thanos rules the world");
         stage.setScene(scene);
@@ -35,7 +36,6 @@ public class Game extends Application {
         Canvas canvas = new Canvas(winParam.getX(), winParam.getY());
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
         selectedWorld = 0;
         thanos = new PlayerClass();
         gameWorlds.add(new World(0, thanos));
@@ -70,11 +70,11 @@ public class Game extends Application {
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouse -> {
-            if(mouse.isPrimaryButtonDown()) {
+            if (mouse.isPrimaryButtonDown()) {
                 thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
-            }else{
+            } else {
                 System.out.println("Right Click");
-                gameWorlds.get(selectedWorld).worldProjectiles.add(new Projectile(new Point2D(mouse.getSceneX(),mouse.getSceneY()).add(thanos.getCameraPosition()),new Point2D(1,1),10,new Point2D(1,0)));
+                gameWorlds.get(selectedWorld).worldProjectiles.add(new Projectile(new Point2D(mouse.getSceneX(), mouse.getSceneY()).add(thanos.getCameraPosition()), new Point2D(1, 1), 10, new Point2D(1, 0)));
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouse -> {
@@ -97,18 +97,18 @@ public class Game extends Application {
     public void gameLoop(GraphicsContext gc) { //the game loop
         long lastTime = System.nanoTime();
 
-        gameWorlds.get(selectedWorld).runWorld(Math.min(lastLength * 0.0000001,3));//run logic for the seletced world
+        gameWorlds.get(selectedWorld).runWorld(Math.min(lastLength * 0.0000001, 3));//run logic for the seletced world
 
         gc.clearRect(0, 0, 1000, 1000);//clear the game screen
 
 
-        gameWorlds.get(selectedWorld).renderWorld(gc);//render the selected world
+        gameWorlds.get(selectedWorld).renderWorld(gc,root);//render the selected world
 
         lastLength = ((System.nanoTime() - lastTime));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
-        } while (lastLength<10000000);
-      //  System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+        } while (lastLength < 10000000);
+         System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
     }
 
     @Override

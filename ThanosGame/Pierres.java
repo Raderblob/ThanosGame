@@ -40,7 +40,7 @@ public class Pierres{
         for (int i = 0; i < bTD.length; i++) {
             bTD[i] = 0;
         }
-        currentTerrain.changeTerrain(pTD.toArray(new Point2D[pTD.size()]), bTD, true);
+        currentTerrain.changeTerrain(pTD.toArray(new Point2D[pTD.size()]), bTD);
         destroyAt = new Point2D(-1, -1);
     }
 }

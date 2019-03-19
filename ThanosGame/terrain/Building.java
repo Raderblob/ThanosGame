@@ -14,10 +14,7 @@ public class Building {
         myPosition = mPos;
         Point2D cPos = new Point2D(myPosition.getX(), Math.max(myPosition.getY() - 80,1));
 
-      /*  for (int i = 0; i < myModules.length; i++) {
-            myModules[i] = new BuildingModule(cPos);
-            cPos = cPos.add(80, 0);
-        }*/
+
         int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4) / 80) ;
         int doorPlacement = (int) (cPos.getY() / 80);
         BuildingModule[][] buildingPlan = new BuildingModule[10][potentialBuildingHeight];
@@ -162,16 +159,13 @@ public class Building {
         for (int i = 0; i < fValsFinal.length; i++) {
             fValsFinal[i] = fVals.get(i);
         }
-        theTerrain.changeTerrain(PToChange.toArray(new Point2D[PToChange.size()]), fValsFinal, false);
+        theTerrain.changeTerrain(PToChange.toArray(new Point2D[PToChange.size()]), fValsFinal);
     }
 }
 
 
 class BuildingModule {
-    public boolean isVoid = false;
     public byte blocks[][];
-    public boolean allowRight, allowLeft, allowBottom, allowTop;
-    public boolean needRight, needLeft, needBottom, needTop;
     public boolean canRight, canLeft, canUp, canDown, shouldCover;
     public Point2D myPosition;
     private int myModel;
