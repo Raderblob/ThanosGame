@@ -26,13 +26,12 @@ public class Projectile extends Item {
         if(isInRectangle(myWorld.thanos.myPosition,myWorld.thanos.mySize)){
             mylife=0;
             //create explosion (does not do the damage directly)
+            myWorld.worldExplosions.add(new Explosion(position,new Point2D(10,1),1,1,myTerrain));
         }
         if(myTerrain.getTerrainVal(position.getX(),position.getY())!=0){
             mylife=0;
             //create explosion
-            Point2D[] ptT = new Point2D[1];
-            ptT[0] = new Point2D(position.getX(),position.getY());
-            myTerrain.changeTerrain(ptT,new byte[]{0});
+            myWorld.worldExplosions.add(new Explosion(position,new Point2D(10,1),1,degats,myTerrain));
         }
 
     }

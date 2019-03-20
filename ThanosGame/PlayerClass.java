@@ -6,8 +6,6 @@ import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-import java.util.LinkedList;
-
 public class PlayerClass {
     public int movingState;
     private int jumpingState;
@@ -82,20 +80,12 @@ public class PlayerClass {
     }
 
     private void useTestStone(TerrainMap currentTerrain, World currentWorld) {
-        LinkedList<Point2D> pTD = new LinkedList<>();
-
-        for (int x = -40; x < 40; x++) {
-            for (int y = -40; y < +40; y++) {
-                if (Main.getMagnitudeSquared(x, y) < Math.pow(40, 2)) {
-                    pTD.add(currentTerrain.clampPoint(new Point2D(x, y).add(destroyAt)));
-                }
-            }
-        }
-        byte bTD[] = new byte[pTD.size()];
+        Point2D[] pTD = currentTerrain.getCircleOfPoints(destroyAt,40);
+        byte bTD[] = new byte[pTD.length];
         for (int i = 0; i < bTD.length; i++) {
             bTD[i] = 0;
         }
-        currentTerrain.changeTerrain(pTD.toArray(new Point2D[pTD.size()]), bTD);
+        currentTerrain.changeTerrain(pTD, bTD);
         destroyAt = new Point2D(-1, -1);
     }
 

@@ -12,7 +12,7 @@ import java.util.LinkedList;
 public class World {
     public PlayerClass thanos;
     private TerrainMap terrain;
-    private LinkedList<Explosion> worldExplosions;
+    public LinkedList<Explosion> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
 
     public World(int worldType, PlayerClass p) {
@@ -40,7 +40,7 @@ public class World {
             }
         }
         for (Explosion cExplosion : worldExplosions) {
-            cExplosion.runExplosion(this,currentNanoTime); //run explosion logic (possible repulsion and animation)
+            cExplosion.runExplosion(this,terrain,currentNanoTime); //run explosion logic (possible repulsion and animation)
             if (cExplosion.mylife <= 0) {
                 eToRemove.add(cExplosion);
             }

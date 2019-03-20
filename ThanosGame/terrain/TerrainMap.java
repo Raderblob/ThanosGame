@@ -9,6 +9,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+import java.util.LinkedList;
+
 public class TerrainMap {
     private TerrainChunck chunk[];
     private int numChunks;
@@ -128,7 +130,21 @@ public class TerrainMap {
     }
 
 
+    public Point2D[] getCircleOfPoints(Point2D circlePos, double circleRadius) {
 
+        LinkedList<Point2D> pTD = new LinkedList<>();
+
+        for (int x = (int)-circleRadius; x < circleRadius; x++) {
+            for (int y = (int)-circleRadius; y < +circleRadius; y++) {
+                if (Main.getMagnitudeSquared(x, y) < Math.pow(circleRadius, 2)) {
+                    pTD.add(clampPoint(new Point2D(x, y).add(circlePos)));
+                }
+            }
+        }
+        return pTD.toArray(new Point2D[0]);
+
+
+    }
     public Point2D clampPoint(Point2D pIn) {
         return new Point2D(Math.min(Math.max(0, pIn.getX()), maxPixelsX), Math.min(Math.max(0, pIn.getY()), maxPixelsY));
     }

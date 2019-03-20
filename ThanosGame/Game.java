@@ -74,7 +74,7 @@ public class Game extends Application {
                 thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
             } else {
                 System.out.println("Right Click");
-                gameWorlds.get(selectedWorld).worldProjectiles.add(new Projectile(new Point2D(mouse.getSceneX(), mouse.getSceneY()).add(thanos.getCameraPosition()), new Point2D(1, 1), 10, new Point2D(1, 0)));
+                gameWorlds.get(selectedWorld).worldProjectiles.add(new Projectile(new Point2D(mouse.getSceneX(), mouse.getSceneY()).add(thanos.getCameraPosition()), new Point2D(1, 1), 12, new Point2D(5, 0)));
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouse -> {
