@@ -35,26 +35,22 @@ public class World {
         LinkedList<Explosion> eToRemove = new LinkedList<>();
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.runLogic(this, terrain, currentNanoTime); //run collisions for projectiles
-            if (cProjectile.mylife == 0) {
+            if (cProjectile.mylife <= 0) {
                 pToRemove.add(cProjectile);
             }
         }
         for (Explosion cExplosion : worldExplosions) {
-            cExplosion.runExplosion(this); //run explosion logic (possible repulsion and animation)
-            if (cExplosion.mylife == 0) {
+            cExplosion.runExplosion(this,currentNanoTime); //run explosion logic (possible repulsion and animation)
+            if (cExplosion.mylife <= 0) {
                 eToRemove.add(cExplosion);
             }
         }
 
         for (Projectile p : pToRemove) {
-            if (p.mylife == 0) {
                 worldProjectiles.remove(p);
-            }
         }
         for (Explosion e : eToRemove) {
-            if (e.mylife == 0) {
                 worldExplosions.remove(e);
-            }
         }
 
         //run physics for AI

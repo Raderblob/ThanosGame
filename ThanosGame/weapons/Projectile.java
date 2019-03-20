@@ -21,7 +21,7 @@ public class Projectile extends Item {
     }
 
     public void runLogic(World myWorld,TerrainMap myTerrain,double nanoTime){
-        mylife-=1;
+        mylife-=nanoTime;
         position = position.add(speed.multiply(nanoTime));
         if(isInRectangle(myWorld.thanos.myPosition,myWorld.thanos.mySize)){
             mylife=0;
