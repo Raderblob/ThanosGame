@@ -3,17 +3,24 @@ package ThanosGame.weapons;
 import ThanosGame.Item;
 import ThanosGame.Main;
 import ThanosGame.World;
+import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.graphics.images.PixelBlockType;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Scale;
 
 public class Explosion extends Item { //does the damage
     private double damagePerTick;
     private double explosionRadius;
     private Point2D[] explosionPoints;
+    private double maxLife;
     public Explosion(Point2D maPosition, Point2D Size,double myL, double damageT,TerrainMap mTerrain) {
-        super(maPosition, Size,null,new Point2D(0,0),100);
+        super(maPosition, Size,ImagesSaves.explosions[0],new Point2D(15,13),100);
         mylife = myL;
+        maxLife = myL;
         damagePerTick = damageT;
         explosionRadius = mySize.getX();
         explosionPoints = mTerrain.getCircleOfPoints(position,explosionRadius);
@@ -61,5 +68,18 @@ public class Explosion extends Item { //does the damage
 
 
         return false;
+    }
+
+    public void renderMe(GraphicsContext gc, Point2D camPos) {
+        gc.save();
+        double myScale =1- (mylife/maxLife);
+        System.out.println(myScale);
+        Scale nS = new Scale(myScale,myScale,position.getX()-camPos.getX(), position.getY()-camPos.getY());
+        Rotate nR = new Rotate(Math.random()*360,position.getX()-camPos.getX(),position.getY()-camPos.getY());
+        Affine nA = new Affine(nS);
+        nA.append(nR);
+        Main.applyMatrixTransform(gc, nA);
+        super.renderMe(gc,camPos);
+        gc.restore();
     }
 }
