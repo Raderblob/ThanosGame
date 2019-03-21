@@ -1,6 +1,6 @@
 package ThanosGame;
 
-import ThanosGame.Menus.MenuPrincipal;
+import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
@@ -10,13 +10,13 @@ import java.util.Random;
 
 public class Main {
     public static Random numberGenerator;
+    public static  MenuPrincipal mainMenu;
 
     public static void main(String[] args) {
         numberGenerator = new Random(System.nanoTime());
         BuildingSaves.loadBuildings();
-        MenuPrincipal mn = new MenuPrincipal();
-        //  ThanosGame.Game.launchGame();
 
+        Game.launchGame();
 
     }
 

@@ -1,6 +1,7 @@
-package ThanosGame.Menus;
+package ThanosGame.menus;
 
 import ThanosGame.Keyboard;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

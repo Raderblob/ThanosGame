@@ -1,6 +1,7 @@
 package ThanosGame;
 
 import ThanosGame.graphics.images.ImagesSaves;
+import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.weapons.ReboundProjectile;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
@@ -24,26 +25,27 @@ public class Game extends Application {
     private int selectedWorld;
     private long lastLength;
     private Group root;
+    private boolean playing;
+    private int toShow =0;
+    private Stage stage;
+    private Scene scene;
 
     @Override
     public void start(Stage stage) {
+        this.stage=stage;
         ImagesSaves.loadImages();
-        root = new Group();
-        Scene scene = new Scene(root, winParam.getX(), winParam.getY());
-        stage.setTitle("ThanosGame.Thanos rules the world");
-        stage.setScene(scene);
+        System.out.println("Loading Game...");
+        loadGame();
+        Main.mainMenu = new MenuPrincipal(this);
+        loadEvents();
 
-        Canvas canvas = new Canvas(winParam.getX(), winParam.getY());
-        root.getChildren().add(canvas);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        selectedWorld = 0;
-        thanos = new PlayerClass();
-        gameWorlds.add(new World(0, thanos));
+    }
 
-
+    private void loadEvents(){
         scene.addEventHandler(KeyEvent.KEY_PRESSED, key -> {
             if (key.getCode() == KeyCode.ESCAPE) {
-                System.exit(0);
+                hideGame();
+                Main.mainMenu.setVisible(true);
             } else if (key.getCode() == Keyboard.left) {
                 thanos.movingState = -1;
             } else if (key.getCode() == Keyboard.right) {
@@ -74,24 +76,45 @@ public class Game extends Application {
                 thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
             } else {
                 System.out.println("Right Click for test projectile");
-                gameWorlds.get(selectedWorld).worldProjectiles.add(new ReboundProjectile(new Point2D(mouse.getSceneX(), mouse.getSceneY()).add(thanos.getCameraPosition()), new Point2D(4, 3), 12, 1,Math.random()*360));
+                gameWorlds.get(selectedWorld).worldProjectiles.add(new ReboundProjectile(new Point2D(mouse.getSceneX(), mouse.getSceneY()).add(thanos.getCameraPosition()), new Point2D(4, 3), 12, 5, Math.random() * 360));
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouse -> {
 
         });
+    }
+
+    private void loadGame(){
+        root = new Group();
+        scene = new Scene(root, winParam.getX(), winParam.getY());
+        stage.setTitle("ThanosGame.Thanos rules the world");
+        stage.setScene(scene);
+
+        Canvas canvas = new Canvas(winParam.getX(), winParam.getY());
+        root.getChildren().add(canvas);
+        GraphicsContext gc = canvas.getGraphicsContext2D();
+        selectedWorld = 0;
+        thanos = new PlayerClass();
+        gameWorlds.add(new World(0, thanos));
 
 
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
-                gameLoop(gc);
+                if (playing) {
+                    gameLoop(gc);
+                }
+                if(toShow ==1){
+                    stage.show();
+                    toShow=0;
+                }else if(toShow ==-1){
+
+
+                    toShow=0;
+                }
             }
         }.start();
         //Displaying the contents of the stage
         stage.setResizable(false);
-        stage.show();
-
-
     }
 
     public void gameLoop(GraphicsContext gc) { //the game loop
@@ -108,7 +131,15 @@ public class Game extends Application {
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);
-        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+       // System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+    }
+
+    public void showGame(){
+        playing=true;
+        toShow=1;
+    }
+    public void hideGame(){
+        playing=false;
     }
 
     @Override

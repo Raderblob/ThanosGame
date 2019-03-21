@@ -26,7 +26,7 @@ public class ReboundProjectile extends Projectile {
                     Point2D projectedVec = terrainTangent.multiply(speed.dotProduct(terrainTangent));
                     Point2D displacement = projectedVec.add(speed.multiply(-1));
                     speed = projectedVec.add(displacement);
-                    position = position.add(speed.multiply(2));
+                   // position = position.add(speed.multiply(2));
                 }else{
                     mylife=0;
                 }
