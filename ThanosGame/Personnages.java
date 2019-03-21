@@ -1,4 +1,6 @@
-/*package ThanosGame;
+package ThanosGame;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 
 public class Personnages {
     private int largeur, taille; // Taille perso
@@ -37,6 +39,20 @@ public class Personnages {
     // METHODES UTILISABLES
     // Deplacement du personnage
 
+    public Image marcher(int freq, String nom){
+        String a;
+        ImageIcon figure;
+        Image image;
+
+        if (this.marche == false){
+            if (this.aDroite==true){ a="/images"/+ nom +"ArrêtDroite.png";}
+            else {a="/image/"+ nom +"ArrêtGauche.png ";}
+        }
+        else {
+            compt++;
+        }
+
+
+    }
 
 }
-*/
