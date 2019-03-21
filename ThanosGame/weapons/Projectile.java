@@ -1,6 +1,5 @@
 package ThanosGame.weapons;
 
-//import ThanosGame.terrain.TerrainMap;
 
 import ThanosGame.Item;
 import ThanosGame.Main;
@@ -9,38 +8,55 @@ import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.transform.Scale;
+import javafx.scene.transform.Rotate;
 
 public class Projectile extends Item {
-    private int degats;
-    private Point2D speed;
+    public int degats;
+    protected Point2D speed;
     protected boolean canDamage;
-
-    public Projectile(Point2D position, Point2D Size, int degats , Point2D speed){
-        super(position,Size,ImagesSaves.projectiles[0],new Point2D(20,10),100);
+    protected double maxLife;
+    public Projectile(Point2D position, Point2D size, int degats , Point2D speed){
+        super(position,size,ImagesSaves.projectiles[0],new Point2D(20,10),100);
         this.degats=degats;
         this.speed=speed;
+        canDamage =true;
+        maxLife = 1000;
+        mylife =maxLife;
+    }
+    public Projectile(Point2D position, Point2D size, int degats , double speed,double angle){
+        super(position,size,ImagesSaves.projectiles[0],new Point2D(20,10),100);
+        this.degats=degats;
+        double angleRad = angle/180*Math.PI;
+        this.speed=new Point2D(Math.cos(angleRad),Math.sin(angleRad)).multiply(speed);
         canDamage =true;
         mylife =1000;
     }
 
     public void runLogic(World myWorld,TerrainMap myTerrain,double nanoTime){
-        mylife-=nanoTime;
-        position = position.add(speed.multiply(nanoTime));
-        if(isInRectangle(myWorld.thanos.myPosition,myWorld.thanos.mySize)){
-            mylife=0;
-            //create explosion (does not do the damage directly)
-            myWorld.worldExplosions.add(new Explosion(position,new Point2D(10,10),10,1,myTerrain));
-        }
-        if(myTerrain.getTerrainVal(position.getX(),position.getY())!=0){
-            mylife=0;
-            //create explosion
-            myWorld.worldExplosions.add(new Explosion(position,new Point2D(10,10),10,degats,myTerrain));
+        if(runBasicPhysics(myTerrain,nanoTime)) {
+            if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)) {
+                mylife = 0;
+                //create explosion (does not do the damage directly)
+            }
+            if (myTerrain.getTerrainVal(position.getX(), position.getY()) != 0) {
+                mylife = 0;
+                //create explosion
+            }
         }
 
     }
 
-
+    protected boolean runBasicPhysics(TerrainMap myTerrain,double nanoTime){
+        mylife-=nanoTime;
+        position = position.add(speed.multiply(nanoTime));
+        Point2D clampedPos = myTerrain.clampPoint(position);
+        if(clampedPos.getY()!= position.getY() || clampedPos.getX()!=position.getX()){
+            mylife=0;
+            return false;
+        }else{
+            return true;
+        }
+    }
 
 
 
@@ -48,19 +64,10 @@ public class Projectile extends Item {
 
     public void renderMe(GraphicsContext gc, Point2D camPos) {
         gc.save();
-        Scale nR = new Scale(1,1,position.getX(), position.getY());
+        Rotate nR = new Rotate(Math.atan2(speed.getY(),speed.getX())/Math.PI*180,position.getX()-camPos.getX(), position.getY()-camPos.getY());
         Main.applyMatrixTransform(gc, nR);
         super.renderMe(gc,camPos);
         gc.restore();
     }
-  /*  public void collisionThanos(Thanos Thanos1) {
-        if (((Thanos1.myPosition.getX() + Thanos1.mySize.getX()) > this.position.getX()) && (Thanos1.myPosition.getX() < (this.position.getX() - this.mySize.getX())) && ((Thanos1.myPosition.getY() + Thanos1.mySize.getY()) > this.position.getY()) && (Thanos1.myPosition.getY() < (this.position.getY() - this.mySize.getY()))) {
-            Thanos1.PV = Thanos1.PV - this.degats;
-        }
-    }
 
-
-
-    public void collisionTerrain(TerrainMap currentTerrain){
-    }*/
 }

@@ -40,17 +40,18 @@ public class World {
             }
         }
         for (Explosion cExplosion : worldExplosions) {
-            cExplosion.runExplosion(this,terrain,currentNanoTime); //run explosion logic (possible repulsion and animation)
+            cExplosion.runExplosion(this, terrain, currentNanoTime); //run explosion logic (possible repulsion and animation)
             if (cExplosion.mylife <= 0) {
                 eToRemove.add(cExplosion);
             }
         }
 
         for (Projectile p : pToRemove) {
-                worldProjectiles.remove(p);
+            worldExplosions.add(new Explosion(p.position, new Point2D(10, 10), 10, p.degats, terrain));
+            worldProjectiles.remove(p);
         }
         for (Explosion e : eToRemove) {
-                worldExplosions.remove(e);
+            worldExplosions.remove(e);
         }
 
         //run physics for AI

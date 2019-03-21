@@ -24,7 +24,7 @@ public class TerrainMap {
         maxPixelsY = (int) (TerrainChunck.chunkParam.getY() * 4 - 1);
         terrainRendered = false;
         SimplexNoise geny = new SimplexNoise((int) System.nanoTime(), 8, 0.0035, 0.5);
-        SimplexNoise biomeGeny = new SimplexNoise((int) System.nanoTime() + 1, 8, 0.0035, 0.5);
+        SimplexNoise biomeGeny = new SimplexNoise((int) System.nanoTime() + 1, 8, 0.0035, 0.7);
 
 
         chunk = new TerrainChunck[numChunks];
@@ -41,14 +41,14 @@ public class TerrainMap {
                     setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
                 } else if (a > 0.35) {//dirt stone
 
-                    if (b > 0.3) {
+                    if (b < 0.2) {
                         setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
                     } else {
                         setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
                     }
 
                 } else if (a > 0.29) {
-                    if (b > 0.1) {
+                    if (b < 0.6) {
                         setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
                     } else {
                         setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
@@ -118,6 +118,9 @@ public class TerrainMap {
         return chunk[nX / (int) TerrainChunck.chunkParam.getX()].getVal(nX, nY);
     }
 
+    public byte getTerrainVal(Point2D p){
+        return getTerrainVal(p.getX(),p.getY());
+    }
 
     public void changeTerrain(Point2D pointToChange[], byte futurVals[]) {
         Point2D pTC[] = new Point2D[pointToChange.length];
@@ -145,6 +148,22 @@ public class TerrainMap {
 
 
     }
+
+    public Point2D getTangent(Point2D tPos,Point2D startPoint){
+        Point2D invertedStartPoint = startPoint.multiply(-1);
+        double angle = Math.atan2(invertedStartPoint.getY(),invertedStartPoint.getX());
+        Point2D testPoint;
+
+        for(double a = angle;a<angle+Math.PI*2;a+=0.1/180*Math.PI){
+            testPoint = new Point2D(Math.cos(a),Math.sin(a));
+            if(getTerrainVal(testPoint.multiply(10).add(tPos)) !=0){
+                return testPoint;
+            }
+        }
+
+        return new Point2D(Math.cos(angle),Math.sin(angle));
+    }
+
     public Point2D clampPoint(Point2D pIn) {
         return new Point2D(Math.min(Math.max(0, pIn.getX()), maxPixelsX), Math.min(Math.max(0, pIn.getY()), maxPixelsY));
     }

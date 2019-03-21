@@ -1,7 +1,7 @@
 package ThanosGame;
 
 import ThanosGame.graphics.images.ImagesSaves;
-import ThanosGame.weapons.Projectile;
+import ThanosGame.weapons.ReboundProjectile;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -73,8 +73,8 @@ public class Game extends Application {
             if (mouse.isPrimaryButtonDown()) {
                 thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
             } else {
-                System.out.println("Right Click");
-                gameWorlds.get(selectedWorld).worldProjectiles.add(new Projectile(new Point2D(mouse.getSceneX(), mouse.getSceneY()).add(thanos.getCameraPosition()), new Point2D(4, 3), 12, new Point2D(5, 0)));
+                System.out.println("Right Click for test projectile");
+                gameWorlds.get(selectedWorld).worldProjectiles.add(new ReboundProjectile(new Point2D(mouse.getSceneX(), mouse.getSceneY()).add(thanos.getCameraPosition()), new Point2D(4, 3), 12, 1,Math.random()*360));
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouse -> {
@@ -104,7 +104,7 @@ public class Game extends Application {
 
         gameWorlds.get(selectedWorld).renderWorld(gc, root);//render the selected world
 
-        lastLength = ((System.nanoTime() - lastTime));
+
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);

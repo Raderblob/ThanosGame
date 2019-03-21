@@ -73,7 +73,6 @@ public class Explosion extends Item { //does the damage
     public void renderMe(GraphicsContext gc, Point2D camPos) {
         gc.save();
         double myScale =1- (mylife/maxLife);
-        System.out.println(myScale);
         Scale nS = new Scale(myScale,myScale,position.getX()-camPos.getX(), position.getY()-camPos.getY());
         Rotate nR = new Rotate(Math.random()*360,position.getX()-camPos.getX(),position.getY()-camPos.getY());
         Affine nA = new Affine(nS);
