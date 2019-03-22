@@ -50,8 +50,28 @@ public class Personnages {
         }
         else {
             compt++;
+            if (freq==0) {
+                if (this.aDroite == true) {
+                    a = "/images" / +nom + "ArrêtDroite.png";
+                } else {
+                    a = "/image/" + nom + "ArrêtGauche.png ";
+                }
+            } else {
+                if (this.aDroite == true) {
+                    a = "/images" / +nom + "MarcherDroite.png";
+                } else {
+                    a = "/image/" + nom + "MarcherGauche.png ";
+                }
+            }
+            if (this.compt ==2*freq){this.compt=0;}
+
         }
 
+        figure = new ImageIcon(getClass().getResource(a));
+        image = figure.getImage();
+        return image;
+    }
+    public void deplacer (){
 
     }
 
