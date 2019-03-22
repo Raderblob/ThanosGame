@@ -20,7 +20,7 @@ public class TerrainMap {
 
     public TerrainMap(int numC) {
         numChunks = numC;
-        maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks + 1) - 1);
+        maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks ) );
         maxPixelsY = (int) (TerrainChunck.chunkParam.getY() * 4 - 1);
         terrainRendered = false;
         SimplexNoise geny = new SimplexNoise((int) System.nanoTime(), 8, 0.0035, 0.5);
@@ -88,7 +88,7 @@ public class TerrainMap {
         for (int i = 0; i < chunk.length; i++) {
 
 
-            double drawPos = -Math.min(pos.getX(), numChunks * TerrainChunck.chunkParam.getX() * 4 - 1000) + i * TerrainChunck.chunkParam.getX() * 4;
+            double drawPos = -pos.getX() + i * TerrainChunck.chunkParam.getX() * 4;// -Math.min(pos.getX(), numChunks * TerrainChunck.chunkParam.getX() * 4 - 1000) + i * TerrainChunck.chunkParam.getX() * 4;
 
 
             if (drawPos + TerrainChunck.chunkParam.getX() * 4 >= 0 && drawPos < Game.winParam.getX()*2) {
