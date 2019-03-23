@@ -23,7 +23,7 @@ public class PlayerClass {
         destroyAt = new Point2D(-1, -1);
 
 
-        myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 100);
+        myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 64);
     }
 
     public void draw(GraphicsContext gc) {
@@ -113,7 +113,7 @@ public class PlayerClass {
 
     private boolean terrainIsObstacleRight(TerrainMap currentTerrain) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (currentTerrain.getTerrainVal(myPosition.getX() + mySize.getX(), y) != 0) {
+            if (currentTerrain.getTerrainVal(myPosition.getX() + mySize.getX()+3, y) != 0) {
                 return true;
             }
         }
@@ -122,7 +122,7 @@ public class PlayerClass {
 
     private boolean terrainIsObstacleLeft(TerrainMap currentTerrain) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (currentTerrain.getTerrainVal(myPosition.getX() - mySize.getX(), y) != 0) {
+            if (currentTerrain.getTerrainVal(myPosition.getX() - mySize.getX()-3, y) != 0) {
                 return true;
             }
         }

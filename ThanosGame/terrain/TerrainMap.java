@@ -3,6 +3,7 @@ package ThanosGame.terrain;
 import ThanosGame.Game;
 import ThanosGame.Main;
 import ThanosGame.graphics.images.PixelBlockType;
+import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -20,7 +21,7 @@ public class TerrainMap {
 
     public TerrainMap(int numC) {
         numChunks = numC;
-        maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks + 1) - 1);
+        maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks));
         maxPixelsY = (int) (TerrainChunck.chunkParam.getY() * 4 - 1);
         terrainRendered = false;
         SimplexNoise geny = new SimplexNoise((int) System.nanoTime(), 8, 0.0035, 0.5);
@@ -39,7 +40,7 @@ public class TerrainMap {
                 double b = Math.abs(biomeGeny.getNoise(x, y));
                 if (y > TerrainChunck.chunkParam.getY() - 4) {
                     setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
-                } else if (a > 0.35) {//dirt stone
+                } else if (a > 0.38) {//dirt stone
 
                     if (b < 0.2) {
                         setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
@@ -47,7 +48,7 @@ public class TerrainMap {
                         setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
                     }
 
-                } else if (a > 0.29) {
+                } else if (a > 0.30) {
                     if (b < 0.6) {
                         setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
                     } else {
@@ -62,10 +63,7 @@ public class TerrainMap {
         }
 
 
-        for (
-                int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700)
-
-        {//generate buildings
+        for (int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700) {//generate buildings
             if (Main.numberGenerator.nextInt(100) > 50) {
                 int y = 0;
                 int x = Main.numberGenerator.nextInt(200) + i;
@@ -76,22 +74,19 @@ public class TerrainMap {
             }
         }
 
-
+        new LargeBase(BuildingSaves.largeBases[0],new Point2D((int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000,0)).changeTerrain(this);
+        new LargeBase(BuildingSaves.pal,new Point2D(1000,0)).changeTerrain(this);
     }
-
-
-
-
 
 
     public void draw(GraphicsContext gc, Point2D pos, Group root) {
         for (int i = 0; i < chunk.length; i++) {
 
 
-            double drawPos = -Math.min(pos.getX(), numChunks * TerrainChunck.chunkParam.getX() * 4 - 1000) + i * TerrainChunck.chunkParam.getX() * 4;
+            double drawPos = -pos.getX() + i * TerrainChunck.chunkParam.getX() * 4;// -Math.min(pos.getX(), numChunks * TerrainChunck.chunkParam.getX() * 4 - 1000) + i * TerrainChunck.chunkParam.getX() * 4;
 
 
-            if (drawPos + TerrainChunck.chunkParam.getX() * 4 >= 0 && drawPos < Game.winParam.getX()*2) {
+            if (drawPos + TerrainChunck.chunkParam.getX() * 4 >= 0 && drawPos < Game.winParam.getX() * 2) {
                 chunk[i].myCanvas.setTranslateX(drawPos);
                 if (!chunk[i].addedToRoot) {
                     root.getChildren().add(chunk[i].myCanvas);
@@ -118,8 +113,8 @@ public class TerrainMap {
         return chunk[nX / (int) TerrainChunck.chunkParam.getX()].getVal(nX, nY);
     }
 
-    public byte getTerrainVal(Point2D p){
-        return getTerrainVal(p.getX(),p.getY());
+    public byte getTerrainVal(Point2D p) {
+        return getTerrainVal(p.getX(), p.getY());
     }
 
     public void changeTerrain(Point2D pointToChange[], byte futurVals[]) {
@@ -137,8 +132,8 @@ public class TerrainMap {
 
         LinkedList<Point2D> pTD = new LinkedList<>();
 
-        for (int x = (int)-circleRadius; x < circleRadius; x++) {
-            for (int y = (int)-circleRadius; y < +circleRadius; y++) {
+        for (int x = (int) -circleRadius; x < circleRadius; x++) {
+            for (int y = (int) -circleRadius; y < +circleRadius; y++) {
                 if (Main.getMagnitudeSquared(x, y) < Math.pow(circleRadius, 2)) {
                     pTD.add(clampPoint(new Point2D(x, y).add(circlePos)));
                 }
@@ -149,19 +144,19 @@ public class TerrainMap {
 
     }
 
-    public Point2D getTangent(Point2D tPos,Point2D startPoint){
+    public Point2D getTangent(Point2D tPos, Point2D startPoint) {
         Point2D invertedStartPoint = startPoint.multiply(-1);
-        double angle = Math.atan2(invertedStartPoint.getY(),invertedStartPoint.getX());
+        double angle = Math.atan2(invertedStartPoint.getY(), invertedStartPoint.getX());
         Point2D testPoint;
 
-        for(double a = angle;a<angle+Math.PI*2;a+=0.1/180*Math.PI){
-            testPoint = new Point2D(Math.cos(a),Math.sin(a));
-            if(getTerrainVal(testPoint.multiply(10).add(tPos)) !=0){
+        for (double a = angle; a < angle + Math.PI * 2; a += 0.1 / 180 * Math.PI) {
+            testPoint = new Point2D(Math.cos(a), Math.sin(a));
+            if (getTerrainVal(testPoint.multiply(10).add(tPos)) != 0) {
                 return testPoint;
             }
         }
 
-        return new Point2D(Math.cos(angle),Math.sin(angle));
+        return new Point2D(Math.cos(angle), Math.sin(angle));
     }
 
     public Point2D clampPoint(Point2D pIn) {
@@ -242,13 +237,20 @@ class TerrainChunck {
         } else if (a == PixelBlockType.BRICK.getMyVal()) {
             c = new javafx.scene.paint.Color(0, 0, 0, 1);
         } else if (a == PixelBlockType.BRICK2.getMyVal()) {
-            c = new javafx.scene.paint.Color(0, 1, 0, 1);
+            c = new javafx.scene.paint.Color(0.2, 0.2, 0.2, 1);
+        }else if(a==PixelBlockType.BRICK3.getMyVal()){
+            c = new javafx.scene.paint.Color(0.5, 0, 0, 1);
+        }else if(a==PixelBlockType.UNDEFINED1.getMyVal()){
+            c = new javafx.scene.paint.Color(1, 1, 0, 1);
+        }else if(a==PixelBlockType.UNDEFINED2.getMyVal()){
+            c = new javafx.scene.paint.Color(0.5, 0, 0.5, 1);
+        }else if(a==PixelBlockType.UNDEFINED3.getMyVal()){
+            c = new javafx.scene.paint.Color(1, 0, 0, 1);
         } else {
             c = Color.BLUE;
         }
         return c;
     }
-
 
 
     public byte getTVal(double x, double y) {
