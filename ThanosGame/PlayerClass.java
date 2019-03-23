@@ -23,7 +23,7 @@ public class PlayerClass {
         destroyAt = new Point2D(-1, -1);
 
 
-        myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 100);
+        myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 64);
     }
 
     public void draw(GraphicsContext gc) {
