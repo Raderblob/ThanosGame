@@ -10,12 +10,12 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.LinkedList;
 
 public class World {
-    public PlayerClass thanos;
+    public Thanos thanos;
     private TerrainMap terrain;
     public LinkedList<Explosion> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
 
-    public World(int worldType, PlayerClass p) {
+    public World(int worldType, Thanos p) {
         thanos = p;
         worldProjectiles = new LinkedList<>();
         worldExplosions = new LinkedList<>();

@@ -87,6 +87,7 @@ public class TerrainMap {
 
         new LargeBase(BuildingSaves.largeBases[0],new Point2D((int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000,0)).changeTerrain(this);
         new LargeBase(BuildingSaves.pal,new Point2D(1000,0)).changeTerrain(this);
+        System.out.println("test");
     }
 
 

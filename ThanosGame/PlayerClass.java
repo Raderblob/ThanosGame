@@ -12,8 +12,8 @@ public class PlayerClass {
     private boolean doubleJumped;
     public Point2D myPosition;
     public Point2D mySize;
-    private Point2D mySpeed;
-    private Point2D destroyAt;
+    public Point2D mySpeed;
+    protected Point2D destroyAt;
     protected AnimatedPerson myAnimation;
 
     public PlayerClass() {
@@ -42,9 +42,6 @@ public class PlayerClass {
     public void run(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
         doPlayerMovement(currentTerrain, currentWorld,currentNanoTime);
         myAnimation.setWalkingMode(movingState);
-        if (destroyAt.getX() != -1) {
-            useTestStone(currentTerrain, currentWorld);
-        }
     }
 
     private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
@@ -79,15 +76,7 @@ public class PlayerClass {
 
     }
 
-    private void useTestStone(TerrainMap currentTerrain, World currentWorld) {
-        Point2D[] pTD = currentTerrain.getCircleOfPoints(destroyAt,40);
-        byte bTD[] = new byte[pTD.length];
-        for (int i = 0; i < bTD.length; i++) {
-            bTD[i] = 0;
-        }
-        currentTerrain.changeTerrain(pTD, bTD);
-        destroyAt = new Point2D(-1, -1);
-    }
+
 
     public void jump() {
         if (jumpingState == 0) {
