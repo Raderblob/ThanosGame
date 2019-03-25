@@ -4,6 +4,7 @@ import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.menus.MenuInventaire;
 import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.weapons.ReboundProjectile;
+import ThanosGame.weapons.player.RealityStone;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -20,7 +21,7 @@ import java.util.ArrayList;
 
 
 public class Game extends Application {
-    private PlayerClass thanos;
+    private Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
     private ArrayList<World> gameWorlds = new ArrayList<World>();
     private int selectedWorld;
@@ -100,7 +101,8 @@ public class Game extends Application {
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         selectedWorld = 0;
-        thanos = new PlayerClass();
+        thanos = new Thanos(100);
+        thanos.addStone(new RealityStone(thanos.infinity));
         gameWorlds.add(new World(0, thanos));
 
 
