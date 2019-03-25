@@ -22,7 +22,6 @@ public class MenuInventaire extends JFrame implements ActionListener {
         setLayout(null);//c null
         setSize(960, 720);
         setLocation(0, 0);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
         //Rouge
@@ -68,7 +67,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         bOrange.addActionListener(this);
 
         fond = new JLabel();
-        fond.setIcon(new ImageIcon(getClass().getResource("images\\fondInventaire.jpg")));
+        fond.setIcon(new ImageIcon(getClass().getResource("images\\th2.jpg")));
         fond.setLocation(0, 0);
         fond.setSize(getWidth(), getHeight());
 
