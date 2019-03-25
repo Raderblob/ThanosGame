@@ -1,6 +1,7 @@
 package ThanosGame;
 
 import ThanosGame.graphics.images.ImagesSaves;
+import ThanosGame.menus.MenuInventaire;
 import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.weapons.ReboundProjectile;
 import javafx.animation.AnimationTimer;
@@ -29,6 +30,7 @@ public class Game extends Application {
     private int toShow =0;
     private Stage stage;
     private Scene scene;
+    private MenuInventaire inventaire = new MenuInventaire();
 
     @Override
     public void start(Stage stage) {
@@ -56,6 +58,8 @@ public class Game extends Application {
                 //Frapper
             } else if (key.getCode() == Keyboard.down) {
                 //PEUT SERVIR...
+            }else if (key.getCode()== KeyCode.I){
+                inventaire.setVisible(true);
             }
         });
         scene.addEventHandler(KeyEvent.KEY_RELEASED, key -> {
@@ -69,6 +73,8 @@ public class Game extends Application {
                 //thanos.fireAt(X,Y);
             } else if (key.getCode() == Keyboard.down) {
                 //PEUT SERVIR...
+            }else if (key.getCode()== KeyCode.I){
+                //?
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouse -> {
