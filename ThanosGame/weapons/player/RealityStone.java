@@ -27,4 +27,9 @@ public class RealityStone extends Stone {
     public String toString() {
         return "Reality Stone";
     }
+
+    @Override
+    public boolean isReal() {
+        return true;
+    }
 }

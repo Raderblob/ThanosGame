@@ -5,6 +5,7 @@ import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.weapons.ReboundProjectile;
 import ThanosGame.weapons.player.RealityStone;
+import ThanosGame.weapons.player.SpaceStone;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -107,6 +108,7 @@ public class Game extends Application {
         selectedWorld = 0;
         thanos = new Thanos(100);
         thanos.addStone(new RealityStone(thanos));
+        thanos.addStone(new SpaceStone(thanos));
         gui = new GraphicalUserInterface(thanos);
 
         gameWorlds.add(new World(0, thanos));
