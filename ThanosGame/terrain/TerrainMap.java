@@ -2,6 +2,7 @@ package ThanosGame.terrain;
 
 import ThanosGame.Game;
 import ThanosGame.Main;
+import ThanosGame.Personnages;
 import ThanosGame.graphics.images.PixelBlockType;
 import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
@@ -18,8 +19,11 @@ public class TerrainMap {
     private int maxPixelsX;
     private int maxPixelsY;
     public boolean terrainRendered;
+    public Point2D mySize;
 
     public TerrainMap(int numC) {
+
+        mySize = new Point2D(10, 10);
         numChunks = numC;
         maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks));
         maxPixelsY = (int) (TerrainChunck.chunkParam.getY() * 4 - 1);
@@ -64,6 +68,7 @@ public class TerrainMap {
 
 
         for (int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700) {//generate buildings
+            double rdm = Math.random();
             if (Main.numberGenerator.nextInt(100) > 50) {
                 int y = 0;
                 int x = Main.numberGenerator.nextInt(200) + i;
@@ -71,8 +76,14 @@ public class TerrainMap {
                     y += 1;
                 } while (getTerrainVal(x, y) == 0);
                 new Building(new Point2D(x, y)).changeTerrain(this);
+                    if ( rdm<0.3){
+                        Personnages ennemi = new Personnages(x,y);
+                    }
+
             }
         }
+
+
 
         new LargeBase(BuildingSaves.largeBases[0],new Point2D((int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000,0)).changeTerrain(this);
         new LargeBase(BuildingSaves.pal,new Point2D(1000,0)).changeTerrain(this);

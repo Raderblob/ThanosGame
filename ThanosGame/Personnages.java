@@ -1,47 +1,59 @@
 package ThanosGame;
-import java.awt.Image;
-import javax.swing.ImageIcon;
+
+import ThanosGame.graphics.AnimatedPerson;
+import ThanosGame.graphics.images.ImagesSaves;
+import ThanosGame.terrain.TerrainMap;
+import javafx.geometry.Point2D;
+import javafx.scene.canvas.GraphicsContext;
+
+import javax.swing.*;
+
 
 public class Personnages {
-    private int largeur, taille; // Taille perso
-    private int x, y; // position
+    public Point2D mySize;
     private boolean marche;
     private boolean aDroite;
     public int compt; // nb de pas du personnage
+    protected AnimatedPerson myAnimation;
 
     // CONSTRUCTEUR
-    public Personnages(int x, int y, int largeur, int taille) {
+    public Personnages(int x, int y) {
+        mySize = new Point2D(10, 10);
+        myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 100);
+        this.marche=false; this.aDroite=true;
+        this.compt=0;
 
-    this.x=x; this.y=y;
-    this.largeur=largeur;this.taille=taille;
-    this.marche=false; this.aDroite=true;
-    this.compt=0;
+
 }
     //GETTERS
 
-    public int getLargeur() {return largeur; }
-    public int getTaille() {return taille; }
-    public int getX() { return x; }
-    public int getY() { return y; }
+    public Point2D getMySize() { return mySize; }
     public boolean isMarche() { return marche; }
     public boolean isaDroite() { return aDroite; }
+    public int getCompt() { return compt; }
+    public AnimatedPerson getMyAnimation() { return myAnimation; }
+
 
     //SETTERS
 
-    public void setLargeur(int largeur) {this.largeur = largeur;}
-    public void setTaille(int taille) { this.taille = taille; }
-    public void setX(int x) { this.x = x; }
-    public void setY(int y) { this.y = y; }
+
+    public void setMySize(Point2D mySize) { this.mySize = mySize; }
+    public void setMyAnimation(AnimatedPerson myAnimation) { this.myAnimation = myAnimation; }
     public void setMarche(boolean marche) { this.marche = marche; }
     public void setaDroite(boolean aDroite) { this.aDroite = aDroite; }
     public void setCompt(int compt) { this.compt = compt; }
 
     // METHODES UTILISABLES
+
     // Deplacement du personnage
+
+    public void draw(GraphicsContext gc) {
+        myAnimation.draw(gc, new Point2D(this.x, this.y, new Point2D(mySize.getX() * 2, mySize.getY() * 2));
+    }
 
     public Image marcher(int freq, String nom){
         String a;
-        ImageIcon figure;
+        ImageIcon figure = new ImageIcon();
         Image image;
 
         if (this.marche == false){
@@ -74,5 +86,6 @@ public class Personnages {
     public void deplacer (){
 
     }
+    public void
 
 }
