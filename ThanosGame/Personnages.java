@@ -39,13 +39,13 @@ public class Personnages {
     // METHODES UTILISABLES
     // Deplacement du personnage
 
-    public Image marcher(int freq, String nom){
+   /* public Image marcher(int freq, String nom){
         String a;
         ImageIcon figure;
         Image image;
 
         if (this.marche == false){
-            if (this.aDroite==true){ a="/images"/+ nom +"ArrêtDroite.png";}
+            if (this.aDroite==true){ a="/images/"+ nom +"ArrêtDroite.png";}
             else {a="/image/"+ nom +"ArrêtGauche.png ";}
         }
         else {
@@ -53,6 +53,6 @@ public class Personnages {
         }
 
 
-    }
+    }*/
 
 }

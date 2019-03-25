@@ -13,6 +13,7 @@ public class BuildingSaves {
     public static byte[][][] largeBases=new byte[1][][];
 
     public static byte[][] pal;
+    public static byte[][] base_Iron_man;
 
 
     public static void loadBuildings(){
@@ -22,6 +23,7 @@ public class BuildingSaves {
         //load largeBase
         largeBases[0] = readModule("largeBase0.png");
         pal = readModule("pal.png");
+        base_Iron_man = readModule("Base_Iron_man.png");
     }
 
     private static byte[][] readModule(String str) {
