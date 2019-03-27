@@ -76,12 +76,21 @@ public class TerrainMap {
                     y += 1;
                 } while (getTerrainVal(x, y) == 0);
                 new Building(new Point2D(x, y)).changeTerrain(this);
-                    if ( rdm<0.3){
-                        Personnages ennemi = new Personnages(x,y);
-                    }
+
 
             }
         }
+
+        // Générons les ennemis
+        for (int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700) {//generate buildings
+            double rdm = Math.random();
+            if (Main.numberGenerator.nextInt(100) > 70) {
+                int x = Main.numberGenerator.nextInt(200) + i;
+                int y = // La hauteur de la platerforme sur laquelle on se trouve
+                Personnages Shield = new Personnages(x,y); // On crée un perso
+            }
+        }
+
 
 
 
