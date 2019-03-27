@@ -2,7 +2,6 @@ package ThanosGame.terrain;
 
 
 import javafx.geometry.Point2D;
-import javafx.scene.image.Image;
 
 import java.util.LinkedList;
 
@@ -18,7 +17,7 @@ public class LargeBase {
 
     public void changeTerrain(TerrainMap theTerrain) {
         LinkedList<Point2D> PToChange = new LinkedList<>();
-        LinkedList<Byte> fVals = new LinkedList<Byte>();
+        LinkedList<Byte> fVals = new LinkedList<>();
 
         for (int x = 0; x < myArray.length; x++) {
             for (int y = 0; y < myArray[x].length; y++) {
@@ -33,6 +32,6 @@ public class LargeBase {
         for (int i = 0; i < fValsFinal.length; i++) {
             fValsFinal[i] = fVals.get(i);
         }
-        theTerrain.changeTerrain(PToChange.toArray(new Point2D[PToChange.size()]), fValsFinal);
+        theTerrain.changeTerrain(PToChange.toArray(new Point2D[0]), fValsFinal);
     }
 }

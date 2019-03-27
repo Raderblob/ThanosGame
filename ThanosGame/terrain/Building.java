@@ -5,6 +5,7 @@ import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Building {
     BuildingModule myModules[];
@@ -82,7 +83,7 @@ public class Building {
             }
         }
 
-        myModules = plannedBuilding.toArray(new BuildingModule[plannedBuilding.size()]);
+        myModules = plannedBuilding.toArray(new BuildingModule[0]);
     }
 
     private BuildingModule getBuildingModule(Point2D mP) {
@@ -109,7 +110,7 @@ public class Building {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.canLeft);
+        } while (!Objects.requireNonNull(potBuilding).canLeft);
         return potBuilding;
     }
 
@@ -118,7 +119,7 @@ public class Building {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.canRight);
+        } while (!Objects.requireNonNull(potBuilding).canRight);
         return potBuilding;
     }
 
@@ -127,7 +128,7 @@ public class Building {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.canUp);
+        } while (!Objects.requireNonNull(potBuilding).canUp);
         return potBuilding;
     }
 
@@ -136,21 +137,21 @@ public class Building {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.canDown);
+        } while (!Objects.requireNonNull(potBuilding).canDown);
         return potBuilding;
     }
 
 
     public void changeTerrain(TerrainMap theTerrain) {
         LinkedList<Point2D> PToChange = new LinkedList<>();
-        LinkedList<Byte> fVals = new LinkedList<Byte>();
+        LinkedList<Byte> fVals = new LinkedList<>();
 
-        for (int i = 0; i < myModules.length; i++) {
-            for (int x = 0; x < myModules[i].blocks.length; x++) {
-                for (int y = 0; y < myModules[i].blocks[x].length; y++) {
-                    if(myModules[i].blocks[x][y] != -1) {
-                        PToChange.add(new Point2D(x * 4, y * 4).add(myModules[i].myPosition));
-                        fVals.add(myModules[i].blocks[x][y]);
+        for (BuildingModule myModule : myModules) {
+            for (int x = 0; x < myModule.blocks.length; x++) {
+                for (int y = 0; y < myModule.blocks[x].length; y++) {
+                    if (myModule.blocks[x][y] != -1) {
+                        PToChange.add(new Point2D(x * 4, y * 4).add(myModule.myPosition));
+                        fVals.add(myModule.blocks[x][y]);
                     }
                 }
             }
@@ -159,7 +160,7 @@ public class Building {
         for (int i = 0; i < fValsFinal.length; i++) {
             fValsFinal[i] = fVals.get(i);
         }
-        theTerrain.changeTerrain(PToChange.toArray(new Point2D[PToChange.size()]), fValsFinal);
+        theTerrain.changeTerrain(PToChange.toArray(new Point2D[0]), fValsFinal);
     }
 }
 
@@ -208,9 +209,7 @@ class BuildingModule {
     private byte[][] readModule(int i) {
         byte res[][] = new byte[BuildingSaves.moduleTemplates[0].length][BuildingSaves.moduleTemplates[0][0].length];
         for (int x = 0; x < res.length; x++) {
-            for (int y = 0; y < res.length; y++) {
-                res[x][y] = BuildingSaves.moduleTemplates[i][x][y];
-            }
+            System.arraycopy(BuildingSaves.moduleTemplates[i][x], 0, res[x], 0, res.length);
         }
 
         return res;

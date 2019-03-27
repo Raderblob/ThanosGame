@@ -12,7 +12,7 @@ public class Thanos extends PlayerClass{
     public Thanos(int PV){
         super();
         this.PV=PV ;
-        this.infinity= new Gant(this); ;
+        this.infinity= new Gant(this);
     }
 
     @Override
