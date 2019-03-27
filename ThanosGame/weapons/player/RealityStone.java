@@ -10,6 +10,8 @@ public class RealityStone extends Stone {
 
     public RealityStone(Thanos owner) {
         super(owner);
+        stoneType=1;
+        stoneName="Reality Stone";
     }
 
     @Override
@@ -23,13 +25,4 @@ public class RealityStone extends Stone {
         return 1;
     }
 
-    @Override
-    public String toString() {
-        return "Reality Stone";
-    }
-
-    @Override
-    public boolean isReal() {
-        return true;
-    }
 }

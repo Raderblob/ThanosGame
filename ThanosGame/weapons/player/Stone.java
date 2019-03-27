@@ -8,9 +8,11 @@ import javafx.geometry.Point2D;
 public class Stone {
     protected int stoneType;
     protected Thanos owner;
+    protected String stoneName;
     public Stone(Thanos owner){
         stoneType=-1;
         this.owner = owner;
+        stoneName = "Empty";
     }
 
     public int doAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
@@ -30,9 +32,8 @@ public class Stone {
         return -1;
     }
 
-    @Override
     public String toString() {
-        return "Empty";
+        return stoneName;
     }
 
     public boolean isReal(){

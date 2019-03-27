@@ -2,6 +2,7 @@ package ThanosGame;
 
 import ThanosGame.terrain.TerrainMap;
 import ThanosGame.weapons.Explosion;
+import ThanosGame.weapons.FXEffect;
 import ThanosGame.weapons.Projectile;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -12,7 +13,7 @@ import java.util.LinkedList;
 public class World {
     public Thanos thanos;
     private TerrainMap terrain;
-    public LinkedList<Explosion> worldExplosions;
+    public LinkedList<FXEffect> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
 
     public World(int worldType, Thanos p) {
@@ -32,14 +33,14 @@ public class World {
     public void runWorld(double currentNanoTime) {
         thanos.run(terrain, this, currentNanoTime);//run physics for the player
         LinkedList<Projectile> pToRemove = new LinkedList<>();
-        LinkedList<Explosion> eToRemove = new LinkedList<>();
+        LinkedList<FXEffect> eToRemove = new LinkedList<>();
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.runLogic(this, terrain, currentNanoTime); //run collisions for projectiles
             if (cProjectile.mylife <= 0) {
                 pToRemove.add(cProjectile);
             }
         }
-        for (Explosion cExplosion : worldExplosions) {
+        for (FXEffect cExplosion : worldExplosions) {
             cExplosion.runExplosion(this, terrain, currentNanoTime); //run explosion logic (possible repulsion and animation)
             if (cExplosion.mylife <= 0) {
                 eToRemove.add(cExplosion);
@@ -50,7 +51,7 @@ public class World {
             worldExplosions.add(new Explosion(p.position, new Point2D(10, 10), 10, p.degats, terrain));
             worldProjectiles.remove(p);
         }
-        for (Explosion e : eToRemove) {
+        for (FXEffect e : eToRemove) {
             worldExplosions.remove(e);
         }
 
@@ -63,7 +64,7 @@ public class World {
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.renderMe(gc, thanos.getCameraPosition());
         }
-        for (Explosion cExplosion : worldExplosions) {
+        for (FXEffect cExplosion : worldExplosions) {
             cExplosion.renderMe(gc, thanos.getCameraPosition());
         }
     }

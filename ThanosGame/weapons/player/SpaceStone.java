@@ -4,12 +4,15 @@ import ThanosGame.Main;
 import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
+import ThanosGame.weapons.FXEffect;
 import javafx.geometry.Point2D;
 
 public class SpaceStone extends Stone {
     private double range = 1000;
     public SpaceStone(Thanos owner) {
         super(owner);
+        stoneType = 2;
+        stoneName="Space Stone";
     }
 
     @Override
@@ -22,6 +25,8 @@ public class SpaceStone extends Stone {
         }
 
         if(terrainClear(currentWorld.thanos,currentTerrain,destination)){
+            currentWorld.worldExplosions.add(new FXEffect(currentWorld.thanos.myPosition,new Point2D(40,40),1000,currentTerrain));
+            currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(40,40),1000,currentTerrain));
             currentWorld.thanos.myPosition = destination;
         }
 
@@ -39,13 +44,4 @@ public class SpaceStone extends Stone {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "Space Stone";
-    }
-
-    @Override
-    public boolean isReal() {
-        return true;
-    }
 }
