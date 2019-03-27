@@ -3,6 +3,7 @@ package ThanosGame.ToBeIntegrated;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
+import java.util.Objects;
 
 public class BoutonRond extends JButton {
 
@@ -98,7 +99,7 @@ public class BoutonRond extends JButton {
         g2d.fillOval(x + BULLE_WIDTH / 5, y, 5 * BULLE_WIDTH / 8,
         BULLE_WIDTH / 3);
         
-        if(this.texte!="null"){
+        if(!Objects.equals(this.texte, "null")){
             g2d.setFont(this.font);
             float[] dist = {0.1f, 0.3f};
             Color c = new Color(22,22,22,0);

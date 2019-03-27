@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class Game extends Application {
     private Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
-    private ArrayList<World> gameWorlds = new ArrayList<World>();
+    private ArrayList<World> gameWorlds = new ArrayList<>();
     private int selectedWorld;
     private long lastLength;
     private Group root;

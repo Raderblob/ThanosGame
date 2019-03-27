@@ -37,7 +37,9 @@ public class FXEffect extends Item {
         Affine nA = new Affine(nS);
         nA.append(nR);
         Main.applyMatrixTransform(gc, nA);
+        gc.setGlobalAlpha(mylife/maxLife);
         super.renderMe(gc,camPos);
         gc.restore();
+
     }
 }

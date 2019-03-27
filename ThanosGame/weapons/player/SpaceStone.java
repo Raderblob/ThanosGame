@@ -25,8 +25,8 @@ public class SpaceStone extends Stone {
         }
 
         if(terrainClear(currentWorld.thanos,currentTerrain,destination)){
-            currentWorld.worldExplosions.add(new FXEffect(currentWorld.thanos.myPosition,new Point2D(40,40),1000,currentTerrain));
-            currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(40,40),1000,currentTerrain));
+            currentWorld.worldExplosions.add(new FXEffect(currentWorld.thanos.myPosition,new Point2D(40,40),20,currentTerrain));
+            currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(40,40),20,currentTerrain));
             currentWorld.thanos.myPosition = destination;
         }
 

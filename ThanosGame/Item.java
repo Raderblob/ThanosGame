@@ -20,11 +20,7 @@ public class Item {
 
     protected boolean isInRectangle(Point2D rPos, Point2D rSize) {
         Point2D relPos = position.add(rPos.multiply(-1));
-        if (Math.abs(relPos.getX()) < rSize.getX() && Math.abs(relPos.getY()) < rSize.getY()) {
-            return true;
-        } else {
-            return false;
-        }
+        return Math.abs(relPos.getX()) < rSize.getX() && Math.abs(relPos.getY()) < rSize.getY();
     }
 
     public void renderMe(GraphicsContext gc, Point2D camPos) {

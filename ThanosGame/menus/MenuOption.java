@@ -216,16 +216,16 @@ public class MenuOption extends JFrame implements ActionListener  {
 		if (e.getSource() == valid){
             // Phase 2 CLAVIER
             if (azerty.isSelected()){
-                touches.setAZERTY();
+                Keyboard.setAZERTY();
             }
             if (qwerty.isSelected()){
-                touches.setQWERTY();
+                Keyboard.setQWERTY();
             }
             if (up.isSelected()){
-                touches.setUpJump();
+                Keyboard.setUpJump();
             }
             if (space.isSelected()){
-                touches.setSpaceJump();
+                Keyboard.setSpaceJump();
             }
 
             // Phase 2 NIVEAU
