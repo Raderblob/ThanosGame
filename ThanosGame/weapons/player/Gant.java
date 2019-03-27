@@ -7,15 +7,15 @@ import javafx.geometry.Point2D;
 
 public class Gant{
     public Thanos owner;
-    private int selectedStone;
-    Stone[] stones ;
+    public int selectedStone;
+    public Stone[] stones ;
     int nbPierres ;
 
     public Gant(Thanos owner){
         this.owner=owner;
         stones = new Stone[5];
         for(int i=0;i<stones.length;i++){
-            stones[i] = new Stone(this);
+            stones[i] = new Stone(owner);
         }
         selectedStone = 0;
     }
@@ -23,7 +23,23 @@ public class Gant{
         for(int i = 0;i<stones.length;i++){
             if(!stones[i].isReal()){
                 stones[i]=nStone;
+                return;
             }
+        }
+    }
+    public void selectStone(int stoneToSelect){
+        selectedStone = stoneToSelect;
+    }
+    public void selectNextStone(){
+        selectedStone+=1;
+        if(selectedStone>=stones.length){
+            selectedStone=0;
+        }
+    }
+    public void selectPreviousStone(){
+        selectedStone-=1;
+        if(selectedStone<0){
+            selectedStone=stones.length-1;
         }
     }
 

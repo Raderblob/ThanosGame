@@ -1,17 +1,17 @@
 package ThanosGame.weapons.player;
 
-import ThanosGame.Main;
+import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 
-import java.util.LinkedList;
-
 public class RealityStone extends Stone {
 
 
-    public RealityStone(Gant owner) {
+    public RealityStone(Thanos owner) {
         super(owner);
+        stoneType=1;
+        stoneName="Reality Stone";
     }
 
     @Override

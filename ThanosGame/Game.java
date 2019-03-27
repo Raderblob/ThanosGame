@@ -1,9 +1,11 @@
 package ThanosGame;
 
+import ThanosGame.graphics.GraphicalUserInterface;
 import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.weapons.ReboundProjectile;
 import ThanosGame.weapons.player.RealityStone;
+import ThanosGame.weapons.player.SpaceStone;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -30,6 +32,7 @@ public class Game extends Application {
     private int toShow =0;
     private Stage stage;
     private Scene scene;
+    private GraphicalUserInterface gui;
 
     @Override
     public void start(Stage stage) {
@@ -57,6 +60,14 @@ public class Game extends Application {
                 //Frapper
             } else if (key.getCode() == Keyboard.down) {
                 //PEUT SERVIR...
+            }else if(key.getCode() == KeyCode.DIGIT1){
+                thanos.infinity.selectStone(0);
+            }else if(key.getCode()==KeyCode.DIGIT2){
+                thanos.infinity.selectStone(1);
+            }else if(key.getCode()==KeyCode.DIGIT3){
+                thanos.infinity.selectStone(2);
+            }else if(key.getCode()==KeyCode.DIGIT4){
+                thanos.infinity.selectStone(3);
             }
         });
         scene.addEventHandler(KeyEvent.KEY_RELEASED, key -> {
@@ -96,7 +107,10 @@ public class Game extends Application {
         GraphicsContext gc = canvas.getGraphicsContext2D();
         selectedWorld = 0;
         thanos = new Thanos(100);
-        thanos.addStone(new RealityStone(thanos.infinity));
+        thanos.addStone(new RealityStone(thanos));
+        thanos.addStone(new SpaceStone(thanos));
+        gui = new GraphicalUserInterface(thanos);
+
         gameWorlds.add(new World(0, thanos));
 
 
@@ -109,8 +123,6 @@ public class Game extends Application {
                     stage.show();
                     toShow=0;
                 }else if(toShow ==-1){
-
-
                     toShow=0;
                 }
             }
@@ -128,7 +140,7 @@ public class Game extends Application {
 
 
         gameWorlds.get(selectedWorld).renderWorld(gc, root);//render the selected world
-
+        gui.draw(gc);
 
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
