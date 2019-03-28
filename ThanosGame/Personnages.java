@@ -69,16 +69,9 @@ public class Personnages {
 
 
         if (tUnderFoot) {
-            // Alors faire demi-tour
-        }
-
-        if (playerTrimmingTerrain(currentTerrain)) {
-            myPosition = myPosition.add(0, -4);
-        }
-
-        if (movingState > 0) {
             myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleRight(currentTerrain) ? 0 : 1), 0);
-        } else if (movingState < 0) {
+
+        } else {
             myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleLeft(currentTerrain) ? 0 : 1), 0);
         }
         myPosition = currentTerrain.clampPoint(myPosition.add(mySpeed.multiply(currentNanoTime)), mySize);
@@ -111,16 +104,6 @@ public class Personnages {
     private boolean terrainIsObstacleLeft(TerrainMap currentTerrain) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
             if (currentTerrain.getTerrainVal(myPosition.getX() - mySize.getX()-3, y) != 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    private boolean playerTrimmingTerrain(TerrainMap currentTerrain) {
-        for (int x = (int) (myPosition.getX() - mySize.getX()); x < myPosition.getX() + mySize.getX(); x += 4) {
-            if (currentTerrain.getTerrainVal(x, myPosition.getY() + mySize.getY() - 1) != 0) {
                 return true;
             }
         }

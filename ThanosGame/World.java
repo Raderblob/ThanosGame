@@ -48,7 +48,7 @@ public class World {
 
     public void runWorld(double currentNanoTime) {
         thanos.run(terrain, this, currentNanoTime);
-        ennemi.run(terrain, this, currentNanoTime);
+       /* ennemi.run(terrain, this, currentNanoTime);*/
         //run physics for the player
         //run ai
         LinkedList<Projectile> pToRemove = new LinkedList<>();
