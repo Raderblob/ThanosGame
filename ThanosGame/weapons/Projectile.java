@@ -38,7 +38,7 @@ public class Projectile extends Item {
                 mylife = 0;
                 //create explosion (does not do the damage directly)
             }
-            if (myTerrain.getTerrainVal(position.getX(), position.getY()) != 0) {
+            if (myTerrain.getTerrainValCollision(position.getX(), position.getY()) != 0) {
                 mylife = 0;
                 //create explosion
             }

@@ -36,7 +36,7 @@ public class SpaceStone extends Stone {
     private boolean terrainClear(Thanos thanos, TerrainMap currentTerrain,Point2D destination){
         for(int x = -(int)thanos.mySize.getX();x<thanos.mySize.getX();x++){
             for(int y = -(int)thanos.mySize.getY();y<thanos.mySize.getY();y++){
-                if(currentTerrain.getTerrainVal(x+ destination.getX(),y+destination.getY())!=0){
+                if(currentTerrain.getTerrainValCollision(x+ destination.getX(),y+destination.getY())!=0){
                     return false;
                 }
             }

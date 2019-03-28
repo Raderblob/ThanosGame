@@ -90,10 +90,10 @@ public class PlayerClass {
 
     private boolean terrainUnderFoot(TerrainMap currentTerrain) {
         for (int x = (int) (myPosition.getX() - mySize.getX()); x < myPosition.getX() + mySize.getX(); x += 4) {
-            if (currentTerrain.getTerrainVal(x, myPosition.getY() + mySize.getY()) != 0) {
+            if (currentTerrain.getTerrainValCollision(x, myPosition.getY() + mySize.getY()) != 0) {
                 return true;
             }
-            if (currentTerrain.getTerrainVal(x , myPosition.getY() + mySize.getY()-3) != 0) {
+            if (currentTerrain.getTerrainValCollision(x , myPosition.getY() + mySize.getY()-3) != 0) {
                 return true;
             }
         }
@@ -102,7 +102,7 @@ public class PlayerClass {
 
     private boolean terrainIsObstacleRight(TerrainMap currentTerrain) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (currentTerrain.getTerrainVal(myPosition.getX() + mySize.getX()+3, y) != 0) {
+            if (currentTerrain.getTerrainValCollision(myPosition.getX() + mySize.getX()+3, y) != 0) {
                 return true;
             }
         }
@@ -111,7 +111,7 @@ public class PlayerClass {
 
     private boolean terrainIsObstacleLeft(TerrainMap currentTerrain) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (currentTerrain.getTerrainVal(myPosition.getX() - mySize.getX()-3, y) != 0) {
+            if (currentTerrain.getTerrainValCollision(myPosition.getX() - mySize.getX()-3, y) != 0) {
                 return true;
             }
         }
@@ -120,7 +120,7 @@ public class PlayerClass {
 
     private boolean terrainIsObstacleOverhead(TerrainMap currentTerrain) {
         for (int x = (int) (myPosition.getX() - mySize.getX()); x < myPosition.getX() + mySize.getX(); x += 4) {
-            if (currentTerrain.getTerrainVal(x, myPosition.getY() - mySize.getY()) != 0) {
+            if (currentTerrain.getTerrainValCollision(x, myPosition.getY() - mySize.getY()) != 0) {
                 return true;
             }
         }
@@ -129,7 +129,7 @@ public class PlayerClass {
 
     private boolean playerTrimmingTerrain(TerrainMap currentTerrain) {
         for (int x = (int) (myPosition.getX() - mySize.getX()); x < myPosition.getX() + mySize.getX(); x += 4) {
-            if (currentTerrain.getTerrainVal(x, myPosition.getY() + mySize.getY() - 1) != 0) {
+            if (currentTerrain.getTerrainValCollision(x, myPosition.getY() + mySize.getY() - 1) != 0) {
                 return true;
             }
         }

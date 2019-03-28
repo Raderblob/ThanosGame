@@ -70,7 +70,7 @@ public class BuildingSaves {
                         res[x][y] = PixelBlockType.STONE.getMyVal();
                         break;
                     default:
-                        res[x][y] = 0;
+                        res[x][y] =(byte) -PixelBlockType.STONE.getMyVal();
                         break;
                 }
             }

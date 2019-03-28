@@ -127,15 +127,23 @@ public class TerrainMap {
     }
 
     public byte getTerrainVal(double x, double y) {
+        return (byte)Math.abs(getTerrainValRaw(x,y));
+    }
+    private byte getTerrainValRaw(double x,double y){
         int nX, nY;
         nX = (int) (x / 4);
         nY = (int) (y / 4);
         return chunk[nX / (int) TerrainChunck.chunkParam.getX()].getVal(nX, nY);
     }
 
+    public byte getTerrainValCollision(double x,double y){
+        return (byte)(Math.max(0,getTerrainValRaw(x,y)));
+    }
+
     public byte getTerrainVal(Point2D p) {
         return getTerrainVal(p.getX(), p.getY());
     }
+    public byte getTerrainValCollision(Point2D p){return getTerrainValCollision(p.getX(),p.getY());}
 
     public void changeTerrain(Point2D pointToChange[], byte futurVals[]) {
         Point2D pTC[] = new Point2D[pointToChange.length];
@@ -177,7 +185,7 @@ public class TerrainMap {
 
         for (double a = angle; a < angle + Math.PI * 2; a += 0.1 / 180 * Math.PI) {
             testPoint = new Point2D(Math.cos(a), Math.sin(a));
-            if (getTerrainVal(testPoint.multiply(10).add(tPos)) != 0) {
+            if (getTerrainValCollision(testPoint.multiply(10).add(tPos)) != 0) {
                 return testPoint;
             }
         }
@@ -250,7 +258,9 @@ class TerrainChunck {
     }
 
 
-    private Color getTerrainColor(byte a) {
+    private Color getTerrainColor(byte aR) {
+        byte a =(byte) Math.abs(aR);
+
         javafx.scene.paint.Color c;
         if (a == PixelBlockType.DIRT.getMyVal()) {
             c = new javafx.scene.paint.Color((101 + (int) (Math.random() * 50 - 25)) / 254d, (67 + (int) (Math.random() * 50 - 25)) / 254d, (33 + (int) (Math.random() * 50 - 25)) / 254d, 1);
@@ -274,6 +284,9 @@ class TerrainChunck {
             c = new javafx.scene.paint.Color(1, 0, 0, 1);
         } else {
             c = Color.BLUE;
+        }
+        if(aR<0){
+            c = c.desaturate().darker();
         }
         return c;
     }
