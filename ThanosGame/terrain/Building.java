@@ -149,7 +149,7 @@ public class Building {
         for (BuildingModule myModule : myModules) {
             for (int x = 0; x < myModule.blocks.length; x++) {
                 for (int y = 0; y < myModule.blocks[x].length; y++) {
-                    if (myModule.blocks[x][y] != -1) {
+                    if (myModule.blocks[x][y] != -100) {
                         PToChange.add(new Point2D(x * 4, y * 4).add(myModule.myPosition));
                         fVals.add(myModule.blocks[x][y]);
                     }
@@ -157,8 +157,10 @@ public class Building {
             }
         }
         byte fValsFinal[] = new byte[fVals.size()];
-        for (int i = 0; i < fValsFinal.length; i++) {
-            fValsFinal[i] = fVals.get(i);
+        int i=0;
+        for(byte v:fVals){
+            fValsFinal[i] = v;
+            i++;
         }
         theTerrain.changeTerrain(PToChange.toArray(new Point2D[0]), fValsFinal);
     }

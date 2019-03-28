@@ -6,8 +6,8 @@ import javafx.geometry.Point2D;
 import java.util.LinkedList;
 
 public class LargeBase {
-    private Point2D myPos;
-    private byte[][] myArray;
+    private final Point2D myPos;
+    private final byte[][] myArray;
 
     public LargeBase(byte[][] baseArray, Point2D basePos) {
         myPos = basePos;
@@ -21,7 +21,7 @@ public class LargeBase {
 
         for (int x = 0; x < myArray.length; x++) {
             for (int y = 0; y < myArray[x].length; y++) {
-                if (myArray[x][y] != -1) {
+                if (myArray[x][y] != -100) {
                     PToChange.add(new Point2D(x * 4, y * 4).add(myPos));
                     fVals.add(myArray[x][y]);
                 }
@@ -29,9 +29,13 @@ public class LargeBase {
         }
 
         byte fValsFinal[] = new byte[fVals.size()];
-        for (int i = 0; i < fValsFinal.length; i++) {
-            fValsFinal[i] = fVals.get(i);
+        int i=0;
+        for(byte v:fVals){
+            fValsFinal[i] = v;
+            i++;
         }
+
+
         theTerrain.changeTerrain(PToChange.toArray(new Point2D[0]), fValsFinal);
     }
 }

@@ -19,13 +19,12 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
 
 
 public class Game extends Application {
     private Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
-    private ArrayList<World> gameWorlds = new ArrayList<>();
+    private World gameWorld;
     private int selectedWorld;
     private long lastLength;
     private Group root;
@@ -37,6 +36,7 @@ public class Game extends Application {
 
     @Override
     public void start(Stage stage) {
+
         this.stage=stage;
         ImagesSaves.loadImages();
         System.out.println("Loading Game...");
@@ -89,7 +89,7 @@ public class Game extends Application {
                 thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
             } else {
                 System.out.println("Right Click for test projectile");
-                gameWorlds.get(selectedWorld).worldProjectiles.add(new ReboundProjectile(new Point2D(mouse.getSceneX(), mouse.getSceneY()).add(thanos.getCameraPosition()), new Point2D(4, 3), 12, 5, Math.random() * 360));
+                gameWorld.worldProjectiles.add(new ReboundProjectile(new Point2D(mouse.getSceneX(), mouse.getSceneY()).add(thanos.getCameraPosition()), new Point2D(4, 3), 12, 5, Math.random() * 360));
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouse -> {
@@ -106,7 +106,8 @@ public class Game extends Application {
         Canvas canvas = new Canvas(winParam.getX(), winParam.getY());
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        selectedWorld = 0;
+
+
         thanos = new Thanos(100);
         thanos.addStone(new RealityStone(thanos));
         thanos.addStone(new SpaceStone(thanos));
@@ -114,8 +115,8 @@ public class Game extends Application {
 
         gui = new GraphicalUserInterface(thanos);
 
-        gameWorlds.add(new World(0, thanos));
 
+        switchWorlds(1);
 
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
@@ -137,18 +138,28 @@ public class Game extends Application {
     public void gameLoop(GraphicsContext gc) { //the game loop
         long lastTime = System.nanoTime();
 
-        gameWorlds.get(selectedWorld).runWorld(Math.min(lastLength * 0.0000001, 3));//run logic for the seletced world
+        gameWorld.runWorld(Math.min(lastLength * 0.0000001, 3));//run logic for the selected world
 
         gc.clearRect(0, 0, 1000, 1000);//clear the game screen
 
 
-        gameWorlds.get(selectedWorld).renderWorld(gc, root);//render the selected world
+        gameWorld.renderWorld(gc, root);//render the selected world
         gui.draw(gc);
 
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);
        // System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+    }
+
+    public void switchWorlds(int newWorld){
+        if(gameWorld != null){
+            gameWorld.dispose(root);
+        }
+
+        selectedWorld = newWorld;
+        gameWorld = new World(selectedWorld,thanos,this);
+        thanos.myPosition =gameWorld.getStarterPos();
     }
 
     public void showGame(){
