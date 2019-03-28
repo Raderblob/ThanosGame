@@ -5,20 +5,16 @@ import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 
-public class RealityStone extends Stone {
-
-
-    public RealityStone(Thanos owner) {
+public class PowerStone extends Stone {
+    public PowerStone(Thanos owner) {
         super(owner);
-        stoneType=1;
-        stoneName="Reality Stone";
-        myPower = 10;
+        stoneType = 3;
+        stoneName="Power Stone";
+        myPower=1000;
     }
 
-    @Override
     public int doAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
-        doChanges( currentTerrain.getCircleOfPointsLinked(destroyAt,40),(byte)0,currentTerrain);
+        super.doAction(currentTerrain,currentWorld,destroyAt);
         return 1;
     }
-
 }

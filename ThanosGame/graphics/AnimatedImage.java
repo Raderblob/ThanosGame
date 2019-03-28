@@ -22,6 +22,9 @@ public class AnimatedImage {
         delay = delayToUse;
         lastClock = System.currentTimeMillis();
     }
+    public void setMyMode(int myMode){
+        this.myMode=myMode;
+    }
 
     public void draw(GraphicsContext gc, Point2D drawingCoords, Point2D imageSize) {
         gc.drawImage(globalImage,imageIndex * subImageSize.getX(), myMode * subImageSize.getY(), subImageSize.getX(), subImageSize.getY(), drawingCoords.getX(), drawingCoords.getY(), imageSize.getX(), imageSize.getY());

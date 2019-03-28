@@ -14,8 +14,8 @@ public class ImagesSaves {
         thanosSprites = new Image(ImagesSaves.class.getResource("thanosSprites.png").toExternalForm());
         projectiles[0] =  new Image(ImagesSaves.class.getResource("projectile1.png").toExternalForm());
         explosions[0]=  new Image(ImagesSaves.class.getResource("explosion1.png").toExternalForm());
-        ShieldSprites = new Image(ImagesSaves.class.getResource("ShieldSprites.png").toExternalForm());
-        WakandaisSprites = new Image(ImagesSaves.class.getResource("WakandaisSprites.png").toExternalForm());
+       // ShieldSprites = new Image(ImagesSaves.class.getResource("ShieldSprites.png").toExternalForm());
+        //WakandaisSprites = new Image(ImagesSaves.class.getResource("WakandaisSprites.png").toExternalForm());
     }
 }
 

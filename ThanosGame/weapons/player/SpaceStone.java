@@ -8,7 +8,7 @@ import ThanosGame.weapons.FXEffect;
 import javafx.geometry.Point2D;
 
 public class SpaceStone extends Stone {
-    private double range = 1000;
+    private double range = 500;
     public SpaceStone(Thanos owner) {
         super(owner);
         stoneType = 2;

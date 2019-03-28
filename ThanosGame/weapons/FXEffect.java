@@ -17,7 +17,8 @@ public class FXEffect extends Item {
     private double maxLife;
 
     public FXEffect(Point2D maPosition, Point2D Size,double myL,TerrainMap mTerrain) {
-        super(maPosition, Size,ImagesSaves.explosions[0],new Point2D(15,13),100);
+        super(maPosition, Size,ImagesSaves.explosions[0],new Point2D(15,14),100);
+        myAnimation.setMyMode(1);
         mylife = myL;
         maxLife = myL;
         explosionRadius = mySize.getX();

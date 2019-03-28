@@ -2,7 +2,6 @@ package ThanosGame.terrain;
 
 import ThanosGame.Game;
 import ThanosGame.Main;
-import ThanosGame.Personnages;
 import ThanosGame.graphics.images.PixelBlockType;
 import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
@@ -82,14 +81,14 @@ public class TerrainMap {
         }
 
         // Générons les ennemis
-        for (int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700) {//generate buildings
+      /*  for (int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700) {//generate buildings
             double rdm = Math.random();
             if (Main.numberGenerator.nextInt(100) > 70) {
                 int x = Main.numberGenerator.nextInt(200) + i;
                 int y = // La hauteur de la platerforme sur laquelle on se trouve
                 Personnages Shield = new Personnages(x,y); // On crée un perso
             }
-        }
+        }*/
 
 
 
@@ -151,6 +150,12 @@ public class TerrainMap {
 
     public Point2D[] getCircleOfPoints(Point2D circlePos, double circleRadius) {
 
+        return getCircleOfPointsLinked(circlePos,circleRadius).toArray(new Point2D[0]);
+
+
+    }
+    public LinkedList<Point2D> getCircleOfPointsLinked(Point2D circlePos, double circleRadius) {
+
         LinkedList<Point2D> pTD = new LinkedList<>();
 
         for (int x = (int) -circleRadius; x < circleRadius; x++) {
@@ -160,7 +165,7 @@ public class TerrainMap {
                 }
             }
         }
-        return pTD.toArray(new Point2D[0]);
+        return pTD;
 
 
     }

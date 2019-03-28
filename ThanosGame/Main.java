@@ -1,5 +1,6 @@
 package ThanosGame;
 
+import ThanosGame.graphics.images.PixelBlockType;
 import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
@@ -30,5 +31,22 @@ public class Main {
 
     public static void applyMatrixTransform(GraphicsContext gc, Transform tr){
         gc.setTransform(tr.getMxx(),tr.getMyx(),tr.getMxy(),tr.getMyy(),tr.getTx(),tr.getTy());
+    }
+
+    public static boolean canDamage(byte terrainByte, double damageDone){
+        if(terrainByte == PixelBlockType.NOTHING.getMyVal()){
+            return false;
+        }else if(terrainByte == PixelBlockType.BEDROCK.getMyVal()){
+            return false;
+        }else if(terrainByte == PixelBlockType.GRASS.getMyVal() || terrainByte == PixelBlockType.DIRT.getMyVal()){
+            return damageDone > 1;
+        }else if(terrainByte == PixelBlockType.STONE.getMyVal()){
+            return damageDone > 8;
+        }else if(terrainByte == PixelBlockType.BRICK.getMyVal()){
+            return damageDone > 12;
+        }
+
+
+        return false;
     }
 }

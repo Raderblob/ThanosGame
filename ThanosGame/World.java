@@ -48,7 +48,7 @@ public class World {
         }
 
         for (Projectile p : pToRemove) {
-            worldExplosions.add(new Explosion(p.position, new Point2D(10, 10), 10, p.degats, terrain));
+            worldExplosions.add(new Explosion(p.position, new Point2D(10, 10), 28, p.degats, terrain));
             worldProjectiles.remove(p);
         }
         for (FXEffect e : eToRemove) {

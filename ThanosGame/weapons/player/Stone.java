@@ -1,45 +1,63 @@
 package ThanosGame.weapons.player;
 
+import ThanosGame.Main;
 import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 
+import java.util.LinkedList;
+
 public class Stone {
     protected int stoneType;
     protected Thanos owner;
     protected String stoneName;
-    public Stone(Thanos owner){
-        stoneType=-1;
+    protected int myPower;
+    public Stone(Thanos owner) {
+        stoneType = -1;
         this.owner = owner;
         stoneName = "Empty";
+        myPower = 2;
     }
 
-    public int doAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
-        Point2D[] pTD = new Point2D[(int)(owner.mySize.getX()*2*owner.mySize.getY()*2)];
-        int cnt =0;
-        for(int x=0;x<owner.mySize.getX()*2;x++){
-            for(int y =(int)-owner.mySize.getY();y<owner.mySize.getY();y++){
-                pTD[cnt] = new Point2D((destroyAt.add(owner.myPosition.multiply(-1)).getX()<0? -1:1)*x,y).add(owner.myPosition);
-                cnt++;
-            }
-        }
+    public int doAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
+        Point2D destination = new Point2D(destroyAt.getX(), destroyAt.getY());
+        Point2D hitDistance = destination.add(currentWorld.thanos.myPosition.multiply(-1));
+
+        hitDistance = hitDistance.normalize().multiply(owner.mySize.getX());
+        destination = hitDistance.add(currentWorld.thanos.myPosition);
+        doChanges( currentTerrain.getCircleOfPointsLinked(destination,10),(byte)0,currentTerrain);
+        return -1;
+    }
+
+    protected void doChanges(LinkedList<Point2D> p,byte b,TerrainMap currentTerrain){
+        Point2D[] pTD =testMyDamage(p,currentTerrain);
+
+
         byte bTD[] = new byte[pTD.length];
         for (int i = 0; i < bTD.length; i++) {
-            bTD[i] = 0;
+            bTD[i] = b;
         }
         currentTerrain.changeTerrain(pTD, bTD);
-        return -1;
+    }
+
+    protected Point2D[] testMyDamage(LinkedList<Point2D> pTD, TerrainMap currentTerrain){
+        LinkedList<Point2D> res = new LinkedList<>();
+        for(Point2D p :pTD){
+            if(Main.canDamage(currentTerrain.getTerrainVal(p),myPower)){
+                res.add(p);
+            }
+        }
+        return res.toArray(new Point2D[0]);
     }
 
     public String toString() {
         return stoneName;
     }
 
-    public boolean isReal(){
-        return stoneType!=-1;
+    public boolean isReal() {
+        return stoneType != -1;
     }
-
 
 
 }
