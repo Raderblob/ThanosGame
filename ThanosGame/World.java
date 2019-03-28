@@ -48,7 +48,7 @@ public class World {
 
     public void runWorld(double currentNanoTime) {
         thanos.run(terrain, this, currentNanoTime);
-       /* ennemi.run(terrain, this, currentNanoTime);*/
+        ennemi.run(terrain, this, currentNanoTime);
         //run physics for the player
         //run ai
         LinkedList<Projectile> pToRemove = new LinkedList<>();
@@ -83,6 +83,7 @@ public class World {
     public void renderWorld(GraphicsContext gc, Group root) {
         terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain
         thanos.draw(gc);//draw the player
+        ennemi.draw(gc);
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.renderMe(gc, thanos.getCameraPosition());
         }

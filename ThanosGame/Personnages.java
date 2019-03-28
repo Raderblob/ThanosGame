@@ -50,7 +50,7 @@ public class Personnages {
     // Deplacement du personnage en fontion du timer mis en place
 
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
-        doPlayerMovement(currentTerrain, currentWorld,currentNanoTime);
+        doEnnemyMovement( currentTerrain, currentWorld, currentNanoTime);
         myAnimation.setWalkingMode(movingState);
     }
 
@@ -63,7 +63,7 @@ public class Personnages {
     }
 
 
-    private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
+    private void doEnnemyMovement(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
         mySpeed = mySpeed.add(0, currentNanoTime * 0.5 * (tUnderFoot ? 0 : 1));
 
