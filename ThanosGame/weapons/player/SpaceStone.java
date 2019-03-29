@@ -13,10 +13,11 @@ public class SpaceStone extends Stone {
         super(owner);
         stoneType = 2;
         stoneName="Space Stone";
+        coolDown = 5000;
     }
 
     @Override
-    public int doAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
+    protected int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
         Point2D destination = new Point2D(destroyAt.getX(),destroyAt.getY());
         Point2D teleportDistance = destination.add(currentWorld.thanos.myPosition.multiply(-1));
         if(Main.getMagnitudeSquared(teleportDistance)>Math.pow(range,2)){
@@ -24,13 +25,15 @@ public class SpaceStone extends Stone {
             destination = teleportDistance.add(currentWorld.thanos.myPosition);
         }
 
+        destination = currentTerrain.clampPoint(destination,currentWorld.thanos.mySize);
         if(terrainClear(currentWorld.thanos,currentTerrain,destination)){
             currentWorld.worldExplosions.add(new FXEffect(currentWorld.thanos.myPosition,new Point2D(40,40),20,currentTerrain));
             currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(40,40),20,currentTerrain));
             currentWorld.thanos.myPosition = destination;
+            return 1;
         }
 
-        return 1;
+        return 0;
     }
 
     private boolean terrainClear(Thanos thanos, TerrainMap currentTerrain,Point2D destination){

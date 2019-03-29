@@ -18,6 +18,7 @@ public class Thanos extends PlayerClass{
     @Override
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         super.run(currentTerrain, currentWorld, currentNanoTime);
+
         if (destroyAt.getX() != -1) {
             infinity.action(currentTerrain,currentWorld,destroyAt);
             //useTestStone(currentTerrain, currentWorld);
