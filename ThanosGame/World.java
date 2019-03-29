@@ -16,7 +16,6 @@ import java.util.LinkedList;
 public class World {
     private Game myGame;
     public Thanos thanos;
-    public Personnages ennemi;
     private TerrainMap terrain;
     public LinkedList<FXEffect> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
@@ -52,7 +51,6 @@ public class World {
 
     public void runWorld(double currentNanoTime) {
         thanos.run(terrain, this, currentNanoTime);
-        ennemi.run(terrain, this, currentNanoTime);
         //run physics for the player
         //run ai
         LinkedList<Projectile> pToRemove = new LinkedList<>();

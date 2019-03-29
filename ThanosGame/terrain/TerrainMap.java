@@ -2,7 +2,6 @@ package ThanosGame.terrain;
 
 import ThanosGame.Game;
 import ThanosGame.Main;
-import ThanosGame.Personnages;
 import ThanosGame.graphics.images.PixelBlockType;
 import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
@@ -20,7 +19,6 @@ public class TerrainMap {
     private int maxPixelsY;
     public boolean terrainRendered;
     public Point2D mySize;
-    private Personnages Shield;
 
     public TerrainMap(int numC, boolean withBuildings) {
 
