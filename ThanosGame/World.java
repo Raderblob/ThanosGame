@@ -17,6 +17,7 @@ import java.util.LinkedList;
 public class World {
     private Game myGame;
     public Thanos thanos;
+    public Personnages ennemi;
     private TerrainMap terrain;
     public LinkedList<FXEffect> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
@@ -52,7 +53,7 @@ public class World {
 
     public void runWorld(double currentNanoTime) {
         thanos.run(terrain, this, currentNanoTime);
-        //run physics for the player
+        ennemi.run(terrain, this, currentNanoTime);
         //run ai
         LinkedList<Projectile> pToRemove = new LinkedList<>();
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
@@ -89,6 +90,7 @@ public class World {
     public void renderWorld(GraphicsContext gc, Group root) {
         terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain
         thanos.draw(gc);//draw the player
+        ennemi.draw(gc);
         GraphicalUserInterface ennemi = null;
         ennemi.draw(gc);   
         for (Projectile cProjectile : worldProjectiles) {

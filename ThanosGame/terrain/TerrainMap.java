@@ -84,7 +84,7 @@ public class TerrainMap {
             double rdm = Math.random();
             if (Main.numberGenerator.nextInt(100) > 30) {
                 int x = Main.numberGenerator.nextInt(200) + i;
-                int y = 50;// La hauteur de la platerforme sur laquelle on se trouve
+                int y = 20;// La hauteur de la platerforme sur laquelle on se trouve
                 ennemi = new Personnages(x,y); // On crée un perso
             }
         }
