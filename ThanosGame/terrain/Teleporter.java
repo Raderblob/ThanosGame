@@ -10,7 +10,7 @@ public class Teleporter extends Item {
     private int teleportTo;
     private Game game;
     public Teleporter(Point2D maPosition,int teleportTo,Game game) {
-        super(maPosition, new Point2D(50,50), ImagesSaves.projectiles[0], new Point2D(20,10), 1000);
+        super(maPosition, new Point2D(50,50), ImagesSaves.teleporterSprite, new Point2D(180,255), 50);
         this.teleportTo = teleportTo;
         this.game=game;
     }
