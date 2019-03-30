@@ -13,10 +13,11 @@ public class RealityStone extends Stone {
         stoneType=1;
         stoneName="Reality Stone";
         myPower = 10;
+        coolDown = 1500;
     }
 
     @Override
-    public int doAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
+    protected int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
         doChanges( currentTerrain.getCircleOfPointsLinked(destroyAt,40),(byte)0,currentTerrain);
         return 1;
     }

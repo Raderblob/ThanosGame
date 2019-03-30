@@ -13,21 +13,46 @@ public class Stone {
     protected Thanos owner;
     protected String stoneName;
     protected int myPower;
+    protected long coolDown;
+    private long lastUsage;
     public Stone(Thanos owner) {
         stoneType = -1;
         this.owner = owner;
         stoneName = "Empty";
         myPower = 2;
+        lastUsage=System.currentTimeMillis();
+        coolDown=1;
+    }
+    
+    private void reset(){
+        if(isReset()){
+            lastUsage=System.currentTimeMillis();
+        }
     }
 
-    public int doAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
+    public double getCurrentCoolDown(){
+        return Math.min(coolDown,System.currentTimeMillis()-lastUsage)/((double)(coolDown));
+    }
+    private boolean isReset(){
+        return getCurrentCoolDown()==1;
+    }
+
+    public void doAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
+        if(isReset()) {
+            if(doSubAction(currentTerrain, currentWorld, destroyAt)==1){
+                reset();
+            }
+        }
+    }
+
+    protected int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
         Point2D destination = new Point2D(destroyAt.getX(), destroyAt.getY());
         Point2D hitDistance = destination.add(currentWorld.thanos.myPosition.multiply(-1));
 
         hitDistance = hitDistance.normalize().multiply(owner.mySize.getX());
         destination = hitDistance.add(currentWorld.thanos.myPosition);
         doChanges( currentTerrain.getCircleOfPointsLinked(destination,10),(byte)0,currentTerrain);
-        return -1;
+        return 1;
     }
 
     protected void doChanges(LinkedList<Point2D> p,byte b,TerrainMap currentTerrain){

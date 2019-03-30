@@ -11,10 +11,11 @@ public class PowerStone extends Stone {
         stoneType = 3;
         stoneName="Power Stone";
         myPower=1000;
+        coolDown = 300;
     }
 
-    public int doAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
-        super.doAction(currentTerrain,currentWorld,destroyAt);
+    protected int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
+        super.doSubAction(currentTerrain,currentWorld,destroyAt);
         return 1;
     }
 }
