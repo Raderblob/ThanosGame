@@ -2,6 +2,7 @@ package ThanosGame.terrain;
 
 import ThanosGame.Game;
 import ThanosGame.Main;
+import ThanosGame.Personnages;
 import ThanosGame.graphics.images.PixelBlockType;
 import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
@@ -19,6 +20,7 @@ public class TerrainMap {
     private int maxPixelsY;
     public boolean terrainRendered;
     public Point2D mySize;
+   private Personnages ennemi;
 
     public TerrainMap(int numC, boolean withBuildings) {
 
@@ -77,17 +79,17 @@ public class TerrainMap {
                 }
             }
 
-          /*  // Générons les ennemis
+          // Générons les ennemis
         for (int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700) {//generate buildings
             double rdm = Math.random();
-            if (Main.numberGenerator.nextInt(100) > 70) {
+            if (Main.numberGenerator.nextInt(100) > 30) {
                 int x = Main.numberGenerator.nextInt(200) + i;
-                int y = 0;// La hauteur de la platerforme sur laquelle on se trouve
-                Shield = new Personnages(x,y); // On crée un perso
+                int y = 50;// La hauteur de la platerforme sur laquelle on se trouve
+                ennemi = new Personnages(x,y); // On crée un perso
             }
         }
 
-*/
+
             new LargeBase(BuildingSaves.largeBases[0], new Point2D((int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000, 0)).changeTerrain(this); //end of World
         }
     }

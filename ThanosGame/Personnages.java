@@ -13,7 +13,6 @@ public class Personnages {
     private final AnimatedPerson myAnimation2;
     public int compt; // nb de pas du personnage
     public Point2D myPosition;
-    private int movingState;
     public Point2D mySize;
     public Point2D mySpeed;
 
@@ -30,7 +29,6 @@ public class Personnages {
     //GETTERS
 
 
-    public int getMovingState() { return movingState; }
     public Point2D getMySize() { return mySize; }
     public AnimatedPerson getMyAnimation() { return myAnimation; }
     public AnimatedPerson getMyAnimation2() { return myAnimation2; }
@@ -41,7 +39,6 @@ public class Personnages {
     //SETTERS
 
 
-    public void setMovingState(int movingState) { this.movingState = movingState; }
     public void setMySize(Point2D mySize) { this.mySize = mySize; }
     public void setMyPosition(Point2D myPosition) { this.myPosition = myPosition; }
     public void setCompt(int compt) { this.compt = compt; }
@@ -50,8 +47,7 @@ public class Personnages {
     // Deplacement du personnage en fontion du timer mis en place
 
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
-        doPlayerMovement(currentTerrain, currentWorld,currentNanoTime);
-        myAnimation.setWalkingMode(movingState);
+        doEnnemyMovement( currentTerrain, currentWorld, currentNanoTime);
     }
 
     public void draw(GraphicsContext gc) {
@@ -63,23 +59,16 @@ public class Personnages {
     }
 
 
-    private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
+    private void doEnnemyMovement(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
         mySpeed = mySpeed.add(0, currentNanoTime * 0.5 * (tUnderFoot ? 0 : 1));
 
 
         if (tUnderFoot) {
-            // Alors faire demi-tour
-        }
+            myPosition = myPosition.add( currentNanoTime*2 * (terrainIsObstacleRight(currentTerrain) ? 0 : 1), 0);
 
-        if (playerTrimmingTerrain(currentTerrain)) {
-            myPosition = myPosition.add(0, -4);
-        }
-
-        if (movingState > 0) {
-            myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleRight(currentTerrain) ? 0 : 1), 0);
-        } else if (movingState < 0) {
-            myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleLeft(currentTerrain) ? 0 : 1), 0);
+        } else {
+            myPosition = myPosition.add( currentNanoTime*2 * (terrainIsObstacleLeft(currentTerrain) ? 0 : 1), 0);
         }
         myPosition = currentTerrain.clampPoint(myPosition.add(mySpeed.multiply(currentNanoTime)), mySize);
 
@@ -111,16 +100,6 @@ public class Personnages {
     private boolean terrainIsObstacleLeft(TerrainMap currentTerrain) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
             if (currentTerrain.getTerrainVal(myPosition.getX() - mySize.getX()-3, y) != 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-    private boolean playerTrimmingTerrain(TerrainMap currentTerrain) {
-        for (int x = (int) (myPosition.getX() - mySize.getX()); x < myPosition.getX() + mySize.getX(); x += 4) {
-            if (currentTerrain.getTerrainVal(x, myPosition.getY() + mySize.getY() - 1) != 0) {
                 return true;
             }
         }

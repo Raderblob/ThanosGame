@@ -1,5 +1,6 @@
 package ThanosGame;
 
+import ThanosGame.graphics.GraphicalUserInterface;
 import ThanosGame.terrain.LargeBase;
 import ThanosGame.terrain.Teleporter;
 import ThanosGame.terrain.TerrainMap;
@@ -88,6 +89,8 @@ public class World {
     public void renderWorld(GraphicsContext gc, Group root) {
         terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain
         thanos.draw(gc);//draw the player
+        GraphicalUserInterface ennemi = null;
+        ennemi.draw(gc);   
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.renderMe(gc, thanos.getCameraPosition());
         }
