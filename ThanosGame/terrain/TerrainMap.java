@@ -20,7 +20,7 @@ public class TerrainMap {
     private int maxPixelsY;
     public boolean terrainRendered;
     public Point2D mySize;
-    private Personnages ennemi;
+   private Personnages ennemi;
 
     public TerrainMap(int numC, boolean withBuildings) {
 
@@ -79,7 +79,7 @@ public class TerrainMap {
                 }
             }
 
-            // Générons les ennemis
+          // Générons les ennemis
         for (int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700) {//generate buildings
             double rdm = Math.random();
             if (Main.numberGenerator.nextInt(100) > 30) {

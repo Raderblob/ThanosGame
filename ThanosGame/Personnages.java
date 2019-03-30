@@ -13,7 +13,6 @@ public class Personnages {
     private final AnimatedPerson myAnimation2;
     public int compt; // nb de pas du personnage
     public Point2D myPosition;
-    private int movingState;
     public Point2D mySize;
     public Point2D mySpeed;
 
@@ -30,7 +29,6 @@ public class Personnages {
     //GETTERS
 
 
-    public int getMovingState() { return movingState; }
     public Point2D getMySize() { return mySize; }
     public AnimatedPerson getMyAnimation() { return myAnimation; }
     public AnimatedPerson getMyAnimation2() { return myAnimation2; }
@@ -41,7 +39,6 @@ public class Personnages {
     //SETTERS
 
 
-    public void setMovingState(int movingState) { this.movingState = movingState; }
     public void setMySize(Point2D mySize) { this.mySize = mySize; }
     public void setMyPosition(Point2D myPosition) { this.myPosition = myPosition; }
     public void setCompt(int compt) { this.compt = compt; }
@@ -51,7 +48,6 @@ public class Personnages {
 
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         doEnnemyMovement( currentTerrain, currentWorld, currentNanoTime);
-        myAnimation.setWalkingMode(movingState);
     }
 
     public void draw(GraphicsContext gc) {
@@ -69,10 +65,10 @@ public class Personnages {
 
 
         if (tUnderFoot) {
-            myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleRight(currentTerrain) ? 0 : 1), 0);
+            myPosition = myPosition.add( currentNanoTime*2 * (terrainIsObstacleRight(currentTerrain) ? 0 : 1), 0);
 
         } else {
-            myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleLeft(currentTerrain) ? 0 : 1), 0);
+            myPosition = myPosition.add( currentNanoTime*2 * (terrainIsObstacleLeft(currentTerrain) ? 0 : 1), 0);
         }
         myPosition = currentTerrain.clampPoint(myPosition.add(mySpeed.multiply(currentNanoTime)), mySize);
 
