@@ -35,7 +35,7 @@ public class World {
                 teleportTo = 0;
                 terrain = new TerrainMap(30,true);
                 new LargeBase(BuildingSaves.pal,new Point2D(10000,0)).changeTerrain(terrain);
-                ennemi = new Personnages(new Point2D(100,50),thanos);
+                ennemi = new Personnages(new Point2D(100,50),thanos,terrain);
                 break;
             case 0:
                 starterPos = new Point2D(720,320);

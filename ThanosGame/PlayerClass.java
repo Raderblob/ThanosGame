@@ -15,6 +15,7 @@ public class PlayerClass {
     public Point2D mySpeed;
     protected Point2D destroyAt;
     protected AnimatedPerson myAnimation;
+    protected int obsClear ;
 
     public PlayerClass() {
         myPosition = new Point2D(50, 50);
@@ -46,6 +47,7 @@ public class PlayerClass {
 
     private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
+        obsClear = 1;
         mySpeed = mySpeed.add(0, currentNanoTime * 0.5 * (tUnderFoot ? 0 : 1));
 
 
@@ -68,12 +70,13 @@ public class PlayerClass {
         }
 
         if (movingState > 0) {
-            myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleRight(currentTerrain) ? 0 : 1), 0);
+            obsClear = terrainIsObstacleRight(currentTerrain) ? 0 : 1;
+            myPosition = myPosition.add( currentNanoTime*2 * movingState * (obsClear), 0);
         } else if (movingState < 0) {
-            myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleLeft(currentTerrain) ? 0 : 1), 0);
+            obsClear = terrainIsObstacleLeft(currentTerrain) ? 0 : 1;
+            myPosition = myPosition.add( currentNanoTime*2 * movingState * (obsClear), 0);
         }
         myPosition = currentTerrain.clampPoint(myPosition.add(mySpeed.multiply(currentNanoTime)), mySize);
-
     }
 
 
