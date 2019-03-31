@@ -1,6 +1,8 @@
 package ThanosGame.terrain;
 
 import ThanosGame.Main;
+import ThanosGame.Personnage;
+import ThanosGame.World;
 import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
 
@@ -11,12 +13,12 @@ public class Building {
     BuildingModule myModules[];
     private Point2D myPosition;
 
-    public Building(Point2D mPos) {
+    public Building(Point2D mPos, LinkedList<Personnage> enemyList, World myWorld, TerrainMap myTerrain) {
         myPosition = mPos;
-        Point2D cPos = new Point2D(myPosition.getX(), Math.max(myPosition.getY() - 80,1));
+        Point2D cPos = new Point2D(myPosition.getX(), Math.max(myPosition.getY() - 80, 1));
 
 
-        int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4) / 80) ;
+        int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4) / 80);
         int doorPlacement = (int) (cPos.getY() / 80);
         BuildingModule[][] buildingPlan = new BuildingModule[10][potentialBuildingHeight];
         LinkedList<BuildingModule> plannedBuilding = new LinkedList<>();
@@ -31,21 +33,29 @@ public class Building {
                         if (buildingPlan[x - 1][y] != null && buildingPlan[x - 1][y].canRight) {
                             buildingPlan[x][y] = getCanLeft(buildingPlan[x - 1][y].myPosition.add(80, 0));
                             plannedBuilding.add(buildingPlan[x][y]);
+                            if (Main.numberGenerator.nextInt(10) < 1)
+                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                         if (buildingPlan[x + 1][y] != null && buildingPlan[x + 1][y].canLeft) {
                             buildingPlan[x][y] = getCanRight(buildingPlan[x + 1][y].myPosition.add(-80, 0));
                             plannedBuilding.add(buildingPlan[x][y]);
+                            if (Main.numberGenerator.nextInt(10) < 1)
+                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                         if (buildingPlan[x][y + 1] != null && buildingPlan[x][y + 1].canUp) {
                             buildingPlan[x][y] = getCanDown(buildingPlan[x][y + 1].myPosition.add(0, -80));
                             plannedBuilding.add(buildingPlan[x][y]);
+                            if (Main.numberGenerator.nextInt(10) < 1)
+                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                         if (buildingPlan[x][y - 1] != null && buildingPlan[x][y - 1].canDown) {
                             buildingPlan[x][y] = getCanUp(buildingPlan[x][y - 1].myPosition.add(0, 80));
                             plannedBuilding.add(buildingPlan[x][y]);
+                            if (Main.numberGenerator.nextInt(10) < 1)
+                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                     }
@@ -157,8 +167,8 @@ public class Building {
             }
         }
         byte fValsFinal[] = new byte[fVals.size()];
-        int i=0;
-        for(byte v:fVals){
+        int i = 0;
+        for (byte v : fVals) {
             fValsFinal[i] = v;
             i++;
         }

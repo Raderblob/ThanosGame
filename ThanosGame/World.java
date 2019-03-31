@@ -17,7 +17,7 @@ public class World {
     private Game myGame;
     public Thanos thanos;
     private TerrainMap terrain;
-    private Personnages ennemi;
+    private  LinkedList<Personnage> enemies;
     public LinkedList<FXEffect> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
     private Point2D starterPos;
@@ -29,18 +29,19 @@ public class World {
         worldProjectiles = new LinkedList<>();
         worldExplosions = new LinkedList<>();
         teleporters = new LinkedList<>();
+        enemies = new LinkedList<>();
         switch (worldType) {
             case 1:
                 starterPos = new Point2D(50,50);
                 teleportTo = 0;
-                terrain = new TerrainMap(30,true);
+                terrain = new TerrainMap(30,true,this,enemies);
                 new LargeBase(BuildingSaves.pal,new Point2D(10000,0)).changeTerrain(terrain);
-                ennemi = new Personnages(new Point2D(100,50),thanos,terrain);
+                enemies.add(new Personnage(new Point2D(1000,50),terrain,this));
                 break;
             case 0:
                 starterPos = new Point2D(720,320);
                 teleportTo = 1;
-                terrain = new TerrainMap(2,false);
+                terrain = new TerrainMap(2,false,this,enemies);
                 System.out.println("loading base");
                 new LargeBase(BuildingSaves.thanosBase,new Point2D(0,0)).changeTerrain(terrain);//generate home base
                 teleporters.add(new Teleporter(new Point2D(1000,320),1,myGame));
@@ -54,7 +55,13 @@ public class World {
     public void runWorld(double currentNanoTime) {
         thanos.run(terrain, this, currentNanoTime);
         //run physics for the player
-        ennemi.run(terrain,this,currentNanoTime);//run ai
+
+        for(Personnage enemy: enemies){
+            enemy.run(terrain,this,currentNanoTime);//run ai
+        }
+
+
+
         LinkedList<Projectile> pToRemove = new LinkedList<>();
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
         for (Projectile cProjectile : worldProjectiles) {
@@ -90,7 +97,9 @@ public class World {
     public void renderWorld(GraphicsContext gc, Group root) {
         terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain
         thanos.draw(gc);//draw the player
-        ennemi.draw(gc);
+        for(Personnage enemy: enemies){
+            enemy.draw(gc);//draw ai
+        }
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.renderMe(gc, thanos.getCameraPosition());
         }

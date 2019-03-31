@@ -2,7 +2,8 @@ package ThanosGame.terrain;
 
 import ThanosGame.Game;
 import ThanosGame.Main;
-import ThanosGame.Personnages;
+import ThanosGame.Personnage;
+import ThanosGame.World;
 import ThanosGame.graphics.images.PixelBlockType;
 import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
@@ -20,9 +21,8 @@ public class TerrainMap {
     private int maxPixelsY;
     public boolean terrainRendered;
     public Point2D mySize;
-    private Personnages ennemi;
 
-    public TerrainMap(int numC, boolean withBuildings) {
+    public TerrainMap(int numC, boolean withBuildings, World myWorld, LinkedList<Personnage> enemyList) {
 
         mySize = new Point2D(10, 10);
         numChunks = numC;
@@ -75,7 +75,7 @@ public class TerrainMap {
                     do {
                         y += 1;
                     } while (getTerrainVal(x, y) == 0);
-                    new Building(new Point2D(x, y)).changeTerrain(this);
+                    new Building(new Point2D(x, y),enemyList,myWorld,this).changeTerrain(this);
                 }
             }
 
@@ -215,8 +215,6 @@ public class TerrainMap {
     }
 
 
-    private class Personnag {
-    }
 }
 
 class TerrainChunck {
