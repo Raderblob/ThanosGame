@@ -1,6 +1,5 @@
 package ThanosGame;
 
-import ThanosGame.graphics.GraphicalUserInterface;
 import ThanosGame.terrain.LargeBase;
 import ThanosGame.terrain.Teleporter;
 import ThanosGame.terrain.TerrainMap;
@@ -18,6 +17,7 @@ public class World {
     private Game myGame;
     public Thanos thanos;
     private TerrainMap terrain;
+    private Personnages ennemi;
     public LinkedList<FXEffect> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
     private Point2D starterPos;
@@ -35,6 +35,7 @@ public class World {
                 teleportTo = 0;
                 terrain = new TerrainMap(30,true);
                 new LargeBase(BuildingSaves.pal,new Point2D(10000,0)).changeTerrain(terrain);
+                ennemi = new Personnages(new Point2D(100,50),thanos);
                 break;
             case 0:
                 starterPos = new Point2D(720,320);
@@ -53,7 +54,7 @@ public class World {
     public void runWorld(double currentNanoTime) {
         thanos.run(terrain, this, currentNanoTime);
         //run physics for the player
-        //run ai
+        ennemi.run(terrain,this,currentNanoTime);//run ai
         LinkedList<Projectile> pToRemove = new LinkedList<>();
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
         for (Projectile cProjectile : worldProjectiles) {
@@ -89,8 +90,7 @@ public class World {
     public void renderWorld(GraphicsContext gc, Group root) {
         terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain
         thanos.draw(gc);//draw the player
-        GraphicalUserInterface ennemi = null;
-        ennemi.draw(gc);   
+        ennemi.draw(gc);
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.renderMe(gc, thanos.getCameraPosition());
         }
