@@ -20,6 +20,8 @@ public class Personnage extends PlayerClass {
     private boolean changeMind;
 
     public Personnage(Point2D pos, TerrainMap myTerrain, World myWorld) {
+        this.PV=100 ;
+        maxPv = PV;
         if(Main.numberGenerator.nextInt(10)<7){
             myState = AiState.STATIC;
         }else{

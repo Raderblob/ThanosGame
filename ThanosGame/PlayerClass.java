@@ -7,6 +7,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 public class PlayerClass {
+    public double PV ;
+    protected double maxPv;
+
     public int movingState;
     private int jumpingState;
     private boolean doubleJumped;
@@ -18,6 +21,8 @@ public class PlayerClass {
     protected int obsClear ;
 
     public PlayerClass() {
+
+
         myPosition = new Point2D(50, 50);
         mySize = new Point2D(10, 10);
         mySpeed = new Point2D(0, 0);
@@ -137,5 +142,9 @@ public class PlayerClass {
             }
         }
         return false;
+    }
+
+    public double getHp(){
+        return PV/maxPv;
     }
 }

@@ -5,6 +5,8 @@ import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 
+import java.util.LinkedList;
+
 public class RealityStone extends Stone {
 
 
@@ -18,7 +20,10 @@ public class RealityStone extends Stone {
 
     @Override
     protected int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
-        doChanges( currentTerrain.getCircleOfPointsLinked(destroyAt,40),(byte)0,currentTerrain);
+        LinkedList<Point2D> pointsToChange =  currentTerrain.getCircleOfPointsLinked(destroyAt,40);
+        doChanges(pointsToChange,(byte)0,currentTerrain);
+        doDamage(currentWorld,destroyAt,pointsToChange);
+
         return 1;
     }
 
