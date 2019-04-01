@@ -17,7 +17,7 @@ public class World {
     public Game myGame;
     public Thanos thanos;
     private TerrainMap terrain;
-    private  LinkedList<Personnage> enemies;
+    public  LinkedList<Personnage> enemies;
     public LinkedList<FXEffect> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
     private Point2D starterPos;
@@ -36,6 +36,10 @@ public class World {
                 teleportTo = 0;
                 terrain = new TerrainMap(30,true,this,enemies);
                 new LargeBase(BuildingSaves.pal,new Point2D(10000,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.ironManBase,new Point2D(1500,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.captainBase,new Point2D(2500,40)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.thorBase,new Point2D(2000,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.SpidermanBase,new Point2D(3000,0)).changeTerrain(terrain);
                 enemies.add(new Personnage(new Point2D(1000,50),terrain,this));
                 break;
             case 0:
@@ -56,14 +60,19 @@ public class World {
         thanos.run(terrain, this, currentNanoTime);
         //run physics for the player
 
-        for(Personnage enemy: enemies){
-            enemy.run(terrain,this,currentNanoTime);//run ai
-        }
 
 
-
+        LinkedList<Personnage> ennToRemove = new LinkedList<>();
         LinkedList<Projectile> pToRemove = new LinkedList<>();
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
+
+        for(Personnage enemy: enemies){
+            enemy.run(terrain,this,currentNanoTime);//run ai
+            if(enemy.PV<=0){
+                ennToRemove.add(enemy);
+            }
+        }
+
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.runLogic(this, terrain, currentNanoTime); //run collisions for projectiles
             if (cProjectile.mylife <= 0) {
@@ -83,6 +92,10 @@ public class World {
         }
         for (FXEffect e : eToRemove) {
             worldExplosions.remove(e);
+        }
+        for (Personnage e : ennToRemove) {
+            worldExplosions.add(new Explosion(e.myPosition, new Point2D(10, 10), 28, 1, terrain));
+            enemies.remove(e);
         }
 
         for(Teleporter teleporter:teleporters){
