@@ -7,12 +7,12 @@ import java.awt.event.ActionListener;
 
 public class MenuInventaire extends JFrame implements ActionListener {
     private JButton bRouge, bVert, bBleu, bViolet, bOrange, bJaune;
-    private JLabel fond,perso;
+    private JLabel fond,perso,PV;
     private JPanel conteneurMain, conteneurPerso;
     private int longueurBouton = 50;
     private int hauteurBouton = 50;
     private String texteTitre = "INVENTAIRE";
-    private int nbPierres = 8; //ATTENTION MODIFIER POUR FAIRE EN SORTE D'AVOIR LE NBPIERRES CORRESPONDANT
+    private int nbPierres = 5; //ATTENTION MODIFIER POUR FAIRE EN SORTE D'AVOIR LE NBPIERRES CORRESPONDANT
 
     public MenuInventaire() {
         //Création de la fenêtre et son entête
@@ -22,19 +22,29 @@ public class MenuInventaire extends JFrame implements ActionListener {
         setLocation(0, 0);
         setResizable(false);
 
+        //Violet
+        bViolet = new JButton("");
+        bViolet.setBounds((getWidth() - longueurBouton) / 2, 100, longueurBouton, hauteurBouton);
+        bViolet.setBackground(new Color(75,15,125));
+        bViolet.setForeground(Color.white);
+        bViolet.addActionListener(this);
+        if(nbPierres<1) {
+            bBleu.setVisible(false);
+        }else{
+            bViolet.setVisible(true);
+        }
+
         //Rouge
         bRouge = new JButton("");
-        bRouge.setBounds((getWidth() - longueurBouton) / 2, 100, longueurBouton, hauteurBouton);
+        bRouge.setBounds((getWidth() - longueurBouton) / 2, 200, longueurBouton, hauteurBouton);
         bRouge.setBackground(Color.red);
         bRouge.setForeground(Color.white);
         bRouge.addActionListener(this);
-
-        //Vert
-        bVert = new JButton("");
-        bVert.setBounds((getWidth() - longueurBouton) / 2, 200, longueurBouton, hauteurBouton);
-        bVert.setBackground(Color.green);
-        bVert.setForeground(Color.white);
-        bVert.addActionListener(this);
+        if(nbPierres<2) {
+            bRouge.setVisible(false);
+        }else{
+            bRouge.setVisible(true);
+        }
 
         //Bleu
         bBleu = new JButton("");
@@ -42,13 +52,23 @@ public class MenuInventaire extends JFrame implements ActionListener {
         bBleu.setBackground(Color.blue);
         bBleu.setForeground(Color.white);
         bBleu.addActionListener(this);
+        if(nbPierres<3) {
+            bBleu.setVisible(false);
+        }else{
+            bBleu.setVisible(true);
+        }
 
-        //Violet
-        bViolet = new JButton("");
-        bViolet.setBounds((getWidth() - longueurBouton) / 2, 400, longueurBouton, hauteurBouton);
-        bViolet.setBackground(new Color(75,15,125));
-        bViolet.setForeground(Color.white);
-        bViolet.addActionListener(this);
+        //Vert
+        bVert = new JButton("");
+        bVert.setBounds((getWidth() - longueurBouton) / 2, 400, longueurBouton, hauteurBouton);
+        bVert.setBackground(Color.green);
+        bVert.setForeground(Color.white);
+        bVert.addActionListener(this);
+        if(nbPierres<4) {
+            bVert.setVisible(false);
+        }else{
+            bVert.setVisible(true);
+        }
 
         //Jaune
         bJaune = new JButton("");
@@ -56,6 +76,11 @@ public class MenuInventaire extends JFrame implements ActionListener {
         bJaune.setBackground(new Color(255,255,0));
         bJaune.setForeground(Color.white);
         bJaune.addActionListener(this);
+        if(nbPierres<5) {
+            bJaune.setVisible(false);
+        }else{
+            bJaune.setVisible(true);
+        }
 
         //Orange
         bOrange = new JButton("");
@@ -63,6 +88,11 @@ public class MenuInventaire extends JFrame implements ActionListener {
         bOrange.setBackground(new Color(255,96,0));
         bOrange.setForeground(Color.white);
         bOrange.addActionListener(this);
+        if(nbPierres<6) {
+            bOrange.setVisible(false);
+        }else{
+            bOrange.setVisible(true);
+        }
 
         //Photo du personnage
         perso = new JLabel();
@@ -85,6 +115,10 @@ public class MenuInventaire extends JFrame implements ActionListener {
         fond.setIcon(new ImageIcon(getClass().getResource("images\\th2.jpg")));
         fond.setLocation(0, 0);
         fond.setSize(getWidth(), getHeight());
+
+        //Barre de vie
+        //PV = new JLabel(thanos.PV+"/"+thanos.maxPv);
+        //PV.setBounds(0,0,200,20);
 
         conteneurMain = new JPanel();
         conteneurMain.setLayout(null);
