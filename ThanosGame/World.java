@@ -17,7 +17,7 @@ public class World {
     public Game myGame;
     public Thanos thanos;
     private TerrainMap terrain;
-    private  LinkedList<Personnage> enemies;
+    public  LinkedList<Personnage> enemies;
     public LinkedList<FXEffect> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
     private Point2D starterPos;
