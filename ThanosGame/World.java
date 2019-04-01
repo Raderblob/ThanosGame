@@ -14,7 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
 import java.util.LinkedList;
 
 public class World {
-    private Game myGame;
+    public Game myGame;
     public Thanos thanos;
     private TerrainMap terrain;
     private  LinkedList<Personnage> enemies;
