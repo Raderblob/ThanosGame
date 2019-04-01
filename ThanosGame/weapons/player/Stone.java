@@ -5,6 +5,7 @@ import ThanosGame.Personnage;
 import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
+import ThanosGame.weapons.FXEffect;
 import javafx.geometry.Point2D;
 
 import java.util.LinkedList;
@@ -57,6 +58,7 @@ public class Stone {
         LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 20);
         doChanges(pointsToChange, (byte) 0, currentTerrain);
         doDamage(currentWorld,destination,pointsToChange);
+        currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(40,40),10,currentTerrain));
         return 1;
     }
 
