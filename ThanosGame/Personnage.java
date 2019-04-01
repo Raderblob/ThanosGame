@@ -39,7 +39,7 @@ public class Personnage extends PlayerClass {
         myAnimation = new AnimatedPerson(ImagesSaves.wakandaisSprites, new Point2D(335, 430), 64);
 
         int rndgen = Main.numberGenerator.nextInt(100);
-        if(rndgen<10){
+        if(rndgen<20){
             myGun = new ReboundRifle(myWorld.worldProjectiles, this, 10);
         }else if(rndgen<50){
             myGun = new Rifle(myWorld.worldProjectiles, this, 10);
