@@ -67,14 +67,18 @@ public class MenuInventaire extends JFrame implements ActionListener {
         //Photo du personnage
         perso = new JLabel();
         perso.setIcon(new ImageIcon(getClass().getResource("images\\thanos.jpg")));
-        perso.setLocation(0, 0);
-        perso.setSize(getWidth(), getHeight());
+        perso.setLocation(0, 5);
+        perso.setSize(350, 310);
 
         //Cadre perso
+        int x1,y1;
+        x1=350;
+        y1=320;
         conteneurPerso = new JPanel();
         conteneurPerso.setLayout(null);
         conteneurPerso.add(perso);
-        conteneurPerso.setBounds(200, 200, 100, 125);
+        conteneurPerso.setBounds(75, getHeight()/2-y1/2, x1, y1);
+        conteneurPerso.setBackground(Color.white);
 
         //Fond
         fond = new JLabel();
