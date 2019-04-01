@@ -54,9 +54,9 @@ public class Stone {
 
         hitDistance = hitDistance.normalize().multiply(owner.mySize.getX());
         destination = hitDistance.add(currentWorld.thanos.myPosition);
-        LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 10);
+        LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 20);
         doChanges(pointsToChange, (byte) 0, currentTerrain);
-        doDamage(currentWorld,destroyAt,pointsToChange);
+        doDamage(currentWorld,destination,pointsToChange);
         return 1;
     }
 
@@ -67,6 +67,7 @@ public class Stone {
                     Point2D dist = pT.add(enemy.myPosition.multiply(-1));
                     if(Math.abs(dist.getX())<enemy.mySize.getX()&&Math.abs(dist.getY())<enemy.mySize.getY()){
                         enemy.PV-=myPower;
+                        return;
                     }
                 }
             }
