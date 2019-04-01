@@ -39,6 +39,7 @@ public class World {
                 new LargeBase(BuildingSaves.ironManBase,new Point2D(1500,0)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.captainBase,new Point2D(2500,40)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.thorBase,new Point2D(2000,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.SpidermanBase,new Point2D(3000,0)).changeTerrain(terrain);
                 enemies.add(new Personnage(new Point2D(1000,50),terrain,this));
                 break;
             case 0:
