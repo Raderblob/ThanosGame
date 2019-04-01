@@ -142,7 +142,7 @@ public class Personnage extends PlayerClass {
 
     private boolean obstacleAtDistance(int atDistance) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (myTerrain.getTerrainValCollision(Math.max(myPosition.getX() + atDistance, 0), y) != 0) {
+            if (myTerrain.getTerrainValCollision(Math.max(myPosition.getX() + atDistance, 0), Math.max(y,0)) != 0) {
                 return true;
             }
         }

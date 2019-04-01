@@ -35,7 +35,7 @@ public class Main {
 
     public static boolean canDamage(byte terrainByte, double damageDone){
         if(terrainByte == PixelBlockType.NOTHING.getMyVal()){
-            return false;
+            return true;
         }else if(terrainByte == PixelBlockType.BEDROCK.getMyVal()){
             return false;
         }else if(terrainByte == PixelBlockType.GRASS.getMyVal() || terrainByte == PixelBlockType.DIRT.getMyVal()){

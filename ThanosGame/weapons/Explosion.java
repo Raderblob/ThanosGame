@@ -20,7 +20,7 @@ public class Explosion extends FXEffect { //does the damage
         super.runExplosion(myWorld,terrain,nanoTime);
 
         if (!damaged && isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)) {
-            myWorld.thanos.PV-=damagePerTick;
+            myWorld.thanos.removeHp(damagePerTick);
             damaged = true;
         }
 

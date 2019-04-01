@@ -16,7 +16,9 @@ public class Stone {
     protected String stoneName;
     protected int myPower;
     protected long coolDown;
+    protected long secondaryCoolDown;
     private long lastUsage;
+    private boolean usedSecondary;
 
     public Stone(Thanos owner) {
         stoneType = -1;
@@ -25,6 +27,8 @@ public class Stone {
         myPower = 2;
         lastUsage = System.currentTimeMillis();
         coolDown = 1;
+        secondaryCoolDown = 5000;
+        usedSecondary = false;
     }
 
     private void reset() {
@@ -34,7 +38,11 @@ public class Stone {
     }
 
     public double getCurrentCoolDown() {
-        return Math.min(coolDown, System.currentTimeMillis() - lastUsage) / ((double) (coolDown));
+        if(!usedSecondary) {
+            return Math.min(coolDown, System.currentTimeMillis() - lastUsage) / ((double) (coolDown));
+        }else{
+            return Math.min(secondaryCoolDown, System.currentTimeMillis() - lastUsage) / ((double) (secondaryCoolDown));
+        }
     }
 
     private boolean isReset() {
@@ -45,8 +53,22 @@ public class Stone {
         if (isReset()) {
             if (doSubAction(currentTerrain, currentWorld, destroyAt) == 1) {
                 reset();
+                usedSecondary=false;
             }
         }
+    }
+
+    public void doSecondaryAction(TerrainMap currentTerrain,World currentWorld,Point2D destroyAt){
+        if(isReset()) {
+            if(doSubSecondaryAction(currentTerrain,currentWorld,destroyAt)==1){
+                reset();
+                usedSecondary=true;
+            }
+        }
+    }
+    protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
+        currentWorld.thanos.myShield += myPower*10;
+        return 1;
     }
 
     protected int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
@@ -56,8 +78,9 @@ public class Stone {
         hitDistance = hitDistance.normalize().multiply(owner.mySize.getX());
         destination = hitDistance.add(currentWorld.thanos.myPosition);
         LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 20);
-        doChanges(pointsToChange, (byte) 0, currentTerrain);
+
         doDamage(currentWorld,destination,pointsToChange);
+        doChanges(pointsToChange, (byte) 0, currentTerrain);
         currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(40,40),10,currentTerrain));
         return 1;
     }
@@ -73,7 +96,7 @@ public class Stone {
         for(Point2D pT:pointsToChange){
             Point2D dist = pT.add(enemy.myPosition.multiply(-1));
             if(Math.abs(dist.getX())<enemy.mySize.getX()&&Math.abs(dist.getY())<enemy.mySize.getY()){
-                enemy.PV-=myPower;
+                enemy.removeHp(myPower);
                 return;
             }
         }

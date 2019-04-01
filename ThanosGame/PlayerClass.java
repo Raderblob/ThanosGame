@@ -7,8 +7,9 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 public class PlayerClass {
-    public double PV ;
+    protected double PV ;
     protected double maxPv;
+    public double myShield;
 
     public int movingState;
     private int jumpingState;
@@ -31,6 +32,14 @@ public class PlayerClass {
 
         myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 64);
     }
+    public void removeHp(double amount){
+        double toRemove = amount;
+        if(myShield>0){
+            toRemove-=myShield;
+            myShield-=amount;
+        }
+        PV -= Math.max(0,toRemove);
+    }
 
     public void draw(GraphicsContext gc) {
         myAnimation.draw(gc, new Point2D(myPosition.getX() - mySize.getX() - getCameraPosition().getX(), myPosition.getY() - mySize.getY() - getCameraPosition().getY()), new Point2D(mySize.getX() * 2, mySize.getY() * 2));
@@ -46,6 +55,10 @@ public class PlayerClass {
     }
 
     public void run(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
+        if(myShield>0){
+            myShield-=currentNanoTime*0.04;
+        }
+        myShield= Math.min(Math.max(myShield,0),maxPv);
         doPlayerMovement(currentTerrain, currentWorld,currentNanoTime);
         myAnimation.setWalkingMode(movingState);
     }

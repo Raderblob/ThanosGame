@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 public class ImagesSaves {
     public static Image thanosSprites;
     public static Image teleporterSprite;
+    public static Image shieldSprite;
     public static Image projectiles[] = new Image[3];
     public static Image explosions[] = new Image[1];
     public static Image shieldSprites;
@@ -20,6 +21,7 @@ public class ImagesSaves {
         teleporterSprite =  new Image(ImagesSaves.class.getResource("teleporterSprite.png").toExternalForm());
         shieldSprites = new Image(ImagesSaves.class.getResource("ShieldSprites.png").toExternalForm());
         wakandaisSprites = new Image(ImagesSaves.class.getResource("WakandaisSprites.png").toExternalForm());
+        shieldSprite = new Image(ImagesSaves.class.getResource("shieldSprite.png").toExternalForm());
     }
 }
 
