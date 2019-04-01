@@ -12,10 +12,10 @@ public class MenuInventaire extends JFrame implements ActionListener {
     private int longueurBouton = 50;
     private int hauteurBouton = 50;
     private String texteTitre = "INVENTAIRE";
-    private int nbPierres = 5; //ATTENTION MODIFIER POUR FAIRE EN SORTE D'AVOIR LE NBPIERRES CORRESPONDANT
+    private int nbPierres = 6; //ATTENTION MODIFIER POUR FAIRE EN SORTE D'AVOIR LE NBPIERRES CORRESPONDANT
 
     public MenuInventaire() {
-        //Création de la fenêtre et son entête
+        //Création de la fenêtre et son en-tête
         setTitle(texteTitre);
         setLayout(null);//c null
         setSize(960, 720);
