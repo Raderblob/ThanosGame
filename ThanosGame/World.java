@@ -56,14 +56,19 @@ public class World {
         thanos.run(terrain, this, currentNanoTime);
         //run physics for the player
 
-        for(Personnage enemy: enemies){
-            enemy.run(terrain,this,currentNanoTime);//run ai
-        }
 
 
-
+        LinkedList<Personnage> ennToRemove = new LinkedList<>();
         LinkedList<Projectile> pToRemove = new LinkedList<>();
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
+
+        for(Personnage enemy: enemies){
+            enemy.run(terrain,this,currentNanoTime);//run ai
+            if(enemy.PV<=0){
+                ennToRemove.add(enemy);
+            }
+        }
+
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.runLogic(this, terrain, currentNanoTime); //run collisions for projectiles
             if (cProjectile.mylife <= 0) {
@@ -83,6 +88,10 @@ public class World {
         }
         for (FXEffect e : eToRemove) {
             worldExplosions.remove(e);
+        }
+        for (Personnage e : ennToRemove) {
+            worldExplosions.add(new Explosion(e.myPosition, new Point2D(10, 10), 28, 1, terrain));
+            enemies.remove(e);
         }
 
         for(Teleporter teleporter:teleporters){
