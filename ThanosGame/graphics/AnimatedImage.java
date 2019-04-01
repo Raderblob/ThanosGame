@@ -5,13 +5,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 
 public class AnimatedImage {
-    int imageIndex, maxImageIndex;
-    Image globalImage;
-    Point2D globalSize;
-    Point2D subImageSize;
+    private int imageIndex, maxImageIndex;
+    private Image globalImage;
+    private Point2D globalSize;
+    private Point2D subImageSize;
     int myMode;
-    long delay, lastClock;
-    public boolean initialized = false;
+    private long delay, lastClock;
 
     public AnimatedImage(Image img, Point2D sISize, int delayToUse) {
         globalImage =img;
@@ -22,7 +21,9 @@ public class AnimatedImage {
         maxImageIndex = (int) (globalSize.getX() / subImageSize.getX());
         delay = delayToUse;
         lastClock = System.currentTimeMillis();
-        initialized=true;
+    }
+    public void setMyMode(int myMode){
+        this.myMode=myMode;
     }
 
     public void draw(GraphicsContext gc, Point2D drawingCoords, Point2D imageSize) {

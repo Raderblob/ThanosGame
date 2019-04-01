@@ -2,6 +2,8 @@ package ThanosGame.terrain;
 
 import ThanosGame.Game;
 import ThanosGame.Main;
+import ThanosGame.Personnage;
+import ThanosGame.World;
 import ThanosGame.graphics.images.PixelBlockType;
 import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
@@ -18,8 +20,11 @@ public class TerrainMap {
     private int maxPixelsX;
     private int maxPixelsY;
     public boolean terrainRendered;
+    public Point2D mySize;
 
-    public TerrainMap(int numC) {
+    public TerrainMap(int numC, boolean withBuildings, World myWorld, LinkedList<Personnage> enemyList) {
+
+        mySize = new Point2D(10, 10);
         numChunks = numC;
         maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks));
         maxPixelsY = (int) (TerrainChunck.chunkParam.getY() * 4 - 1);
@@ -33,60 +38,58 @@ public class TerrainMap {
             chunk[i] = new TerrainChunck();
         }
 
+        if (withBuildings) {
+            for (int x = 0; x < (int) TerrainChunck.chunkParam.getX() * chunk.length; x++) {
+                for (int y = 0; y < (int) TerrainChunck.chunkParam.getY(); y++) {
+                    double a = Math.min(1, Math.abs(geny.getNoise(x, y)) * Math.pow(y / TerrainChunck.chunkParam.getY() + 0.6, 10));
+                    double b = Math.abs(biomeGeny.getNoise(x, y));
+                    if (y > TerrainChunck.chunkParam.getY() - 4) {
+                        setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
+                    } else if (a > 0.38) {//dirt stone
 
-        for (int x = 0; x < (int) TerrainChunck.chunkParam.getX() * chunk.length; x++) {
-            for (int y = 0; y < (int) TerrainChunck.chunkParam.getY(); y++) {
-                double a = Math.min(1, Math.abs(geny.getNoise(x, y)) * Math.pow(y / TerrainChunck.chunkParam.getY() + 0.6, 10));
-                double b = Math.abs(biomeGeny.getNoise(x, y));
-                if (y > TerrainChunck.chunkParam.getY() - 4) {
-                    setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
-                } else if (a > 0.38) {//dirt stone
+                        if (b < 0.2) {
+                            setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
+                        } else {
+                            setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
+                        }
 
-                    if (b < 0.2) {
-                        setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
+                    } else if (a > 0.30) {
+                        if (b < 0.6) {
+                            setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
+                        } else {
+                            setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
+                        }
+                    } else if (a > 0.25) {
+                        setTerrainVal(x, y, PixelBlockType.GRASS.getMyVal());//grass
                     } else {
-                        setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
+                        setTerrainVal(x, y, PixelBlockType.NOTHING.getMyVal());
                     }
-
-                } else if (a > 0.30) {
-                    if (b < 0.6) {
-                        setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
-                    } else {
-                        setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
-                    }
-                } else if (a > 0.25) {
-                    setTerrainVal(x, y, PixelBlockType.GRASS.getMyVal());//grass
-                } else {
-                    setTerrainVal(x, y, PixelBlockType.NOTHING.getMyVal());
                 }
             }
-        }
 
 
-        for (int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700) {//generate buildings
-            if (Main.numberGenerator.nextInt(100) > 50) {
-                int y = 0;
-                int x = Main.numberGenerator.nextInt(200) + i;
-                do {
-                    y += 1;
-                } while (getTerrainVal(x, y) == 0);
-                new Building(new Point2D(x, y)).changeTerrain(this);
+            for (int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700) {//generate buildings
+                if (Main.numberGenerator.nextInt(100) > 50) {
+                    int y = 0;
+                    int x = Main.numberGenerator.nextInt(200) + i;
+                    do {
+                        y += 1;
+                    } while (getTerrainVal(x, y) == 0);
+                    new Building(new Point2D(x, y),enemyList,myWorld,this).changeTerrain(this);
+                }
             }
-        }
 
-        new LargeBase(BuildingSaves.largeBases[0],new Point2D((int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000,0)).changeTerrain(this);
-        new LargeBase(BuildingSaves.pal,new Point2D(1000,0)).changeTerrain(this);
-        new LargeBase(BuildingSaves.base_Iron_man,new Point2D(500,0)).changeTerrain(this);
+
+
+
+            new LargeBase(BuildingSaves.largeBases[0], new Point2D((int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000, 0)).changeTerrain(this); //end of World
+        }
     }
 
 
     public void draw(GraphicsContext gc, Point2D pos, Group root) {
         for (int i = 0; i < chunk.length; i++) {
-
-
             double drawPos = -pos.getX() + i * TerrainChunck.chunkParam.getX() * 4;// -Math.min(pos.getX(), numChunks * TerrainChunck.chunkParam.getX() * 4 - 1000) + i * TerrainChunck.chunkParam.getX() * 4;
-
-
             if (drawPos + TerrainChunck.chunkParam.getX() * 4 >= 0 && drawPos < Game.winParam.getX() * 2) {
                 chunk[i].myCanvas.setTranslateX(drawPos);
                 if (!chunk[i].addedToRoot) {
@@ -103,19 +106,40 @@ public class TerrainMap {
         }
     }
 
+    public void removeCanvas(Group root) {
+        for (int i = 0; i < chunk.length; i++) {
+            if (chunk[i].addedToRoot) {
+                root.getChildren().remove(chunk[i].myCanvas);
+                chunk[i].addedToRoot = false;
+            }
+        }
+    }
+
     private void setTerrainVal(int x, int y, byte val) {
         chunk[x / (int) TerrainChunck.chunkParam.getX()].setVal(x, y, val);
     }
 
     public byte getTerrainVal(double x, double y) {
+        return (byte) Math.abs(getTerrainValRaw(x, y));
+    }
+
+    private byte getTerrainValRaw(double x, double y) {
         int nX, nY;
         nX = (int) (x / 4);
         nY = (int) (y / 4);
         return chunk[nX / (int) TerrainChunck.chunkParam.getX()].getVal(nX, nY);
     }
 
+    public byte getTerrainValCollision(double x, double y) {
+        return (byte) (Math.max(0, getTerrainValRaw(x, y)));
+    }
+
     public byte getTerrainVal(Point2D p) {
         return getTerrainVal(p.getX(), p.getY());
+    }
+
+    public byte getTerrainValCollision(Point2D p) {
+        return getTerrainValCollision(p.getX(), p.getY());
     }
 
     public void changeTerrain(Point2D pointToChange[], byte futurVals[]) {
@@ -131,6 +155,13 @@ public class TerrainMap {
 
     public Point2D[] getCircleOfPoints(Point2D circlePos, double circleRadius) {
 
+        return getCircleOfPointsLinked(circlePos, circleRadius).toArray(new Point2D[0]);
+
+
+    }
+
+    public LinkedList<Point2D> getCircleOfPointsLinked(Point2D circlePos, double circleRadius) {
+
         LinkedList<Point2D> pTD = new LinkedList<>();
 
         for (int x = (int) -circleRadius; x < circleRadius; x++) {
@@ -140,7 +171,7 @@ public class TerrainMap {
                 }
             }
         }
-        return pTD.toArray(new Point2D[0]);
+        return pTD;
 
 
     }
@@ -152,7 +183,7 @@ public class TerrainMap {
 
         for (double a = angle; a < angle + Math.PI * 2; a += 0.1 / 180 * Math.PI) {
             testPoint = new Point2D(Math.cos(a), Math.sin(a));
-            if (getTerrainVal(testPoint.multiply(10).add(tPos)) != 0) {
+            if (getTerrainValCollision(testPoint.multiply(10).add(tPos)) != 0) {
                 return testPoint;
             }
         }
@@ -225,7 +256,9 @@ class TerrainChunck {
     }
 
 
-    private Color getTerrainColor(byte a) {
+    private Color getTerrainColor(byte aR) {
+        byte a = (byte) Math.abs(aR);
+
         javafx.scene.paint.Color c;
         if (a == PixelBlockType.DIRT.getMyVal()) {
             c = new javafx.scene.paint.Color((101 + (int) (Math.random() * 50 - 25)) / 254d, (67 + (int) (Math.random() * 50 - 25)) / 254d, (33 + (int) (Math.random() * 50 - 25)) / 254d, 1);
@@ -239,16 +272,20 @@ class TerrainChunck {
             c = new javafx.scene.paint.Color(0, 0, 0, 1);
         } else if (a == PixelBlockType.BRICK2.getMyVal()) {
             c = new javafx.scene.paint.Color(0.2, 0.2, 0.2, 1);
-        }else if(a==PixelBlockType.BRICK3.getMyVal()){
+        } else if (a == PixelBlockType.BRICK3.getMyVal()) {
             c = new javafx.scene.paint.Color(0.5, 0, 0, 1);
-        }else if(a==PixelBlockType.UNDEFINED1.getMyVal()){
+        } else if (a == PixelBlockType.UNDEFINED1.getMyVal()) {
             c = new javafx.scene.paint.Color(1, 1, 0, 1);
-        }else if(a==PixelBlockType.UNDEFINED2.getMyVal()){
+        } else if (a == PixelBlockType.UNDEFINED2.getMyVal()) {
             c = new javafx.scene.paint.Color(0.5, 0, 0.5, 1);
-        }else if(a==PixelBlockType.UNDEFINED3.getMyVal()){
+        } else if (a == PixelBlockType.UNDEFINED3.getMyVal()) {
             c = new javafx.scene.paint.Color(1, 0, 0, 1);
         } else {
             c = Color.BLUE;
+        }
+        if (aR < 0) {
+            c = c.desaturate().darker();
+            c = new Color(c.getRed() + 0.1, c.getGreen() + 0.1, c.getBlue() + 0.1, 1);
         }
         return c;
     }

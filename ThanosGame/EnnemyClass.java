@@ -1,4 +1,4 @@
-package ThanosGame;
+/*package ThanosGame;
 
 import ThanosGame.graphics.AnimatedPerson;
 import ThanosGame.graphics.images.ImagesSaves;
@@ -6,25 +6,22 @@ import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class PlayerClass {
+public class EnnemyClass {
     public int movingState;
-    private int jumpingState;
-    private boolean doubleJumped;
     public Point2D myPosition;
     public Point2D mySize;
-    public Point2D mySpeed;
-    protected Point2D destroyAt;
+    private Point2D mySpeed;
+    private Point2D destroyAt;
     protected AnimatedPerson myAnimation;
-    protected int obsClear ;
 
-    public PlayerClass() {
+    public EnnemyClass() {
         myPosition = new Point2D(50, 50);
         mySize = new Point2D(10, 10);
         mySpeed = new Point2D(0, 0);
         destroyAt = new Point2D(-1, -1);
 
 
-        myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 64);
+        myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 100);
     }
 
     public void draw(GraphicsContext gc) {
@@ -43,11 +40,13 @@ public class PlayerClass {
     public void run(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
         doPlayerMovement(currentTerrain, currentWorld,currentNanoTime);
         myAnimation.setWalkingMode(movingState);
+        if (destroyAt.getX() != -1) {
+            useTestStone(currentTerrain, currentWorld);
+        }
     }
 
     private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
-        obsClear = 1;
         mySpeed = mySpeed.add(0, currentNanoTime * 0.5 * (tUnderFoot ? 0 : 1));
 
 
@@ -70,16 +69,23 @@ public class PlayerClass {
         }
 
         if (movingState > 0) {
-            obsClear = terrainIsObstacleRight(currentTerrain) ? 0 : 1;
-            myPosition = myPosition.add( currentNanoTime*2 * movingState * (obsClear), 0);
+            myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleRight(currentTerrain) ? 0 : 1), 0);
         } else if (movingState < 0) {
-            obsClear = terrainIsObstacleLeft(currentTerrain) ? 0 : 1;
-            myPosition = myPosition.add( currentNanoTime*2 * movingState * (obsClear), 0);
+            myPosition = myPosition.add( currentNanoTime*2 * movingState * (terrainIsObstacleLeft(currentTerrain) ? 0 : 1), 0);
         }
         myPosition = currentTerrain.clampPoint(myPosition.add(mySpeed.multiply(currentNanoTime)), mySize);
+
     }
 
-
+    private void useTestStone(TerrainMap currentTerrain, World currentWorld) {
+        Point2D[] pTD = currentTerrain.getCircleOfPoints(destroyAt,40);
+        byte bTD[] = new byte[pTD.length];
+        for (int i = 0; i < bTD.length; i++) {
+            bTD[i] = 0;
+        }
+        currentTerrain.changeTerrain(pTD, bTD);
+        destroyAt = new Point2D(-1, -1);
+    }
 
     public void jump() {
         if (jumpingState == 0) {
@@ -93,10 +99,10 @@ public class PlayerClass {
 
     private boolean terrainUnderFoot(TerrainMap currentTerrain) {
         for (int x = (int) (myPosition.getX() - mySize.getX()); x < myPosition.getX() + mySize.getX(); x += 4) {
-            if (currentTerrain.getTerrainValCollision(x, myPosition.getY() + mySize.getY()) != 0) {
+            if (currentTerrain.getTerrainVal(x, myPosition.getY() + mySize.getY()) != 0) {
                 return true;
             }
-            if (currentTerrain.getTerrainValCollision(x , myPosition.getY() + mySize.getY()-3) != 0) {
+            if (currentTerrain.getTerrainVal(x , myPosition.getY() + mySize.getY()-3) != 0) {
                 return true;
             }
         }
@@ -105,7 +111,7 @@ public class PlayerClass {
 
     private boolean terrainIsObstacleRight(TerrainMap currentTerrain) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (currentTerrain.getTerrainValCollision(myPosition.getX() + mySize.getX()+3, y) != 0) {
+            if (currentTerrain.getTerrainVal(myPosition.getX() + mySize.getX(), y) != 0) {
                 return true;
             }
         }
@@ -114,7 +120,7 @@ public class PlayerClass {
 
     private boolean terrainIsObstacleLeft(TerrainMap currentTerrain) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (currentTerrain.getTerrainValCollision(myPosition.getX() - mySize.getX()-3, y) != 0) {
+            if (currentTerrain.getTerrainVal(myPosition.getX() - mySize.getX(), y) != 0) {
                 return true;
             }
         }
@@ -123,7 +129,7 @@ public class PlayerClass {
 
     private boolean terrainIsObstacleOverhead(TerrainMap currentTerrain) {
         for (int x = (int) (myPosition.getX() - mySize.getX()); x < myPosition.getX() + mySize.getX(); x += 4) {
-            if (currentTerrain.getTerrainValCollision(x, myPosition.getY() - mySize.getY()) != 0) {
+            if (currentTerrain.getTerrainVal(x, myPosition.getY() - mySize.getY()) != 0) {
                 return true;
             }
         }
@@ -132,10 +138,11 @@ public class PlayerClass {
 
     private boolean playerTrimmingTerrain(TerrainMap currentTerrain) {
         for (int x = (int) (myPosition.getX() - mySize.getX()); x < myPosition.getX() + mySize.getX(); x += 4) {
-            if (currentTerrain.getTerrainValCollision(x, myPosition.getY() + mySize.getY() - 1) != 0) {
+            if (currentTerrain.getTerrainVal(x, myPosition.getY() + mySize.getY() - 1) != 0) {
                 return true;
             }
         }
         return false;
     }
-}
+
+*/

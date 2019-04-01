@@ -1,21 +1,24 @@
 package ThanosGame.terrain;
 
 import ThanosGame.Main;
+import ThanosGame.Personnage;
+import ThanosGame.World;
 import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
 
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Building {
     BuildingModule myModules[];
     private Point2D myPosition;
 
-    public Building(Point2D mPos) {
+    public Building(Point2D mPos, LinkedList<Personnage> enemyList, World myWorld, TerrainMap myTerrain) {
         myPosition = mPos;
-        Point2D cPos = new Point2D(myPosition.getX(), Math.max(myPosition.getY() - 80,1));
+        Point2D cPos = new Point2D(myPosition.getX(), Math.max(myPosition.getY() - 80, 1));
 
 
-        int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4) / 80) ;
+        int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4) / 80);
         int doorPlacement = (int) (cPos.getY() / 80);
         BuildingModule[][] buildingPlan = new BuildingModule[10][potentialBuildingHeight];
         LinkedList<BuildingModule> plannedBuilding = new LinkedList<>();
@@ -30,21 +33,29 @@ public class Building {
                         if (buildingPlan[x - 1][y] != null && buildingPlan[x - 1][y].canRight) {
                             buildingPlan[x][y] = getCanLeft(buildingPlan[x - 1][y].myPosition.add(80, 0));
                             plannedBuilding.add(buildingPlan[x][y]);
+                            if (Main.numberGenerator.nextInt(10) < 1)
+                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                         if (buildingPlan[x + 1][y] != null && buildingPlan[x + 1][y].canLeft) {
                             buildingPlan[x][y] = getCanRight(buildingPlan[x + 1][y].myPosition.add(-80, 0));
                             plannedBuilding.add(buildingPlan[x][y]);
+                            if (Main.numberGenerator.nextInt(10) < 1)
+                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                         if (buildingPlan[x][y + 1] != null && buildingPlan[x][y + 1].canUp) {
                             buildingPlan[x][y] = getCanDown(buildingPlan[x][y + 1].myPosition.add(0, -80));
                             plannedBuilding.add(buildingPlan[x][y]);
+                            if (Main.numberGenerator.nextInt(10) < 1)
+                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                         if (buildingPlan[x][y - 1] != null && buildingPlan[x][y - 1].canDown) {
                             buildingPlan[x][y] = getCanUp(buildingPlan[x][y - 1].myPosition.add(0, 80));
                             plannedBuilding.add(buildingPlan[x][y]);
+                            if (Main.numberGenerator.nextInt(10) < 1)
+                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                     }
@@ -82,7 +93,7 @@ public class Building {
             }
         }
 
-        myModules = plannedBuilding.toArray(new BuildingModule[plannedBuilding.size()]);
+        myModules = plannedBuilding.toArray(new BuildingModule[0]);
     }
 
     private BuildingModule getBuildingModule(Point2D mP) {
@@ -109,7 +120,7 @@ public class Building {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.canLeft);
+        } while (!Objects.requireNonNull(potBuilding).canLeft);
         return potBuilding;
     }
 
@@ -118,7 +129,7 @@ public class Building {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.canRight);
+        } while (!Objects.requireNonNull(potBuilding).canRight);
         return potBuilding;
     }
 
@@ -127,7 +138,7 @@ public class Building {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.canUp);
+        } while (!Objects.requireNonNull(potBuilding).canUp);
         return potBuilding;
     }
 
@@ -136,30 +147,32 @@ public class Building {
         BuildingModule potBuilding;
         do {
             potBuilding = getBuildingModule(mP);
-        } while (!potBuilding.canDown);
+        } while (!Objects.requireNonNull(potBuilding).canDown);
         return potBuilding;
     }
 
 
     public void changeTerrain(TerrainMap theTerrain) {
         LinkedList<Point2D> PToChange = new LinkedList<>();
-        LinkedList<Byte> fVals = new LinkedList<Byte>();
+        LinkedList<Byte> fVals = new LinkedList<>();
 
-        for (int i = 0; i < myModules.length; i++) {
-            for (int x = 0; x < myModules[i].blocks.length; x++) {
-                for (int y = 0; y < myModules[i].blocks[x].length; y++) {
-                    if(myModules[i].blocks[x][y] != -1) {
-                        PToChange.add(new Point2D(x * 4, y * 4).add(myModules[i].myPosition));
-                        fVals.add(myModules[i].blocks[x][y]);
+        for (BuildingModule myModule : myModules) {
+            for (int x = 0; x < myModule.blocks.length; x++) {
+                for (int y = 0; y < myModule.blocks[x].length; y++) {
+                    if (myModule.blocks[x][y] != -100) {
+                        PToChange.add(new Point2D(x * 4, y * 4).add(myModule.myPosition));
+                        fVals.add(myModule.blocks[x][y]);
                     }
                 }
             }
         }
         byte fValsFinal[] = new byte[fVals.size()];
-        for (int i = 0; i < fValsFinal.length; i++) {
-            fValsFinal[i] = fVals.get(i);
+        int i = 0;
+        for (byte v : fVals) {
+            fValsFinal[i] = v;
+            i++;
         }
-        theTerrain.changeTerrain(PToChange.toArray(new Point2D[PToChange.size()]), fValsFinal);
+        theTerrain.changeTerrain(PToChange.toArray(new Point2D[0]), fValsFinal);
     }
 }
 
@@ -208,9 +221,7 @@ class BuildingModule {
     private byte[][] readModule(int i) {
         byte res[][] = new byte[BuildingSaves.moduleTemplates[0].length][BuildingSaves.moduleTemplates[0][0].length];
         for (int x = 0; x < res.length; x++) {
-            for (int y = 0; y < res.length; y++) {
-                res[x][y] = BuildingSaves.moduleTemplates[i][x][y];
-            }
+            System.arraycopy(BuildingSaves.moduleTemplates[i][x], 0, res[x], 0, res.length);
         }
 
         return res;

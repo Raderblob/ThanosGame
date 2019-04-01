@@ -13,7 +13,7 @@ public class BuildingSaves {
     public static byte[][][] largeBases=new byte[1][][];
 
     public static byte[][] pal;
-    public static byte[][] base_Iron_man;
+    public static byte[][] thanosBase;
 
 
     public static void loadBuildings(){
@@ -23,7 +23,7 @@ public class BuildingSaves {
         //load largeBase
         largeBases[0] = readModule("largeBase0.png");
         pal = readModule("pal.png");
-        base_Iron_man = readModule("Base_Iron_man.png");
+        thanosBase = readModule("ThanosBase.png");
     }
 
     private static byte[][] readModule(String str) {
@@ -44,11 +44,14 @@ public class BuildingSaves {
                     case -16777216:
                         res[x][y] = PixelBlockType.BRICK.getMyVal();
                         break;
+                    case -14606047:
+                        res[x][y] =(byte) -PixelBlockType.BRICK.getMyVal();
+                        break;
                     case -65281:
                         res[x][y] = PixelBlockType.BEDROCK.getMyVal();
                         break;
                     case -6737152:
-                        res[x][y] = -1;
+                        res[x][y] = -100;
                         break;
                     case -8388608:
                         res[x][y] = PixelBlockType.BRICK3.getMyVal();
@@ -71,8 +74,11 @@ public class BuildingSaves {
                     case -6908266:
                         res[x][y] = PixelBlockType.STONE.getMyVal();
                         break;
+                    case -8355712:
+                        res[x][y] = (byte) -PixelBlockType.STONE.getMyVal();;
+                        break;
                     default:
-                        res[x][y] = 0;
+                        res[x][y] =0;
                         break;
                 }
             }

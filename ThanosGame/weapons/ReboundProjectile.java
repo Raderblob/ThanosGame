@@ -19,7 +19,7 @@ public class ReboundProjectile extends Projectile {
             if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)) {
                 mylife=0;
             }
-            if (myTerrain.getTerrainVal(position.getX(), position.getY()) != 0) {
+            if (myTerrain.getTerrainValCollision(position.getX(), position.getY()) != 0) {
                 mylife-=degats*10;
                 if(mylife > maxLife/2) {
                     Point2D terrainTangent = myTerrain.getTangent(position, speed);
