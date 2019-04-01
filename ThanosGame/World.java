@@ -36,6 +36,9 @@ public class World {
                 teleportTo = 0;
                 terrain = new TerrainMap(30,true,this,enemies);
                 new LargeBase(BuildingSaves.pal,new Point2D(10000,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.ironManBase,new Point2D(1500,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.captainBase,new Point2D(2500,40)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.thorBase,new Point2D(2000,0)).changeTerrain(terrain);
                 enemies.add(new Personnage(new Point2D(1000,50),terrain,this));
                 break;
             case 0:
@@ -44,7 +47,7 @@ public class World {
                 terrain = new TerrainMap(2,false,this,enemies);
                 System.out.println("loading base");
                 new LargeBase(BuildingSaves.thanosBase,new Point2D(0,0)).changeTerrain(terrain);//generate home base
-                teleporters.add(new Teleporter(new Point2D(1000,320),1,myGame));
+                teleporters.add(new Teleporter(new Point2D(600,150),1,myGame));
                 break;
             default:
                 starterPos = new Point2D(50,50);
