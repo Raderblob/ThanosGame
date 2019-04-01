@@ -64,14 +64,17 @@ public class Stone {
 
     protected void doDamage(World currentWorld,Point2D destroyAt,LinkedList<Point2D> pointsToChange){
         for(Personnage enemy:currentWorld.enemies){
-            if(Main.getMagnitudeSquared(destroyAt.add(enemy.myPosition.multiply(-1)))< 200){
-                for(Point2D pT:pointsToChange){
-                    Point2D dist = pT.add(enemy.myPosition.multiply(-1));
-                    if(Math.abs(dist.getX())<enemy.mySize.getX()&&Math.abs(dist.getY())<enemy.mySize.getY()){
-                        enemy.PV-=myPower;
-                        return;
-                    }
-                }
+            if(Main.getMagnitudeSquared(destroyAt.add(enemy.myPosition.multiply(-1)))< 1000){
+                dmgPerEnemy(enemy,pointsToChange);
+            }
+        }
+    }
+    private void dmgPerEnemy(Personnage enemy,LinkedList<Point2D> pointsToChange){
+        for(Point2D pT:pointsToChange){
+            Point2D dist = pT.add(enemy.myPosition.multiply(-1));
+            if(Math.abs(dist.getX())<enemy.mySize.getX()&&Math.abs(dist.getY())<enemy.mySize.getY()){
+                enemy.PV-=myPower;
+                return;
             }
         }
     }

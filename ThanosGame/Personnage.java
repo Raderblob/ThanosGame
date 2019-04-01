@@ -3,6 +3,9 @@ package ThanosGame;
 import ThanosGame.graphics.AnimatedPerson;
 import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
+import ThanosGame.weapons.ReboundRifle;
+import ThanosGame.weapons.Rifle;
+import ThanosGame.weapons.Spear;
 import ThanosGame.weapons.Weapon;
 import javafx.geometry.Point2D;
 
@@ -35,7 +38,16 @@ public class Personnage extends PlayerClass {
         mySpeed = new Point2D(0, 0);
         myAnimation = new AnimatedPerson(ImagesSaves.wakandaisSprites, new Point2D(335, 430), 64);
 
-        myGun = new Weapon(myWorld.worldProjectiles, this, 10, 5, 500);
+        int rndgen = Main.numberGenerator.nextInt(100);
+        if(rndgen<10){
+            myGun = new ReboundRifle(myWorld.worldProjectiles, this, 10);
+        }else if(rndgen<50){
+            myGun = new Rifle(myWorld.worldProjectiles, this, 10);
+        }else{
+            myGun = new Spear(myWorld.worldProjectiles, this, 10);
+        }
+
+
         timeKeeper = System.currentTimeMillis();
         timeLapse = Main.numberGenerator.nextInt(1000)+500;
     }
@@ -65,6 +77,9 @@ public class Personnage extends PlayerClass {
 
         if(playerDistance <SIGHTRANGE){
             myState = AiState.ATTACK;
+        }
+        if(PV < maxPv){
+            myState =AiState.ATTACK;
         }
 
 
