@@ -2,6 +2,7 @@ package ThanosGame;
 
 import ThanosGame.graphics.GraphicalUserInterface;
 import ThanosGame.graphics.images.ImagesSaves;
+import ThanosGame.menus.MenuInventaire;
 import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.weapons.ReboundProjectile;
 import ThanosGame.weapons.player.PowerStone;
@@ -33,6 +34,7 @@ public class Game extends Application {
     private Stage stage;
     private Scene scene;
     private GraphicalUserInterface gui;
+    private MenuInventaire inventaire = new MenuInventaire();
 
     @Override
     public void start(Stage stage) {
@@ -69,6 +71,8 @@ public class Game extends Application {
                 thanos.infinity.selectStone(2);
             }else if(key.getCode()==KeyCode.DIGIT4){
                 thanos.infinity.selectStone(3);
+            }else if (key.getCode()== KeyCode.I && selectedWorld==0){
+                inventaire.setVisible(true);
             }
         });
         scene.addEventHandler(KeyEvent.KEY_RELEASED, key -> {

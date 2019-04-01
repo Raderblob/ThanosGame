@@ -7,8 +7,8 @@ import java.awt.event.ActionListener;
 
 public class MenuInventaire extends JFrame implements ActionListener {
     private JButton bRouge, bVert, bBleu, bViolet, bOrange, bJaune;
-    private JLabel fond;
-    private JPanel conteneurMain;
+    private JLabel fond,perso;
+    private JPanel conteneurMain, conteneurPerso;
     private int longueurBouton = 50;
     private int hauteurBouton = 50;
     private String texteTitre = "INVENTAIRE";
@@ -64,6 +64,23 @@ public class MenuInventaire extends JFrame implements ActionListener {
         bOrange.setForeground(Color.white);
         bOrange.addActionListener(this);
 
+        //Photo du personnage
+        perso = new JLabel();
+        perso.setIcon(new ImageIcon(getClass().getResource("images\\thanos.jpg")));
+        perso.setLocation(0, 5);
+        perso.setSize(350, 310);
+
+        //Cadre perso
+        int x1,y1;
+        x1=350;
+        y1=320;
+        conteneurPerso = new JPanel();
+        conteneurPerso.setLayout(null);
+        conteneurPerso.add(perso);
+        conteneurPerso.setBounds(75, getHeight()/2-y1/2, x1, y1);
+        conteneurPerso.setBackground(Color.white);
+
+        //Fond
         fond = new JLabel();
         fond.setIcon(new ImageIcon(getClass().getResource("images\\th2.jpg")));
         fond.setLocation(0, 0);
@@ -77,6 +94,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         conteneurMain.add(bViolet);
         conteneurMain.add(bJaune);
         conteneurMain.add(bOrange);
+        conteneurMain.add(conteneurPerso);
         conteneurMain.add(fond);
         conteneurMain.setBounds(0, 0, getWidth(), getHeight());
         //conteneurMain.setBackground(Color.black);

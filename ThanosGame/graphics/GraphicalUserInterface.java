@@ -27,5 +27,9 @@ public class GraphicalUserInterface {
             gc.setFill(Color.WHITE);
             gc.fillText(thanos.infinity.stones[i].toString() ,100+i*200, Game.winParam.getY() -30);
         }
+        gc.setFill(Color.BLACK);
+        gc.fillRect(0,2,100,5);
+        gc.setFill(Color.RED);
+        gc.fillRect(0,2,100*thanos.getHp(),5);
     }
 }

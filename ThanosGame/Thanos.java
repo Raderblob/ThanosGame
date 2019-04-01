@@ -6,12 +6,14 @@ import ThanosGame.weapons.player.Stone;
 import javafx.geometry.Point2D;
 
 public class Thanos extends PlayerClass{
-    public int PV ;
+    public double PV ;
+    private double maxPv;
     public Gant infinity ;
 
     public Thanos(int PV){
         super();
         this.PV=PV ;
+        maxPv = PV;
         this.infinity= new Gant(this);
     }
 
@@ -23,6 +25,10 @@ public class Thanos extends PlayerClass{
             infinity.action(currentTerrain,currentWorld,destroyAt);
             //useTestStone(currentTerrain, currentWorld);
             destroyAt = new Point2D(-1, -1);
+        }
+
+        if(PV <=0){
+
         }
     }
 
@@ -36,6 +42,10 @@ public class Thanos extends PlayerClass{
             bTD[i] = 0;
         }
         currentTerrain.changeTerrain(pTD, bTD);
+    }
+
+    public double getHp(){
+        return PV/maxPv;
     }
 }
 
