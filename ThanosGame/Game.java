@@ -34,7 +34,7 @@ public class Game extends Application {
     private Stage stage;
     private Scene scene;
     private GraphicalUserInterface gui;
-    private MenuInventaire inventaire = new MenuInventaire();
+    private MenuInventaire inventaire;
 
     @Override
     public void start(Stage stage) {
@@ -43,6 +43,7 @@ public class Game extends Application {
         ImagesSaves.loadImages();
         System.out.println("Loading Game...");
         loadGame();
+        inventaire = new MenuInventaire(thanos);
         Main.mainMenu = new MenuPrincipal(this);
         loadEvents();
 
@@ -73,6 +74,7 @@ public class Game extends Application {
                 thanos.infinity.selectStone(3);
             }else if (key.getCode()== KeyCode.I && selectedWorld==0){
                 inventaire.setVisible(true);
+                inventaire.uptade();
             }
 
         });
