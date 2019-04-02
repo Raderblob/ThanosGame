@@ -52,7 +52,7 @@ public class World {
                 terrain = new TerrainMap(2,false,this,enemies);
                 System.out.println("loading base");
                 new LargeBase(BuildingSaves.thanosBase,new Point2D(0,0)).changeTerrain(terrain);//generate home base
-                teleporters.add(new Teleporter(new Point2D(600,150),1,myGame));
+                teleporters.add(new Teleporter(new Point2D(600,190),1,myGame));
                 break;
             default:
                 starterPos = new Point2D(50,50);
