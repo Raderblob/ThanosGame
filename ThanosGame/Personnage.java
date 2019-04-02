@@ -3,10 +3,7 @@ package ThanosGame;
 import ThanosGame.graphics.AnimatedPerson;
 import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
-import ThanosGame.weapons.ReboundRifle;
-import ThanosGame.weapons.Rifle;
-import ThanosGame.weapons.Spear;
-import ThanosGame.weapons.Weapon;
+import ThanosGame.weapons.*;
 import javafx.geometry.Point2D;
 
 
@@ -22,6 +19,7 @@ public class Personnage extends PlayerClass {
     private long timeKeeper;
     private long timeLapse;
     private boolean changeMind;
+    private Point2D myTarget;
 
     public Personnage(Point2D pos, TerrainMap myTerrain, World myWorld) {
         turned=false;
@@ -73,7 +71,16 @@ public class Personnage extends PlayerClass {
 
     @Override
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
-        Point2D pDir = player.myPosition.add(myPosition.multiply(-1));
+        myTarget=player.myPosition;
+        for(FXEffect fx:currentWorld.worldExplosions){
+            if(fx.myType()==1){
+                if(Main.getMagnitudeSquared(fx.position.add(myPosition.multiply(-1)))<Math.pow(SIGHTRANGE,2)){
+                    myTarget = fx.position;
+                }
+            }
+        }
+
+        Point2D pDir = myTarget.add(myPosition.multiply(-1));
         double playerDistance = pDir.distance(0,0);
         Point2D pDirN = pDir.multiply(1/playerDistance);
 
@@ -93,7 +100,7 @@ public class Personnage extends PlayerClass {
                     changeMind=true;
                 }
 
-                if(player.myPosition.getY()-myPosition.getY()<0) {
+                if(myTarget.getY()-myPosition.getY()<0) {
                     if (Main.numberGenerator.nextInt(1000) < 50) {
                         jump();
                     }

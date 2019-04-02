@@ -11,7 +11,7 @@ public class MindStone extends SpaceStone {
         super(owner);
         stoneType = 3;
         stoneName="Mind Stone";
-        coolDown = 5000;
+        coolDown = 15000;
         secondaryCoolDown = 10000;
         myPower = 500;
     }
@@ -26,7 +26,7 @@ public class MindStone extends SpaceStone {
         Point2D destination = getDestination(destroyAt,currentWorld,currentTerrain);
 
         if(terrainClear(currentWorld.thanos,currentTerrain,destination)){
-            currentWorld.worldExplosions.add(new DistractionFX(destination,new Point2D(10,10),1000,currentTerrain));
+            currentWorld.worldExplosions.add(new DistractionFX(destination,new Point2D(10,10),200,currentTerrain));
 
             return 1;
         }
