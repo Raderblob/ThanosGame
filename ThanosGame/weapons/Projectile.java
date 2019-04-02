@@ -22,8 +22,8 @@ public class Projectile extends Item {
         this.speed=speed;
         canDamage =true;
         maxLife = mLife;
-        mylife =maxLife;
         enemyOwned = true;
+        mylife = maxLife;
     }
     public Projectile(Point2D position, Point2D size, int degats , double speed,double angle){
         super(position,size,ImagesSaves.projectiles[0],new Point2D(20,10),100);

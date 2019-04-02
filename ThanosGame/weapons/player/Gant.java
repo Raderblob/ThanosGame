@@ -15,7 +15,7 @@ public class Gant {
     public Gant(Thanos owner) {
         this.owner = owner;
         stones = new Stone[4];
-        pierreAme = true;
+        pierreAme = false;
         nbAme = 0;
         for (int i = 0; i < stones.length; i++) {
             stones[i] = new Stone(owner);
