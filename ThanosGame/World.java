@@ -1,5 +1,6 @@
 package ThanosGame;
 
+import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.LargeBase;
 import ThanosGame.terrain.Teleporter;
 import ThanosGame.terrain.TerrainMap;
@@ -51,7 +52,7 @@ public class World {
                 terrain = new TerrainMap(2,false,this,enemies);
                 System.out.println("loading base");
                 new LargeBase(BuildingSaves.thanosBase,new Point2D(0,0)).changeTerrain(terrain);//generate home base
-                teleporters.add(new Teleporter(new Point2D(600,150),1,myGame));
+                teleporters.add(new Teleporter(new Point2D(600,190),1,myGame));
                 break;
             default:
                 starterPos = new Point2D(50,50);
@@ -75,6 +76,10 @@ public class World {
             if(enemy.PV<=0){
                 ennToRemove.add(enemy);
                 thanos.infinity.PierreAme();
+                int vieOuPas = (int)(Math.random()*1000);
+                if(vieOuPas <= 200){
+                    worldHeal.add(new Heal(enemy.myPosition,new Point2D (5,5),10));
+                }
             }
         }
 
@@ -131,6 +136,9 @@ public class World {
         }
         for (Projectile cProjectile : worldProjectiles) {
             cProjectile.renderMe(gc, thanos.getCameraPosition());
+        }
+        for (Heal cHeal : worldHeal) {
+            cHeal.renderMe(gc, thanos.getCameraPosition());
         }
         for (FXEffect cExplosion : worldExplosions) {
             cExplosion.renderMe(gc, thanos.getCameraPosition());

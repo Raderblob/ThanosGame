@@ -11,6 +11,7 @@ public class ImagesSaves {
     public static Image explosions[] = new Image[1];
     public static Image shieldSprites;
     public static Image wakandaisSprites;
+    public static Image healSprite;
 
     public static void loadImages(){
         thanosSprites = new Image(ImagesSaves.class.getResource("thanosSprites.png").toExternalForm());
@@ -23,6 +24,7 @@ public class ImagesSaves {
         shieldSprites = new Image(ImagesSaves.class.getResource("ShieldSprites.png").toExternalForm());
         wakandaisSprites = new Image(ImagesSaves.class.getResource("WakandaisSprites.png").toExternalForm());
         shieldSprite = new Image(ImagesSaves.class.getResource("shieldSprite.png").toExternalForm());
+        healSprite = new Image(ImagesSaves.class.getResource("healSprite.png").toExternalForm());
     }
 }
 
