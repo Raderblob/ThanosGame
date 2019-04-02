@@ -1,6 +1,8 @@
 package ThanosGame.menus;
 
+
 import javax.swing.*;
+import ThanosGame.Thanos;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,8 +15,11 @@ public class MenuInventaire extends JFrame implements ActionListener {
     private int hauteurBouton = 50;
     private String texteTitre = "INVENTAIRE";
     private int nbPierres = 6; //ATTENTION MODIFIER POUR FAIRE EN SORTE D'AVOIR LE NBPIERRES CORRESPONDANT
+    private Thanos thanos;
 
-    public MenuInventaire() {
+    public MenuInventaire(Thanos thanos) {
+        this.thanos = thanos;
+
         //Création de la fenêtre et son en-tête
         setTitle(texteTitre);
         setLayout(null);//c null
@@ -83,7 +88,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         }
 
         //Orange
-        bOrange = new JButton("");
+        bOrange = new JButton(""+thanos.getPV());
         bOrange.setBounds((getWidth() - longueurBouton) / 2, 600, longueurBouton, hauteurBouton);
         bOrange.setBackground(new Color(255,96,0));
         bOrange.setForeground(Color.white);
@@ -135,6 +140,11 @@ public class MenuInventaire extends JFrame implements ActionListener {
 
         add(conteneurMain);
         setVisible(false);
+    }
+
+    public void uptade(){
+       bOrange.setText(""+thanos.getPV());
+       //Mettre à jour Pv, âme, prix pierres
     }
 
     public void actionPerformed(ActionEvent e) {

@@ -10,14 +10,24 @@ public class Gant {
     public int selectedStone;
     public Stone[] stones;
     int nbPierres;
+    boolean pierreAme;
+    public int nbAme;
 
     public Gant(Thanos owner) {
         this.owner = owner;
         stones = new Stone[4];
+        pierreAme = true;
+        nbAme = 0;
         for (int i = 0; i < stones.length; i++) {
             stones[i] = new Stone(owner);
         }
         selectedStone = 0;
+    }
+
+    public void PierreAme(){
+        if(pierreAme == true){
+            nbAme += 1;
+        }
     }
 
     public void addStones(Stone nStone) {

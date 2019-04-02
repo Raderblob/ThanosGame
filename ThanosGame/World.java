@@ -70,6 +70,7 @@ public class World {
             enemy.run(terrain,this,currentNanoTime);//run ai
             if(enemy.PV<=0){
                 ennToRemove.add(enemy);
+                thanos.infinity.PierreAme();
             }
         }
 

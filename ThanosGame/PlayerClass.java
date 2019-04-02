@@ -160,4 +160,10 @@ public class PlayerClass {
     public double getHp(){
         return PV/maxPv;
     }
+    public double getPV(){
+        return PV;
+    }
+    public double getMaxPv(){
+        return maxPv;
+    }
 }
