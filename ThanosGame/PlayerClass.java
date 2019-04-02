@@ -41,6 +41,14 @@ public class PlayerClass {
         PV -= Math.max(0,toRemove);
     }
 
+    public void addHp(int amount){
+        if(PV + amount >= maxPv){
+            PV = maxPv;
+        } else {
+            PV += amount;
+        }
+    }
+
     public void draw(GraphicsContext gc) {
         myAnimation.draw(gc, new Point2D(myPosition.getX() - mySize.getX() - getCameraPosition().getX(), myPosition.getY() - mySize.getY() - getCameraPosition().getY()), new Point2D(mySize.getX() * 2, mySize.getY() * 2));
     }

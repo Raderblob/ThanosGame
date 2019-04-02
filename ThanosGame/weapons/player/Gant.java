@@ -9,14 +9,13 @@ public class Gant {
     public Thanos owner;
     public int selectedStone;
     public Stone[] stones;
-    int nbPierres;
-    boolean pierreAme;
+    public boolean pierreAme;
     public int nbAme;
 
     public Gant(Thanos owner) {
         this.owner = owner;
         stones = new Stone[4];
-        pierreAme = true;
+        pierreAme = false;
         nbAme = 0;
         for (int i = 0; i < stones.length; i++) {
             stones[i] = new Stone(owner);
@@ -25,7 +24,7 @@ public class Gant {
     }
 
     public void PierreAme(){
-        if(pierreAme == true){
+        if(pierreAme){
             nbAme += 1;
         }
     }
@@ -65,5 +64,15 @@ public class Gant {
     public void secondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
         destroyAt = currentTerrain.clampPoint(destroyAt);
         stones[selectedStone].doSecondaryAction(currentTerrain, currentWorld, destroyAt);
+    }
+
+    public int getNbPierres() {
+        int nbPierres = 0;
+        for(int i=0; i<stones.length;i++){
+            if(stones[i]!=null){
+                nbPierres++;
+            }
+        }
+        return nbPierres;
     }
 }

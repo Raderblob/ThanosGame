@@ -20,6 +20,8 @@ public class World {
     public  LinkedList<Personnage> enemies;
     public LinkedList<FXEffect> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
+    public LinkedList<Heal> worldHeal;
+
     private Point2D starterPos;
     private int teleportTo;
     private LinkedList<Teleporter> teleporters;
@@ -28,6 +30,7 @@ public class World {
         thanos = p;
         worldProjectiles = new LinkedList<>();
         worldExplosions = new LinkedList<>();
+        worldHeal = new LinkedList<>();
         teleporters = new LinkedList<>();
         enemies = new LinkedList<>();
         switch (worldType) {
@@ -65,6 +68,7 @@ public class World {
         LinkedList<Personnage> ennToRemove = new LinkedList<>();
         LinkedList<Projectile> pToRemove = new LinkedList<>();
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
+        LinkedList<Heal> hToRemove = new LinkedList<>();
 
         for(Personnage enemy: enemies){
             enemy.run(terrain,this,currentNanoTime);//run ai
@@ -87,6 +91,13 @@ public class World {
             }
         }
 
+        for (Heal cHeal : worldHeal){
+            cHeal.runLogic(this, terrain);
+            if (cHeal.mylife<= 0) {
+                hToRemove.add(cHeal);
+            }
+        }
+
         for (Projectile p : pToRemove) {
             worldExplosions.add(new Explosion(p.position, new Point2D( p.degats,  p.degats), 28, p.degats, terrain,p.enemyOwned));
             worldProjectiles.remove(p);
@@ -97,6 +108,10 @@ public class World {
         for (Personnage e : ennToRemove) {
             worldExplosions.add(new Explosion(e.myPosition, new Point2D(10, 10), 28, 10, terrain,true));
             enemies.remove(e);
+        }
+
+        for (Heal h : hToRemove) {
+            worldHeal.remove(h);
         }
 
         for(Teleporter teleporter:teleporters){
