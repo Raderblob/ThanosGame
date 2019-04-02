@@ -31,5 +31,6 @@ public class GraphicalUserInterface {
         gc.fillRect(0,2,100,5);
         gc.setFill(Color.RED);
         gc.fillRect(0,2,100*thanos.getHp(),5);
+        gc.fillText(thanos.infinity.nbAme +"",2,20);
     }
 }
