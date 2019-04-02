@@ -143,7 +143,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
     }
 
     public void uptade(){
-       bOrange.setText(""+thanos.getPV());
+       bOrange.setText(""+thanos.infinity.nbAme);
        //Mettre à jour Pv, âme, prix pierres
     }
 
