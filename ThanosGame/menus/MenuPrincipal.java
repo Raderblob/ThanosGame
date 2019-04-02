@@ -75,28 +75,28 @@ public class MenuPrincipal extends JFrame implements ActionListener {
         logo = new JLabel();
         switch (nbPierres) {
             case 0:
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground0.jpg")));
+                logo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("images\\menuBackground0.jpg")));
                 break;
             case 1:
-                logo.setIcon(new ImageIcon(getClass().getResource(".images\\menuBackground1.jpg")));
+                logo.setIcon(new ImageIcon(MenuPrincipal.class.getResource(".images\\menuBackground1.jpg")));
                 break;
             case 2:
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground2.jpg")));
+                logo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("images\\menuBackground2.jpg")));
                 break;
             case 3:
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground3.jpg")));
+                logo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("images\\menuBackground3.jpg")));
                 break;
             case 4:
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground4.jpg")));
+                logo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("images\\menuBackground4.jpg")));
                 break;
             case 5:
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground5.jpg")));
+                logo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("images\\menuBackground5.jpg")));
                 break;
             case 6:
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground6.jpg")));
+                logo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("images\\menuBackground6.jpg")));
                 break;
             default:
-                logo.setIcon(new ImageIcon(getClass().getResource("images\\menuBackground6.jpg")));
+                logo.setIcon(new ImageIcon(MenuPrincipal.class.getResource("images\\menuBackground6.jpg")));
                 break;
         }
         logo.setLocation(0, 0);

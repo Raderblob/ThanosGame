@@ -1,8 +1,9 @@
 package ThanosGame.menus;
 
 
-import javax.swing.*;
 import ThanosGame.Thanos;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -245,7 +246,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         //Photo du personnage
         {
             perso = new JLabel();
-            perso.setIcon(new ImageIcon(getClass().getResource("images\\thanos.jpg")));
+            perso.setIcon(new ImageIcon(MenuInventaire.class.getResource("images\\thanos.jpg")));
             perso.setLocation(0, 5);
             perso.setSize(350, 310);
         }
@@ -265,7 +266,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         //Fond
         {
             fond = new JLabel();
-            fond.setIcon(new ImageIcon(getClass().getResource("images\\th2.jpg")));
+            fond.setIcon(new ImageIcon(MenuInventaire.class.getResource("images\\th2.jpg")));
             fond.setLocation(0, 0);
             fond.setSize(getWidth(), getHeight());
         }

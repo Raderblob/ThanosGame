@@ -4,7 +4,10 @@ import ThanosGame.graphics.GraphicalUserInterface;
 import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.menus.MenuInventaire;
 import ThanosGame.menus.MenuPrincipal;
-import ThanosGame.weapons.player.*;
+import ThanosGame.weapons.player.MindStone;
+import ThanosGame.weapons.player.PowerStone;
+import ThanosGame.weapons.player.RealityStone;
+import ThanosGame.weapons.player.SpaceStone;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -37,13 +40,17 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) {
 
-        this.stage=stage;
-        ImagesSaves.loadImages();
-        System.out.println("Loading Game...");
-        loadGame();
-        inventaire = new MenuInventaire(thanos);
-        Main.mainMenu = new MenuPrincipal(this);
-        loadEvents();
+        try {
+            this.stage=stage;
+            ImagesSaves.loadImages();
+            System.out.println("Loading Game...");
+            loadGame();
+            inventaire = new MenuInventaire(thanos);
+            Main.mainMenu = new MenuPrincipal(this);
+            loadEvents();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
