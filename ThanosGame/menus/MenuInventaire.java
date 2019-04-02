@@ -2,6 +2,7 @@ package ThanosGame.menus;
 
 
 import ThanosGame.Thanos;
+import resources.ImagesSaves;
 
 import javax.swing.*;
 import java.awt.*;
@@ -246,7 +247,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         //Photo du personnage
         {
             perso = new JLabel();
-            perso.setIcon(new ImageIcon(MenuInventaire.class.getResource("images\\thanos.jpg")));
+            perso.setIcon(new ImageIcon(ImagesSaves.class.getResource("menus\\thanos.jpg")));
             perso.setLocation(0, 5);
             perso.setSize(350, 310);
         }
@@ -266,7 +267,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         //Fond
         {
             fond = new JLabel();
-            fond.setIcon(new ImageIcon(MenuInventaire.class.getResource("images\\th2.jpg")));
+            fond.setIcon(new ImageIcon(ImagesSaves.class.getResource("menus\\th2.jpg")));
             fond.setLocation(0, 0);
             fond.setSize(getWidth(), getHeight());
         }

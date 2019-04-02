@@ -3,8 +3,8 @@ package ThanosGame.terrain;
 import ThanosGame.Main;
 import ThanosGame.Personnage;
 import ThanosGame.World;
-import ThanosGame.terrain.buildings.BuildingSaves;
 import javafx.geometry.Point2D;
+import resources.BuildingSaves;
 
 import java.util.LinkedList;
 import java.util.Objects;

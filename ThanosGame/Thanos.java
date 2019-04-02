@@ -1,12 +1,12 @@
 package ThanosGame;
 
 import ThanosGame.graphics.AnimatedImage;
-import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
 import ThanosGame.weapons.player.Gant;
 import ThanosGame.weapons.player.Stone;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import resources.ImagesSaves;
 
 public class Thanos extends PlayerClass{
     public Gant infinity ;

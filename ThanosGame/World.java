@@ -1,16 +1,15 @@
 package ThanosGame;
 
-import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.LargeBase;
 import ThanosGame.terrain.Teleporter;
 import ThanosGame.terrain.TerrainMap;
-import ThanosGame.terrain.buildings.BuildingSaves;
 import ThanosGame.weapons.Explosion;
 import ThanosGame.weapons.FXEffect;
 import ThanosGame.weapons.Projectile;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
+import resources.BuildingSaves;
 
 import java.util.LinkedList;
 

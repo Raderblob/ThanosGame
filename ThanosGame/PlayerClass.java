@@ -1,10 +1,10 @@
 package ThanosGame;
 
 import ThanosGame.graphics.AnimatedPerson;
-import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import resources.ImagesSaves;
 
 public class PlayerClass {
     protected double PV ;

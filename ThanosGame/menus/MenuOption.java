@@ -1,6 +1,7 @@
 package ThanosGame.menus;
 
 import ThanosGame.Keyboard;
+import resources.ImagesSaves;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,7 +49,7 @@ public class MenuOption extends JFrame implements ActionListener  {
 		option.setBounds(0,0,getWidth(),getHeight());
 		option.setLayout(null);
 		//FOND
-		Titan.setIcon (new ImageIcon(MenuOption.class.getResource("images\\OptionsMenu\\Titan.png")));
+		Titan.setIcon (new ImageIcon(ImagesSaves.class.getResource("menus\\OptionsMenu\\Titan.png")));
 		Titan.setSize(1500,800);
 		Titan.setLocation(0,0);
 

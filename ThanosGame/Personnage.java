@@ -1,10 +1,10 @@
 package ThanosGame;
 
 import ThanosGame.graphics.AnimatedPerson;
-import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
 import ThanosGame.weapons.*;
 import javafx.geometry.Point2D;
+import resources.ImagesSaves;
 
 
 public class Personnage extends PlayerClass {

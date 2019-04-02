@@ -1,11 +1,11 @@
 package ThanosGame;
 
-import ThanosGame.graphics.images.PixelBlockType;
 import ThanosGame.menus.MenuPrincipal;
-import ThanosGame.terrain.buildings.BuildingSaves;
+import ThanosGame.terrain.PixelBlockType;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Transform;
+import resources.BuildingSaves;
 
 import java.util.Random;
 

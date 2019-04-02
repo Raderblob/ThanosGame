@@ -1,7 +1,6 @@
 package ThanosGame;
 
 import ThanosGame.graphics.GraphicalUserInterface;
-import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.menus.MenuInventaire;
 import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.weapons.player.MindStone;
@@ -20,7 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
-
+import resources.ImagesSaves;
 
 
 public class Game extends Application {
