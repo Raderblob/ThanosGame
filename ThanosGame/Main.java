@@ -44,6 +44,10 @@ public class Main {
             return damageDone > 8;
         }else if(terrainByte == PixelBlockType.BRICK.getMyVal()){
             return damageDone > 12;
+        }else if(terrainByte == PixelBlockType.UNDEFINED3.getMyVal()){
+            return damageDone > 20;
+        }else if(terrainByte == PixelBlockType.BRICK3.getMyVal()){
+            return damageDone > 15;
         }
 
 
