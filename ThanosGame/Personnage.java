@@ -36,7 +36,7 @@ public class Personnage extends PlayerClass {
         myPosition = pos;
         mySize = new Point2D(10, 10);
         mySpeed = new Point2D(0, 0);
-        myAnimation = new AnimatedPerson(ImagesSaves.wakandaisSprites, new Point2D(322, 396), 64);
+        myAnimation = new AnimatedPerson(ImagesSaves.wakandaisSprites, new Point2D(322, 400), 64);
 
         int rndgen = Main.numberGenerator.nextInt(100);
         if(rndgen<20){

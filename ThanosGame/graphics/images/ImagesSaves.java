@@ -21,7 +21,7 @@ public class ImagesSaves {
         projectiles[3] =  new Image(ImagesSaves.class.getResource("projectile4.png").toExternalForm());
         explosions[0]=  new Image(ImagesSaves.class.getResource("explosion1.png").toExternalForm());
         teleporterSprite =  new Image(ImagesSaves.class.getResource("teleporterSprite.png").toExternalForm());
-        shieldSprites = new Image(ImagesSaves.class.getResource("ShieldSprites.png").toExternalForm());
+
         wakandaisSprites = new Image(ImagesSaves.class.getResource("WakandaisSprites.png").toExternalForm());
         shieldSprite = new Image(ImagesSaves.class.getResource("shieldSprite.png").toExternalForm());
         healSprite = new Image(ImagesSaves.class.getResource("healSprite.png").toExternalForm());
