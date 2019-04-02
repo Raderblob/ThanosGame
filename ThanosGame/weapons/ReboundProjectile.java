@@ -6,7 +6,7 @@ import javafx.geometry.Point2D;
 
 public class ReboundProjectile extends Projectile {
     public ReboundProjectile(Point2D position, Point2D Size, int degats, Point2D speed) {
-        super(position, Size, degats, speed);
+        super(position, Size, degats, speed,1000,2);
     }
 
     public ReboundProjectile(Point2D position, Point2D size, int degats, double speed, double angle) {

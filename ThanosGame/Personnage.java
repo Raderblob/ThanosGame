@@ -3,11 +3,15 @@ package ThanosGame;
 import ThanosGame.graphics.AnimatedPerson;
 import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
+import ThanosGame.weapons.ReboundRifle;
+import ThanosGame.weapons.Rifle;
+import ThanosGame.weapons.Spear;
 import ThanosGame.weapons.Weapon;
 import javafx.geometry.Point2D;
 
 
 public class Personnage extends PlayerClass {
+    public boolean turned;
     private Weapon myGun;
     private Thanos player;
     private TerrainMap myTerrain;
@@ -20,6 +24,9 @@ public class Personnage extends PlayerClass {
     private boolean changeMind;
 
     public Personnage(Point2D pos, TerrainMap myTerrain, World myWorld) {
+        turned=false;
+        this.PV=100 ;
+        maxPv = PV;
         if(Main.numberGenerator.nextInt(10)<7){
             myState = AiState.STATIC;
         }else{
@@ -33,7 +40,16 @@ public class Personnage extends PlayerClass {
         mySpeed = new Point2D(0, 0);
         myAnimation = new AnimatedPerson(ImagesSaves.wakandaisSprites, new Point2D(335, 430), 64);
 
-        myGun = new Weapon(myWorld.worldProjectiles, this, 10, 5, 500);
+        int rndgen = Main.numberGenerator.nextInt(100);
+        if(rndgen<20){
+            myGun = new ReboundRifle(myWorld.worldProjectiles, this, 10);
+        }else if(rndgen<50){
+            myGun = new Rifle(myWorld.worldProjectiles, this, 10);
+        }else{
+            myGun = new Spear(myWorld.worldProjectiles, this, 10);
+        }
+
+
         timeKeeper = System.currentTimeMillis();
         timeLapse = Main.numberGenerator.nextInt(1000)+500;
     }
@@ -63,6 +79,9 @@ public class Personnage extends PlayerClass {
 
         if(playerDistance <SIGHTRANGE){
             myState = AiState.ATTACK;
+        }
+        if(PV < maxPv){
+            myState =AiState.ATTACK;
         }
 
 
@@ -125,7 +144,7 @@ public class Personnage extends PlayerClass {
 
     private boolean obstacleAtDistance(int atDistance) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (myTerrain.getTerrainValCollision(Math.max(myPosition.getX() + atDistance, 0), y) != 0) {
+            if (myTerrain.getTerrainValCollision(Math.max(myPosition.getX() + atDistance, 0), Math.max(y,0)) != 0) {
                 return true;
             }
         }

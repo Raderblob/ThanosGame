@@ -4,7 +4,7 @@ import ThanosGame.graphics.GraphicalUserInterface;
 import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.menus.MenuInventaire;
 import ThanosGame.menus.MenuPrincipal;
-import ThanosGame.weapons.ReboundProjectile;
+import ThanosGame.weapons.player.MindStone;
 import ThanosGame.weapons.player.PowerStone;
 import ThanosGame.weapons.player.RealityStone;
 import ThanosGame.weapons.player.SpaceStone;
@@ -18,6 +18,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
 
 
@@ -34,7 +35,7 @@ public class Game extends Application {
     private Stage stage;
     private Scene scene;
     private GraphicalUserInterface gui;
-    private MenuInventaire inventaire = new MenuInventaire();
+    private MenuInventaire inventaire;
 
     @Override
     public void start(Stage stage) {
@@ -43,6 +44,7 @@ public class Game extends Application {
         ImagesSaves.loadImages();
         System.out.println("Loading Game...");
         loadGame();
+        inventaire = new MenuInventaire(thanos);
         Main.mainMenu = new MenuPrincipal(this);
         loadEvents();
 
@@ -73,31 +75,38 @@ public class Game extends Application {
                 thanos.infinity.selectStone(3);
             }else if (key.getCode()== KeyCode.I && selectedWorld==0){
                 inventaire.setVisible(true);
+                inventaire.uptade();
             }
+
         });
         scene.addEventHandler(KeyEvent.KEY_RELEASED, key -> {
             if (key.getCode() == Keyboard.left) {
                 thanos.movingState = 0;
             } else if (key.getCode() == Keyboard.right) {
                 thanos.movingState = 0;
-            } else if (key.getCode() == Keyboard.jump) {
-
-            } else if (key.getCode() == Keyboard.punch) {
-                //thanos.fireAt(X,Y);
-            } else if (key.getCode() == Keyboard.down) {
-                //PEUT SERVIR...
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouse -> {
             if (mouse.isPrimaryButtonDown()) {
                 thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
             } else {
-                System.out.println("Right Click for test projectile");
-                gameWorld.worldProjectiles.add(new ReboundProjectile(new Point2D(mouse.getSceneX(), mouse.getSceneY()).add(thanos.getCameraPosition()), new Point2D(4, 3), 12, 5, Math.random() * 360));
+                thanos.secondary=true;
+                thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
+            }
+
+        });
+        scene.addEventHandler(ScrollEvent.SCROLL,mouse->{
+            if(mouse.getDeltaY()>0){
+                thanos.infinity.selectNextStone();
+            }else{
+                thanos.infinity.selectPreviousStone();
             }
         });
-        scene.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouse -> {
-
+        scene.addEventHandler(MouseEvent.MOUSE_DRAGGED,mouse->{
+            if(!mouse.isPrimaryButtonDown()){
+                thanos.secondary=true;
+                thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
+            }
         });
     }
 
@@ -111,11 +120,11 @@ public class Game extends Application {
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-
         thanos = new Thanos(100);
         thanos.addStone(new RealityStone(thanos));
         thanos.addStone(new SpaceStone(thanos));
         thanos.addStone(new PowerStone(thanos));
+        thanos.addStone(new MindStone(thanos));
 
         gui = new GraphicalUserInterface(thanos);
 
@@ -150,10 +159,12 @@ public class Game extends Application {
         gameWorld.renderWorld(gc, root);//render the selected world
         gui.draw(gc);
 
+        lastLength = ((System.nanoTime() - lastTime));
+        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);
-       // System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+
     }
 
     public void switchWorlds(int newWorld){

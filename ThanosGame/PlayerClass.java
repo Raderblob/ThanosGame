@@ -7,6 +7,10 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
 public class PlayerClass {
+    protected double PV ;
+    protected double maxPv;
+    public double myShield;
+
     public int movingState;
     private int jumpingState;
     private boolean doubleJumped;
@@ -18,6 +22,8 @@ public class PlayerClass {
     protected int obsClear ;
 
     public PlayerClass() {
+
+
         myPosition = new Point2D(50, 50);
         mySize = new Point2D(10, 10);
         mySpeed = new Point2D(0, 0);
@@ -25,6 +31,22 @@ public class PlayerClass {
 
 
         myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 64);
+    }
+    public void removeHp(double amount){
+        double toRemove = amount;
+        if(myShield>0){
+            toRemove-=myShield;
+            myShield-=amount;
+        }
+        PV -= Math.max(0,toRemove);
+    }
+
+    public void addHp(int amount){
+        if(PV + amount >= maxPv){
+            PV = maxPv;
+        } else {
+            PV += amount;
+        }
     }
 
     public void draw(GraphicsContext gc) {
@@ -41,6 +63,10 @@ public class PlayerClass {
     }
 
     public void run(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
+        if(myShield>0){
+            myShield-=currentNanoTime*0.04;
+        }
+        myShield= Math.min(Math.max(myShield,0),maxPv);
         doPlayerMovement(currentTerrain, currentWorld,currentNanoTime);
         myAnimation.setWalkingMode(movingState);
     }
@@ -137,5 +163,15 @@ public class PlayerClass {
             }
         }
         return false;
+    }
+
+    public double getHp(){
+        return PV/maxPv;
+    }
+    public double getPV(){
+        return PV;
+    }
+    public double getMaxPv(){
+        return maxPv;
     }
 }

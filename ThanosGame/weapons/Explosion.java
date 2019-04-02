@@ -1,6 +1,7 @@
 package ThanosGame.weapons;
 
 import ThanosGame.Main;
+import ThanosGame.Personnage;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
@@ -8,20 +9,36 @@ import javafx.geometry.Point2D;
 public class Explosion extends FXEffect { //does the damage
     private double damagePerTick;
     private boolean damaged;
-    public Explosion(Point2D maPosition, Point2D Size, double myL, double damageT, TerrainMap mTerrain) {
-        super(maPosition, Size, myL, mTerrain);
-        damagePerTick=damageT;
+    private boolean enemyOwned;
+
+    public Explosion(Point2D maPosition, Point2D Size, double myL, double damageT, TerrainMap mTerrain,boolean eOwned) {
+        super(maPosition, new Point2D(Math.tanh((damageT-10)*0.005)*70+10,Math.tanh((damageT-10)*0.005)*70+10), myL, mTerrain);
+        damagePerTick = damageT;
         myAnimation.setMyMode(0);
-        damaged =false;
+        damaged = false;
+        enemyOwned = eOwned;
     }
 
 
-    public void runExplosion(World myWorld, TerrainMap terrain, double nanoTime){
-        super.runExplosion(myWorld,terrain,nanoTime);
 
-        if (!damaged && isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)) {
-            myWorld.thanos.PV-=damagePerTick;
-            damaged = true;
+    public void runExplosion(World myWorld, TerrainMap terrain, double nanoTime) {
+        super.runExplosion(myWorld, terrain, nanoTime);
+
+        if (!damaged) {
+            if (enemyOwned) {
+                if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)){
+                    myWorld.thanos.removeHp(damagePerTick);
+                    damaged = true;
+                }
+            } else {
+                for(Personnage enemy:myWorld.enemies){
+                    if(!enemy.turned && isInRectangle(enemy.myPosition,enemy.mySize)){
+                        enemy.removeHp(damagePerTick);
+                        damaged=true;
+                    }
+                }
+            }
+
         }
 
         for (Point2D explosionPoint : explosionPoints) {
@@ -32,7 +49,6 @@ public class Explosion extends FXEffect { //does the damage
         }
 
     }
-
 
 
 }

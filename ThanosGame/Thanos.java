@@ -1,51 +1,63 @@
 package ThanosGame;
 
+import ThanosGame.graphics.AnimatedImage;
+import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
 import ThanosGame.weapons.player.Gant;
 import ThanosGame.weapons.player.Stone;
 import javafx.geometry.Point2D;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Thanos extends PlayerClass{
-    public double PV ;
-    private double maxPv;
     public Gant infinity ;
-
+    private AnimatedImage animatedShield;
+    public boolean secondary;
     public Thanos(int PV){
         super();
+        myShield=0;
         this.PV=PV ;
         maxPv = PV;
         this.infinity= new Gant(this);
+        animatedShield = new AnimatedImage(ImagesSaves.shieldSprite,new Point2D(556,556),1000);
+        secondary=false;
     }
 
     @Override
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         super.run(currentTerrain, currentWorld, currentNanoTime);
 
+
+
         if (destroyAt.getX() != -1) {
-            infinity.action(currentTerrain,currentWorld,destroyAt);
-            //useTestStone(currentTerrain, currentWorld);
+            if(!secondary) {
+                infinity.action(currentTerrain, currentWorld, destroyAt);
+            }else{
+                infinity.secondaryAction(currentTerrain, currentWorld, destroyAt);
+                secondary = false;
+            }
             destroyAt = new Point2D(-1, -1);
         }
 
         if(PV <=0){
-
+            currentWorld.myGame.switchWorlds(0);
+            PV = maxPv;
         }
     }
+
+
 
     public void addStone(Stone nStone){
         infinity.addStones(nStone);
     }
-    private void useTestStone(TerrainMap currentTerrain, World currentWorld) {
-        Point2D[] pTD = currentTerrain.getCircleOfPoints(destroyAt,40);
-        byte bTD[] = new byte[pTD.length];
-        for (int i = 0; i < bTD.length; i++) {
-            bTD[i] = 0;
-        }
-        currentTerrain.changeTerrain(pTD, bTD);
-    }
 
-    public double getHp(){
-        return PV/maxPv;
+
+    @Override
+    public void draw(GraphicsContext gc) {
+        super.draw(gc);
+        gc.save();
+        gc.setGlobalAlpha(Math.min(myShield/maxPv,1));
+        animatedShield.draw(gc,new Point2D(myPosition.getX() - mySize.getX() - getCameraPosition().getX(), myPosition.getY() - mySize.getY() - getCameraPosition().getY()),mySize.multiply(2));
+        gc.restore();
     }
 }
 
