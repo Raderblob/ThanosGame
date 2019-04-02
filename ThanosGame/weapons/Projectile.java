@@ -15,6 +15,7 @@ public class Projectile extends Item {
     protected Point2D speed;
     protected boolean canDamage;
     protected double maxLife;
+    public boolean enemyOwned;
     public Projectile(Point2D position, Point2D size, int degats , Point2D speed,double mLife,int projectileId){
         super(position,size,ImagesSaves.projectiles[projectileId],new Point2D(20,10),100);
         this.degats=degats;
@@ -22,6 +23,7 @@ public class Projectile extends Item {
         canDamage =true;
         maxLife = mLife;
         mylife =maxLife;
+        enemyOwned = true;
     }
     public Projectile(Point2D position, Point2D size, int degats , double speed,double angle){
         super(position,size,ImagesSaves.projectiles[0],new Point2D(20,10),100);
@@ -30,6 +32,7 @@ public class Projectile extends Item {
         this.speed=new Point2D(Math.cos(angleRad),Math.sin(angleRad)).multiply(speed);
         canDamage =true;
         mylife =1000;
+        enemyOwned=true;
     }
 
     public void runLogic(World myWorld,TerrainMap myTerrain,double nanoTime){

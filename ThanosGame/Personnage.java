@@ -11,6 +11,7 @@ import javafx.geometry.Point2D;
 
 
 public class Personnage extends PlayerClass {
+    public boolean turned;
     private Weapon myGun;
     private Thanos player;
     private TerrainMap myTerrain;
@@ -23,6 +24,7 @@ public class Personnage extends PlayerClass {
     private boolean changeMind;
 
     public Personnage(Point2D pos, TerrainMap myTerrain, World myWorld) {
+        turned=false;
         this.PV=100 ;
         maxPv = PV;
         if(Main.numberGenerator.nextInt(10)<7){

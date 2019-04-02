@@ -88,14 +88,14 @@ public class World {
         }
 
         for (Projectile p : pToRemove) {
-            worldExplosions.add(new Explosion(p.position, new Point2D(10, 10), 28, p.degats, terrain));
+            worldExplosions.add(new Explosion(p.position, new Point2D( p.degats,  p.degats), 28, p.degats, terrain,p.enemyOwned));
             worldProjectiles.remove(p);
         }
         for (FXEffect e : eToRemove) {
             worldExplosions.remove(e);
         }
         for (Personnage e : ennToRemove) {
-            worldExplosions.add(new Explosion(e.myPosition, new Point2D(10, 10), 28, 1, terrain));
+            worldExplosions.add(new Explosion(e.myPosition, new Point2D(10, 10), 28, 10, terrain,true));
             enemies.remove(e);
         }
 
