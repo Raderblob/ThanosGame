@@ -15,7 +15,6 @@ public class Gant {
     public Gant(Thanos owner) {
         this.owner = owner;
         stones = new Stone[4];
-        pierreAme = true;
         nbAme = 0;
         for (int i = 0; i < stones.length; i++) {
             stones[i] = new Stone(owner);
@@ -24,9 +23,7 @@ public class Gant {
     }
 
     public void PierreAme(){
-        if(pierreAme){
-            nbAme += 1;
-        }
+        nbAme += 1;
     }
 
     public void addStones(Stone nStone) {

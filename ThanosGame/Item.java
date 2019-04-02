@@ -12,9 +12,9 @@ public class Item {
     public double mylife;
     protected AnimatedImage myAnimation;
 
-    public Item(Point2D maPosition, Point2D Size, Image myImg, Point2D imgSize, int imgDelay) {
-        this.position = new Point2D(maPosition.getX(), maPosition.getY());
-        this.mySize = Size;
+    public Item(Point2D maPosition, Point2D size, Image myImg, Point2D imgSize, int imgDelay) {
+        position = new Point2D(maPosition.getX(), maPosition.getY());
+        mySize = size;
         myAnimation = new AnimatedImage(myImg, imgSize, imgDelay);
     }
 
