@@ -9,7 +9,7 @@ public class Gant {
     public Thanos owner;
     public int selectedStone;
     public Stone[] stones;
-    boolean pierreAme;
+    public boolean pierreAme;
     public int nbAme;
 
     public Gant(Thanos owner) {
@@ -24,7 +24,7 @@ public class Gant {
     }
 
     public void PierreAme(){
-        if(pierreAme == true){
+        if(pierreAme){
             nbAme += 1;
         }
     }
