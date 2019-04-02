@@ -61,8 +61,6 @@ public class Game extends Application {
                 thanos.movingState = 1;
             } else if (key.getCode() == Keyboard.jump) {
                 thanos.jump();
-            } else if (key.getCode() == Keyboard.punch) {
-                //Frapper
             } else if (key.getCode() == Keyboard.down) {
                 //PEUT SERVIR...
             }else if(key.getCode() == KeyCode.DIGIT1){
@@ -75,7 +73,7 @@ public class Game extends Application {
                 thanos.infinity.selectStone(3);
             }else if (key.getCode()== KeyCode.I && selectedWorld==0){
                 inventaire.setVisible(true);
-                inventaire.uptade();
+                inventaire.update();
             }
 
         });
