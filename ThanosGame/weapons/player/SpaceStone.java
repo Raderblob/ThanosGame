@@ -47,14 +47,16 @@ public class SpaceStone extends Stone {
 
     @Override
     protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
-        Point2D destination = getDestination(destroyAt,currentWorld,currentTerrain);
+        if(owner.infinity.nbAme>0) {
+            owner.infinity.nbAme--;
+            Point2D destination = getDestination(destroyAt, currentWorld, currentTerrain);
 
-        if(terrainClear(currentWorld.thanos,currentTerrain,destination)){
-            currentWorld.worldProjectiles.add(new Tnt(destination,myPower,100));
+            if (terrainClear(currentWorld.thanos, currentTerrain, destination)) {
+                currentWorld.worldProjectiles.add(new Tnt(destination, myPower, 100));
 
-            return 1;
+                return 1;
+            }
         }
-
         return 0;
     }
 
