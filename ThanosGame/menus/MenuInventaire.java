@@ -333,6 +333,18 @@ public class MenuInventaire extends JFrame implements ActionListener {
        Pv2.setBounds(0,0,(int)(350*thanos.getHp()),50);
        PV.setText("" + thanos.getPV() + "/" + thanos.getMaxPv());
        Ame.setText(""+thanos.infinity.nbAme);
+       bViolet.setText("");
+       bVert.setText("");
+       bJaune.setText("");
+       bBleu.setText("");
+       bRouge.setText("");
+       bOrange.setText("");
+       b2Violet.setText("");
+       b2Vert.setText("");
+       b2Orange.setText("");
+       b2Rouge.setText("");
+       b2Jaune.setText("");
+       b2Bleu.setText("");
        //Mettre à jour prix pierres
     }
 
