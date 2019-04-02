@@ -14,12 +14,12 @@ public class Thanos extends PlayerClass{
     public boolean secondary;
     public Thanos(int PV){
         super();
-        myShield=0;
-        this.PV=PV ;
+        myShield = 0;
+        this.PV = PV ;
         maxPv = PV;
-        this.infinity= new Gant(this);
+        this.infinity = new Gant(this);
         animatedShield = new AnimatedImage(ImagesSaves.shieldSprite,new Point2D(556,556),1000);
-        secondary=false;
+        secondary = false;
     }
 
     @Override
