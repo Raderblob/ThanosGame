@@ -4,6 +4,7 @@ import ThanosGame.graphics.GraphicalUserInterface;
 import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.menus.MenuInventaire;
 import ThanosGame.menus.MenuPrincipal;
+import ThanosGame.weapons.player.MindStone;
 import ThanosGame.weapons.player.PowerStone;
 import ThanosGame.weapons.player.RealityStone;
 import ThanosGame.weapons.player.SpaceStone;
@@ -121,6 +122,7 @@ public class Game extends Application {
         thanos.addStone(new RealityStone(thanos));
         thanos.addStone(new SpaceStone(thanos));
         thanos.addStone(new PowerStone(thanos));
+        thanos.addStone(new MindStone(thanos));
 
         gui = new GraphicalUserInterface(thanos);
 
