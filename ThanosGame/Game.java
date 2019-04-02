@@ -1,7 +1,6 @@
 package ThanosGame;
 
 import ThanosGame.graphics.GraphicalUserInterface;
-import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.menus.MenuInventaire;
 import ThanosGame.menus.MenuPrincipal;
 import ThanosGame.weapons.player.MindStone;
@@ -20,7 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
-
+import resources.ImagesSaves;
 
 
 public class Game extends Application {
@@ -40,13 +39,17 @@ public class Game extends Application {
     @Override
     public void start(Stage stage) {
 
-        this.stage=stage;
-        ImagesSaves.loadImages();
-        System.out.println("Loading Game...");
-        loadGame();
-        inventaire = new MenuInventaire(thanos);
-        Main.mainMenu = new MenuPrincipal(this);
-        loadEvents();
+        try {
+            this.stage=stage;
+            ImagesSaves.loadImages();
+            System.out.println("Loading Game...");
+            loadGame();
+            inventaire = new MenuInventaire(thanos);
+            Main.mainMenu = new MenuPrincipal(this);
+            loadEvents();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -158,7 +161,7 @@ public class Game extends Application {
         gui.draw(gc);
 
         lastLength = ((System.nanoTime() - lastTime));
-        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+        //System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);

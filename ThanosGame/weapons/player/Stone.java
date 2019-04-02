@@ -130,6 +130,4 @@ public class Stone {
     public boolean isReal() {
         return stoneType != -1;
     }
-
-
 }

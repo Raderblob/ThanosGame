@@ -1,10 +1,10 @@
 package ThanosGame;
 
 import ThanosGame.graphics.AnimatedPerson;
-import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
 import ThanosGame.weapons.*;
 import javafx.geometry.Point2D;
+import resources.ImagesSaves;
 
 
 public class Personnage extends PlayerClass {
@@ -28,7 +28,7 @@ public class Personnage extends PlayerClass {
         if(Main.numberGenerator.nextInt(10)<7){
             myState = AiState.STATIC;
         }else{
-            myState = AiState.PATROL;
+            patrolMe();
         }
 
         this.myTerrain = myTerrain;
@@ -36,7 +36,7 @@ public class Personnage extends PlayerClass {
         myPosition = pos;
         mySize = new Point2D(10, 10);
         mySpeed = new Point2D(0, 0);
-        myAnimation = new AnimatedPerson(ImagesSaves.wakandaisSprites, new Point2D(322, 396), 64);
+        myAnimation = new AnimatedPerson(ImagesSaves.wakandaisSprites, new Point2D(322, 400), 64);
 
         int rndgen = Main.numberGenerator.nextInt(100);
         if(rndgen<20){
@@ -48,8 +48,6 @@ public class Personnage extends PlayerClass {
         }
 
 
-        timeKeeper = System.currentTimeMillis();
-        timeLapse = Main.numberGenerator.nextInt(1000)+500;
     }
 
     private void moveRight() {
@@ -84,11 +82,13 @@ public class Personnage extends PlayerClass {
         double playerDistance = pDir.distance(0,0);
         Point2D pDirN = pDir.multiply(1/playerDistance);
 
-        if(playerDistance <SIGHTRANGE){
-            myState = AiState.ATTACK;
-        }
-        if(PV < maxPv){
-            myState =AiState.ATTACK;
+        if(myState!=AiState.STUNNED) {
+            if (playerDistance < SIGHTRANGE) {
+                myState = AiState.ATTACK;
+            }
+            if (PV < maxPv) {
+                myState = AiState.ATTACK;
+            }
         }
 
 
@@ -119,7 +119,7 @@ public class Personnage extends PlayerClass {
                 moveDir(movingState);
 
                 if(playerDistance > SIGHTRANGE *10){
-                    myState = AiState.PATROL;
+                    patrolMe();
                 }
                 break;
             case PATROL:
@@ -140,8 +140,26 @@ public class Personnage extends PlayerClass {
             case STATIC:
                 movingState = 0;
                 break;
+            case STUNNED:
+                movingState=0;
+                if(System.currentTimeMillis()-timeKeeper>timeLapse){
+                    myState = AiState.ATTACK;
+                }
+                break;
         }
         super.run(currentTerrain, currentWorld, currentNanoTime);
+    }
+
+    public void patrolMe(){
+        myState= AiState.PATROL;
+        timeKeeper = System.currentTimeMillis();
+        timeLapse = Main.numberGenerator.nextInt(1000)+500;
+    }
+
+    public void stunMe(int power){
+        myState = AiState.STUNNED;
+        timeKeeper = System.currentTimeMillis();
+        timeLapse = Main.numberGenerator.nextInt(power*10)+500;
     }
 
     private Point2D playerDirection() {
@@ -166,6 +184,6 @@ public class Personnage extends PlayerClass {
 
 
     enum AiState {
-        STATIC, PATROL, ATTACK;
+        STATIC, PATROL, ATTACK,STUNNED;
     }
 }

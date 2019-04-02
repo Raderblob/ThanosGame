@@ -3,8 +3,8 @@ package ThanosGame.terrain;
 import ThanosGame.Game;
 import ThanosGame.Item;
 import ThanosGame.Thanos;
-import ThanosGame.graphics.images.ImagesSaves;
 import javafx.geometry.Point2D;
+import resources.ImagesSaves;
 
 public class Teleporter extends Item {
     private int teleportTo;

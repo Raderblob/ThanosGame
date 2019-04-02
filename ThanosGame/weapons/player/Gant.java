@@ -11,6 +11,8 @@ public class Gant {
     public Stone[] stones;
     public boolean pierreAme;
     public int nbAme;
+    public int [] prixCooldown = new int [6];
+    public int [] prixPuissance = new int [6];
 
     public Gant(Thanos owner) {
         this.owner = owner;
@@ -20,6 +22,12 @@ public class Gant {
             stones[i] = new Stone(owner);
         }
         selectedStone = 0;
+
+        //Création des prix de base
+        for(int i=0; i<prixCooldown.length; i++){
+            prixCooldown[i]=5;
+            prixPuissance[i]=5;
+        }
     }
 
     public void PierreAme(){
@@ -71,5 +79,26 @@ public class Gant {
             }
         }
         return nbPierres;
+    }
+
+    public void niveauCooldown(int n){
+        if(prixCooldown[n]<=25 && prixCooldown[n]>0){
+            prixCooldown[n]=(prixCooldown[n]*5);
+            stones[n].coolDown =  stones[n].coolDown/2;
+            stones[n].secondaryCoolDown =  stones[n].secondaryCoolDown/2;
+        }else if (prixCooldown[n]==125){
+            prixCooldown[n]= 0;
+            stones[n].coolDown =  stones[n].coolDown/2;
+            stones[n].secondaryCoolDown =  stones[n].secondaryCoolDown/2;
+        }
+    }
+    public void niveauPuissance(int n){
+        if(prixPuissance[n]<=25 && prixPuissance[n]>0){
+            prixPuissance[n]=(prixPuissance[n]*5);
+            stones[n].myPower =  stones[n].myPower*2;
+        }else if (prixPuissance[n]==125){
+            prixPuissance[n]= 0;
+            stones[n].myPower =  stones[n].myPower*2;
+        }
     }
 }

@@ -4,11 +4,11 @@ package ThanosGame.weapons;
 import ThanosGame.Item;
 import ThanosGame.Main;
 import ThanosGame.World;
-import ThanosGame.graphics.images.ImagesSaves;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.transform.Rotate;
+import resources.ImagesSaves;
 
 public class Projectile extends Item {
     public int degats;

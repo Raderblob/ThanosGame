@@ -1,6 +1,7 @@
-package ThanosGame.terrain.buildings;
+package resources;
 
-import ThanosGame.graphics.images.PixelBlockType;
+
+import ThanosGame.terrain.PixelBlockType;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class BuildingSaves {
         byte res[][];
         BufferedImage img;
         try {
-            img = ImageIO.read(BuildingSaves.class.getResource(str));
+            img = ImageIO.read(BuildingSaves.class.getClassLoader().getResourceAsStream("resources/buildings/" +str));
         } catch (IOException e) {
             e.printStackTrace();
             img = new BufferedImage(1, 1, BufferedImage.TYPE_4BYTE_ABGR);

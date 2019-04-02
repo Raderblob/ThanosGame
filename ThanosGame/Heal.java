@@ -1,8 +1,8 @@
 package ThanosGame;
 
-import ThanosGame.graphics.images.ImagesSaves;
-import javafx.geometry.Point2D;
 import ThanosGame.terrain.TerrainMap;
+import javafx.geometry.Point2D;
+import resources.ImagesSaves;
 
 public class Heal extends Item{
     private int vieRendue;
