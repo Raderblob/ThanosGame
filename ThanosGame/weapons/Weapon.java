@@ -2,7 +2,6 @@ package ThanosGame.weapons;
 
 import ThanosGame.Personnage;
 import javafx.geometry.Point2D;
-
 import java.util.LinkedList;
 
 public class Weapon {
