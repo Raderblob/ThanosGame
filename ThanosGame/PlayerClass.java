@@ -90,11 +90,11 @@ public class PlayerClass {
         }
 
 
-        if (tooHigh || myPosition.getY() - mySize.getY() <= 0) {
+        if (tooLow) {
+            myPosition = myPosition.add(0, -4);
+        }else if(tooHigh || myPosition.getY() - mySize.getY() <= 0){
             mySpeed = new Point2D(mySpeed.getX(), 0);
             myPosition = myPosition.add(0, 4);
-        }else if(tooLow){
-            myPosition = myPosition.add(0, -4);
         }
 
         if (movingState > 0) {

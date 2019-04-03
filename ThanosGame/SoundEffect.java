@@ -22,7 +22,7 @@ public class SoundEffect {
         try {
             new Thread(() -> {
                 // myClip.setFramePosition(0);
-                myClip.play(volume);
+                myClip.play(volume*Keyboard.gameVolume);
             }).start();
         } catch (Exception e) {
             e.printStackTrace();
@@ -33,9 +33,8 @@ public class SoundEffect {
         loopMe = true;
         try {
             new Thread(() -> {
-                myClip.play();
-                while (myClip.isPlaying()) {
-                }
+                myClip.play(Keyboard.gameVolume);
+                while (myClip.isPlaying()) {}
                 if (loopMe) {
                     loop();
                 }
