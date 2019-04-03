@@ -2,37 +2,55 @@ package ThanosGame;
 
 import resources.ImagesSaves;
 
-import java.applet.Applet;
-import java.applet.AudioClip;
-
 public class SoundEffect {
-    private AudioClip myClip;
-    public SoundEffect(String wavFile){
+    private boolean loopMe = false;
+    private javafx.scene.media.AudioClip myClip;
+
+    public SoundEffect(String wavFile) {
         try {
-            myClip = Applet.newAudioClip(ImagesSaves.class.getResource("sound/"+wavFile));
+            // AudioInputStream sound = AudioSystem.getAudioInputStream(ImagesSaves.class.getResource("sound/" + wavFile));
+            myClip = new javafx.scene.media.AudioClip(ImagesSaves.class.getResource("sound/" + wavFile).toExternalForm());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void play(){
+    public void play() {
+        play(1);
+    }
+    public void play(double volume) {
         try {
-            new Thread(() -> myClip.play()).start();
+            new Thread(() -> {
+                // myClip.setFramePosition(0);
+                myClip.play(volume);
+            }).start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void loop(){
+
+    public void loop() {
+        loopMe = true;
         try {
-            new Thread(() -> myClip.loop()).start();
+            new Thread(() -> {
+                myClip.play();
+                while (myClip.isPlaying()) {
+                }
+                if (loopMe) {
+                    loop();
+                }
+            }).start();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    public void stop(){
+
+    public void stop() {
         myClip.stop();
+        loopMe = false;
     }
-    public void dispose(){
+
+    public void dispose() {
         myClip = null;
     }
 }

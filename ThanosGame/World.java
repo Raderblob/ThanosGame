@@ -9,6 +9,7 @@ import ThanosGame.weapons.Projectile;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
+import resources.AudioSaves;
 import resources.BuildingSaves;
 
 import java.util.LinkedList;
@@ -70,7 +71,7 @@ public class World {
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
         LinkedList<Heal> hToRemove = new LinkedList<>();
 
-        for(Personnage enemy: enemies){
+        for(Personnage enemy: enemies){//run physics for ai
             enemy.run(terrain,this,currentNanoTime);//run ai
             if(enemy.PV<=0){
                 ennToRemove.add(enemy);
@@ -103,14 +104,15 @@ public class World {
         }
 
         for (Projectile p : pToRemove) {
-            worldExplosions.add(new Explosion(p.position, new Point2D( p.degats,  p.degats), 28, p.degats, terrain,p.enemyOwned));
+            AudioSaves.explosionSound.play(p.degats/100d);
+            worldExplosions.add(new Explosion(p.position, 28, p.degats, terrain,p.enemyOwned));
             worldProjectiles.remove(p);
         }
         for (FXEffect e : eToRemove) {
             worldExplosions.remove(e);
         }
         for (Personnage e : ennToRemove) {
-            worldExplosions.add(new Explosion(e.myPosition, new Point2D(10, 10), 28, 10, terrain,true));
+            worldExplosions.add(new Explosion(e.myPosition, 28, 10, terrain,true));
             enemies.remove(e);
         }
 

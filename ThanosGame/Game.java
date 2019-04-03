@@ -55,6 +55,7 @@ public class Game extends Application {
             e.printStackTrace();
         }
 
+        //AudioSaves.mainMusic.loop();
         AudioSaves.mainMusic.loop();
 
     }

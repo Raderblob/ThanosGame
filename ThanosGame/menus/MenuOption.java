@@ -230,9 +230,9 @@ public class MenuOption extends JFrame implements ActionListener  {
             }
 
             // Phase 2 NIVEAU
-            if (easy.isSelected()){}
-            if (easy.isSelected()){}
-            if (hard.isSelected()){}
+            if (easy.isSelected()){Keyboard.difficulty=1;}
+            if (easy.isSelected()){Keyboard.difficulty=2;}
+            if (hard.isSelected()){Keyboard.difficulty=10;}
 
 			myMenu.setVisible(true);
 			this.setVisible(false);

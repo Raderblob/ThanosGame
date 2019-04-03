@@ -11,7 +11,7 @@ public class Explosion extends FXEffect { //does the damage
     private boolean damaged;
     private boolean enemyOwned;
 
-    public Explosion(Point2D maPosition, Point2D Size, double myL, double damageT, TerrainMap mTerrain,boolean eOwned) {
+    public Explosion(Point2D maPosition, double myL, double damageT, TerrainMap mTerrain,boolean eOwned) {
         super(maPosition, new Point2D(Math.tanh((damageT-10)*0.005)*70+10,Math.tanh((damageT-10)*0.005)*70+10), myL, mTerrain);
         damagePerTick = damageT;
         myAnimation.setMyMode(0);
