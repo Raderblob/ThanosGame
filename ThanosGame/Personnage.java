@@ -159,7 +159,7 @@ public class Personnage extends PlayerClass {
     public void stunMe(int power){
         myState = AiState.STUNNED;
         timeKeeper = System.currentTimeMillis();
-        timeLapse = Main.numberGenerator.nextInt(power*10)+500;
+        timeLapse = Main.numberGenerator.nextInt(power*50)+500;
     }
 
     private Point2D playerDirection() {

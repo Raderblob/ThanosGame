@@ -73,6 +73,8 @@ public class PlayerClass {
 
     private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
+        boolean tooLow = playerTrimmingTerrain(currentTerrain);
+        boolean tooHigh = terrainIsObstacleOverhead(currentTerrain);
         obsClear = 1;
         mySpeed = mySpeed.add(0, currentNanoTime * 0.5 * (tUnderFoot ? 0 : 1));
 
@@ -87,12 +89,12 @@ public class PlayerClass {
             }
         }
 
-        if (playerTrimmingTerrain(currentTerrain)) {
-            myPosition = myPosition.add(0, -4);
-        }
-        if (terrainIsObstacleOverhead(currentTerrain) || myPosition.getY() - mySize.getY() == 0) {
+
+        if (tooHigh || myPosition.getY() - mySize.getY() <= 0) {
             mySpeed = new Point2D(mySpeed.getX(), 0);
             myPosition = myPosition.add(0, 4);
+        }else if(tooLow){
+            myPosition = myPosition.add(0, -4);
         }
 
         if (movingState > 0) {
@@ -102,7 +104,7 @@ public class PlayerClass {
             obsClear = terrainIsObstacleLeft(currentTerrain) ? 0 : 1;
             myPosition = myPosition.add( currentNanoTime*2 * movingState * (obsClear), 0);
         }
-        myPosition = currentTerrain.clampPoint(myPosition.add(mySpeed.multiply(currentNanoTime)), mySize);
+        myPosition = currentTerrain.clampPoint(myPosition.add(mySpeed.multiply(currentNanoTime)), mySize.multiply(1.2));
     }
 
 

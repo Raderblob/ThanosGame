@@ -35,7 +35,7 @@ public class MindStone extends SpaceStone {
         Point2D destination = getDestination(destroyAt,currentWorld,currentTerrain);
 
         if(terrainClear(currentWorld.thanos,currentTerrain,destination)){
-            currentWorld.worldExplosions.add(new DistractionFX(destination,new Point2D(10,10),200,currentTerrain));
+            currentWorld.worldExplosions.add(new DistractionFX(destination,new Point2D(10,10),myPower*0.5,currentTerrain));
 
             return 1;
         }

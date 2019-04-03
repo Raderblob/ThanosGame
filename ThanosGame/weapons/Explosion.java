@@ -25,18 +25,17 @@ public class Explosion extends FXEffect { //does the damage
         super.runExplosion(myWorld, terrain, nanoTime);
 
         if (!damaged) {
-            if (enemyOwned) {
-                if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)){
-                    myWorld.thanos.removeHp(damagePerTick);
-                    damaged = true;
-                }
-            } else {
+            if (!enemyOwned) {
                 for(Personnage enemy:myWorld.enemies){
                     if(!enemy.turned && isInRectangle(enemy.myPosition,enemy.mySize)){
                         enemy.removeHp(damagePerTick);
                         damaged=true;
                     }
                 }
+            }
+            if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)){
+                myWorld.thanos.removeHp(damagePerTick);
+                damaged = true;
             }
 
         }
