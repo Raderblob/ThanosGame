@@ -126,6 +126,10 @@ public class Stone {
         return res.toArray(new Point2D[0]);
     }
 
+    public int myType(){
+        return stoneType;
+    }
+
     public String toString() {
         return stoneName;
     }

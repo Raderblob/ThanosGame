@@ -1,16 +1,16 @@
-package ThanosGame;
+package ThanosGame.weapons.player;
 
-import ThanosGame.weapons.player.MindStone;
-import ThanosGame.weapons.player.PowerStone;
-import ThanosGame.weapons.player.RealityStone;
-import ThanosGame.weapons.player.SpaceStone;
-import resources.ImagesSaves;
+import ThanosGame.Item;
+import ThanosGame.World;
 import javafx.geometry.Point2D;
+import resources.ImagesSaves;
 
-public class Pierre extends Item{
+import java.util.LinkedList;
+
+public class StoneItem extends Item {
     public int typePierre;
 
-    public Pierre(Point2D position, Point2D Size, int type){
+    public StoneItem(Point2D position, Point2D Size, int type){
         super(position, Size, ImagesSaves.stoneSprite, new Point2D(20,20),1000);
         typePierre = type;
         mylife = 1;
@@ -33,6 +33,12 @@ public class Pierre extends Item{
                     myWorld.thanos.addStone(new MindStone(myWorld.thanos));
                     break;
             }
+        }
+    }
+
+    public static void addStone(Point2D pos, int type, LinkedList<StoneItem> stones,Gant infinity){
+        if(!infinity.hasStone(type)){
+            stones.add(new StoneItem(pos, new Point2D(5, 5), type));
         }
     }
 }

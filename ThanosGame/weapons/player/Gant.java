@@ -9,7 +9,6 @@ public class Gant {
     public Thanos owner;
     public int selectedStone;
     public Stone[] stones;
-    public boolean pierreAme;
     public int nbAme;
     public int [] prixCooldown = new int [6];
     public int [] prixPuissance = new int [6];
@@ -100,5 +99,15 @@ public class Gant {
             prixPuissance[n]= 0;
             stones[n].myPower =  stones[n].myPower*2;
         }
+    }
+
+    public boolean hasStone(int s){
+        for(int i=0;i<stones.length;i++){
+            if (stones[i].myType()==s){
+                return true;
+            }
+
+        }
+        return false;
     }
 }
