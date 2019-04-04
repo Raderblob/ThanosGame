@@ -127,11 +127,10 @@ public class Game extends Application {
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        thanos = new Thanos(500);
+        thanos = new Thanos(100);
 
 
         gui = new GraphicalUserInterface(thanos);
-
 
         switchWorlds(1);
 
