@@ -46,18 +46,18 @@ public class World {
                 teleportTo = 0;
                 terrain = new TerrainMap(30, true, this, enemies);
                 new LargeBase(BuildingSaves.pal, new Point2D(10000, 0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.ironManBase, new Point2D(2500, 0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.captainBase, new Point2D(2000, 40)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.thorBase, new Point2D(3500, 0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.SpidermanBase, new Point2D(1500, 0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.ironManBase, new Point2D(7500, 0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.captainBase, new Point2D(5000, 40)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.thorBase, new Point2D(10000, 0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.SpidermanBase, new Point2D(2500, 0)).changeTerrain(terrain);
                 System.out.println(enemies.size());
                 enemies.add(new Personnage(new Point2D(1000, 50), terrain, this));
 
 
-                StoneItem.addStone(new Point2D(100, 40), 0, worldStoneItem, thanos.infinity);
-                StoneItem.addStone(new Point2D(200, 40), 1, worldStoneItem, thanos.infinity);
-                StoneItem.addStone(new Point2D(250, 40), 2, worldStoneItem, thanos.infinity);
-                StoneItem.addStone(new Point2D(300, 40), 3, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(500, 40), 0, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(2700, 40), 1, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(5200, 40), 2, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(7700, 40), 3, worldStoneItem, thanos.infinity);
                 break;
             case 2:
                 starterPos = new Point2D(50, 50);
@@ -102,7 +102,7 @@ public class World {
                 thanos.infinity.PierreAme();
                 int vieOuPas = (int) (Math.random() * 1000);
                 if (vieOuPas <= 200) {
-                    worldHeal.add(new Heal(enemy.myPosition, new Point2D(5, 5), 50));
+                    worldHeal.add(new Heal(enemy.myPosition, new Point2D(5, 5), 10));
                 }
             }
         }
