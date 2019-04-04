@@ -3,26 +3,19 @@ package resources;
 import ThanosGame.SoundEffect;
 
 public class AudioSaves {
-    public static SoundEffect mainMusic;
-    public static SoundEffect explosionSound;
-    public static SoundEffect gunSound;
-    public static SoundEffect deathSound;
-    public static SoundEffect teleportSound;
-    public static SoundEffect mindSound;
-    public static SoundEffect punchSound;
-    public static SoundEffect realityCreateSound;
-    public static SoundEffect realityDestroySound;
-    public static SoundEffect shieldSound;
+    public final static SoundEffect mainMusic= new SoundEffect("mainMusic.wav");
+    public final static SoundEffect explosionSound = new SoundEffect("explosionSound.wav");
+    public final static SoundEffect gunSound =  new SoundEffect("gunSound.wav");
+    public final static SoundEffect deathSound =  new SoundEffect("deathSound.wav");
+    public final static SoundEffect teleportSound = new SoundEffect("teleportSound.wav");
+    public final static SoundEffect mindSound = new SoundEffect("mindSound.wav");
+    public final static SoundEffect punchSound = new SoundEffect("punchSound.wav");
+    public final static SoundEffect realityCreateSound = new SoundEffect("realityCreateSound.wav");
+    public final static SoundEffect realityDestroySound =  new SoundEffect("realityDestroySound.wav");
+    public final static SoundEffect shieldSound =new SoundEffect("shieldSound.wav");
+
+
     public static void loadMusic(){
-        mainMusic = new SoundEffect("mainMusic.wav");
-        explosionSound = new SoundEffect("explosionSound.wav");
-        gunSound = new SoundEffect("gunSound.wav");
-        deathSound = new SoundEffect("deathSound.wav");
-        teleportSound = new SoundEffect("teleportSound.wav");
-        mindSound = new SoundEffect("mindSound.wav");
-        punchSound = new SoundEffect("punchSound.wav");
-        realityCreateSound = new SoundEffect("realityCreateSound.wav");
-        realityDestroySound = new SoundEffect("realityDestroySound.wav");
-        shieldSound = new SoundEffect("shieldSound.wav");
+
     }
 }
