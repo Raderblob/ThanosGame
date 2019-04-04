@@ -10,7 +10,8 @@ import resources.AudioSaves;
 import java.util.LinkedList;
 
 public class RealityStone extends Stone {
-
+    private final int SOUNDTIME =400;
+    private long lastTime;
 
     public RealityStone(Thanos owner) {
         super(owner);
@@ -27,9 +28,10 @@ public class RealityStone extends Stone {
         doDamage(currentWorld, destroyAt, pointsToChange);
         doChanges(pointsToChange, (byte) 0, currentTerrain);
         currentWorld.worldExplosions.add(new FXEffect(destroyAt, new Point2D(60, 60), 25, currentTerrain));
-        if (!AudioSaves.realityCreateSound.isPlaying()) {
-            AudioSaves.realityCreateSound.play();
-        }
+
+
+        AudioSaves.realityDestroySound.play();
+
         return 1;
     }
 
@@ -43,7 +45,10 @@ public class RealityStone extends Stone {
         if (currentTerrain.getTerrainVal(destroyAt) != 1) {
             doChanges(pointsToChange, (byte) 1, currentTerrain);
             currentWorld.worldExplosions.add(new FXEffect(destroyAt, new Point2D(20, 20), 4, currentTerrain));
-            AudioSaves.realityDestroySound.play();
+            if (System.currentTimeMillis() - lastTime>SOUNDTIME) {
+                AudioSaves.realityCreateSound.play();
+                lastTime=System.currentTimeMillis();
+            }
             return 1;
         } else {
             return 0;

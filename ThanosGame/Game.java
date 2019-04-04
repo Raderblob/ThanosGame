@@ -3,10 +3,6 @@ package ThanosGame;
 import ThanosGame.graphics.GraphicalUserInterface;
 import ThanosGame.menus.MenuInventaire;
 import ThanosGame.menus.MenuPrincipal;
-import ThanosGame.weapons.player.MindStone;
-import ThanosGame.weapons.player.PowerStone;
-import ThanosGame.weapons.player.RealityStone;
-import ThanosGame.weapons.player.SpaceStone;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -170,7 +166,7 @@ public class Game extends Application {
         gui.draw(gc);
 
         lastLength = ((System.nanoTime() - lastTime));
-        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+        //System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);

@@ -18,18 +18,16 @@ public class SoundEffect {
     public void play() {
         play(1);
     }
+
     public void play(double volume) {
         try {
-            new Thread(() -> {
-                // myClip.setFramePosition(0);
-                myClip.play(volume*Keyboard.gameVolume);
-            }).start();
+            myClip.play(volume * Keyboard.gameVolume);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public boolean isPlaying(){
+    public boolean isPlaying() {
         return myClip.isPlaying();
     }
 
@@ -38,7 +36,8 @@ public class SoundEffect {
         try {
             new Thread(() -> {
                 myClip.play(Keyboard.gameVolume);
-                while (myClip.isPlaying()) {}
+                while (myClip.isPlaying()) {
+                }
                 if (loopMe) {
                     loop();
                 }
