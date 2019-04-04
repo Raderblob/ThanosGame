@@ -48,6 +48,10 @@ public class World {
                 new LargeBase(BuildingSaves.SpidermanBase,new Point2D(1500,0)).changeTerrain(terrain);
                 System.out.println(enemies.size());
                 enemies.add(new Personnage(new Point2D(1000,50),terrain,this));
+                worldPierre.add(new Pierre(new Point2D(100,40),new Point2D (5,5),0));
+                worldPierre.add(new Pierre(new Point2D(200,40),new Point2D (5,5),1));
+                worldPierre.add(new Pierre(new Point2D(250,40),new Point2D (5,5),2));
+                worldPierre.add(new Pierre(new Point2D(300,40),new Point2D (5,5),3));
                 break;
             case 0:
                 starterPos = new Point2D(720,320);
