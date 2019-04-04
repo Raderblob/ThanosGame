@@ -166,7 +166,7 @@ public class Game extends Application {
         gui.draw(gc);
 
         lastLength = ((System.nanoTime() - lastTime));
-        //System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);

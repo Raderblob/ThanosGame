@@ -79,11 +79,11 @@ public class Stone {
 
         hitDistance = hitDistance.normalize().multiply(owner.mySize.getX());
         destination = hitDistance.add(currentWorld.thanos.myPosition);
-        LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 20);
+        LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 10);
 
         doDamage(currentWorld,destination,pointsToChange);
         doChanges(pointsToChange, (byte) 0, currentTerrain);
-        currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(40,40),10,currentTerrain));
+        currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(20,20),10,currentTerrain));
         AudioSaves.punchSound.play();
         return 1;
     }

@@ -25,7 +25,7 @@ public class Personnage extends PlayerClass {
         turned=false;
         this.PV=100 * myWorld.getDifficulty() ;
         maxPv = PV;
-        if(Main.numberGenerator.nextInt(10)<7){
+        if(Main.numberGenerator.nextInt(10)<4){
             myState = AiState.STATIC;
         }else{
             patrolMe();
@@ -69,85 +69,88 @@ public class Personnage extends PlayerClass {
 
     @Override
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
-        myTarget=player.myPosition;
-        for(FXEffect fx:currentWorld.worldExplosions){
-            if(fx.myType()==1){
-                if(Main.getMagnitudeSquared(fx.position.add(myPosition.multiply(-1)))<Math.pow(SIGHTRANGE,2)){
-                    myTarget = fx.position;
-                }
-            }
-        }
-
-        Point2D pDir = myTarget.add(myPosition.multiply(-1));
-        double playerDistance = pDir.distance(0,0);
-        Point2D pDirN = pDir.multiply(1/playerDistance);
-
-        if(myState!=AiState.STUNNED && myState != AiState.ATTACK) {
-            if (playerDistance < SIGHTRANGE) {
-                stunMe(10);
-            }
-            if (PV < maxPv) {
-                stunMe(10);
-            }
-        }
-
-
-        switch (myState) {
-            case ATTACK:
-                myGun.fire(pDirN);
-
-                if(Main.numberGenerator.nextInt(1000)<80){
-                    changeMind=true;
-                }
-
-                if(myTarget.getY()-myPosition.getY()<0) {
-                    if (Main.numberGenerator.nextInt(1000) < 50) {
-                        jump();
+        if(myPosition.getX()>getCameraPosition().getX()-500 && myPosition.getX()<getCameraPosition().getX()+ Game.winParam.getX()+1000 ) {
+            myTarget = player.myPosition;
+            for (FXEffect fx : currentWorld.worldExplosions) {
+                if (fx.myType() == 1) {
+                    if (Main.getMagnitudeSquared(fx.position.add(myPosition.multiply(-1))) < Math.pow(SIGHTRANGE, 2)) {
+                        myTarget = fx.position;
                     }
                 }
-                if(changeMind){
-                    if(pDir.getX()>0){
-                        movingState = Main.numberGenerator.nextInt(7)-1;
-                    }else{
-                        movingState = Main.numberGenerator.nextInt(7)-6;
-                    }
-                    if(movingState!=0){
-                        movingState = movingState/Math.abs(movingState);
-                    }
-                    changeMind=false;
-                }
-                moveDir(movingState);
+            }
 
-                if(playerDistance > SIGHTRANGE *10){
-                    patrolMe();
+            Point2D pDir = myTarget.add(myPosition.multiply(-1));
+            double playerDistance = pDir.distance(0, 0);
+            Point2D pDirN = pDir.multiply(1 / playerDistance);
+
+            if (myState != AiState.STUNNED && myState != AiState.ATTACK) {
+                if (playerDistance < SIGHTRANGE) {
+                    stunMe(10);
                 }
-                break;
-            case PATROL:
-                if (patrolFlipper == 0) {
-                    moveRight();
+                if (PV < maxPv) {
+                    stunMe(10);
+                }
+            }
+
+
+            switch (myState) {
+                case ATTACK:
+                    myGun.fire(pDirN);
+
+                    if (Main.numberGenerator.nextInt(1000) < 80) {
+                        changeMind = true;
+                    }
+
+                    if (myTarget.getY() - myPosition.getY() < 0) {
+                        if (Main.numberGenerator.nextInt(1000) < 50) {
+                            jump();
+                        }
+                    }
+                    if (changeMind) {
+                        if (pDir.getX() > 0) {
+                            movingState = Main.numberGenerator.nextInt(7) - 1;
+                        } else {
+                            movingState = Main.numberGenerator.nextInt(7) - 6;
+                        }
+                        if (movingState != 0) {
+                            movingState = movingState / Math.abs(movingState);
+                        }
+                        changeMind = false;
+                    }
+                    moveDir(movingState);
+
+                    if (playerDistance > SIGHTRANGE * 10) {
+                        patrolMe();
+                    }
+                    break;
+                case PATROL:
+                    if (patrolFlipper == 0) {
+                        moveRight();
+                        if (System.currentTimeMillis() - timeKeeper > timeLapse) {
+                            patrolFlipper = 1;
+                            timeKeeper = System.currentTimeMillis();
+                        }
+                    } else {
+                        moveLeft();
+                        if (System.currentTimeMillis() - timeKeeper > timeLapse) {
+                            patrolFlipper = 0;
+                            timeKeeper = System.currentTimeMillis();
+                        }
+                    }
+                    break;
+                case STATIC:
+                    movingState = 0;
+                    break;
+                case STUNNED:
+                    movingState = 0;
                     if (System.currentTimeMillis() - timeKeeper > timeLapse) {
-                        patrolFlipper = 1;
-                        timeKeeper = System.currentTimeMillis();
+                        myState = AiState.ATTACK;
                     }
-                } else {
-                    moveLeft();
-                    if (System.currentTimeMillis() - timeKeeper > timeLapse) {
-                        patrolFlipper = 0;
-                        timeKeeper = System.currentTimeMillis();
-                    }
-                }
-                break;
-            case STATIC:
-                movingState = 0;
-                break;
-            case STUNNED:
-                movingState=0;
-                if(System.currentTimeMillis()-timeKeeper>timeLapse){
-                    myState = AiState.ATTACK;
-                }
-                break;
+                    break;
+            }
+            super.run(currentTerrain, currentWorld, currentNanoTime);
         }
-        super.run(currentTerrain, currentWorld, currentNanoTime);
+
     }
 
     public void patrolMe(){
