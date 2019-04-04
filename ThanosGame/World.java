@@ -90,19 +90,21 @@ public class World {
             }
         }
         for (FXEffect cExplosion : worldExplosions) {
-            cExplosion.runExplosion(this, terrain, currentNanoTime); //run explosion logic (possible repulsion and animation)
+            cExplosion.runExplosion(this, terrain, currentNanoTime); //run explosion logic
             if (cExplosion.mylife <= 0) {
                 eToRemove.add(cExplosion);
             }
         }
 
-        for (Heal cHeal : worldHeal){
+        for (Heal cHeal : worldHeal){//run collision for healitems
             cHeal.runLogic(this, terrain);
             if (cHeal.mylife<= 0) {
                 hToRemove.add(cHeal);
             }
         }
 
+
+        //remove all unwanted items
         for (Projectile p : pToRemove) {
             AudioSaves.explosionSound.play(p.degats/100d);
             worldExplosions.add(new Explosion(p.position, 28, p.degats, terrain,p.enemyOwned));
@@ -120,6 +122,9 @@ public class World {
             worldHeal.remove(h);
         }
 
+
+
+        //run collision for teleporters
         for(Teleporter teleporter:teleporters){
             teleporter.checkForTeleport(thanos);
         }

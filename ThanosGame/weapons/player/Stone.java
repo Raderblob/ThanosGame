@@ -7,6 +7,7 @@ import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
 import ThanosGame.weapons.FXEffect;
 import javafx.geometry.Point2D;
+import resources.AudioSaves;
 
 import java.util.LinkedList;
 
@@ -67,6 +68,7 @@ public class Stone {
         }
     }
     protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
+        AudioSaves.shieldSound.play();
         currentWorld.thanos.myShield += myPower*10;
         return 1;
     }
@@ -82,6 +84,7 @@ public class Stone {
         doDamage(currentWorld,destination,pointsToChange);
         doChanges(pointsToChange, (byte) 0, currentTerrain);
         currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(40,40),10,currentTerrain));
+        AudioSaves.punchSound.play();
         return 1;
     }
 

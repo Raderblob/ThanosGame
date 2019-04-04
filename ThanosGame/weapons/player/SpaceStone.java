@@ -7,6 +7,7 @@ import ThanosGame.terrain.TerrainMap;
 import ThanosGame.weapons.FXEffect;
 import ThanosGame.weapons.Tnt;
 import javafx.geometry.Point2D;
+import resources.AudioSaves;
 
 public class SpaceStone extends Stone {
     private double range = 500;
@@ -27,6 +28,7 @@ public class SpaceStone extends Stone {
             currentWorld.worldExplosions.add(new FXEffect(currentWorld.thanos.myPosition,new Point2D(40,40),20,currentTerrain));
             currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(40,40),20,currentTerrain));
             currentWorld.thanos.myPosition = destination;
+            AudioSaves.teleportSound.play();
             return 1;
         }
 
@@ -53,7 +55,7 @@ public class SpaceStone extends Stone {
 
             if (terrainClear(currentWorld.thanos, currentTerrain, destination)) {
                 currentWorld.worldProjectiles.add(new Tnt(destination, myPower, 100));
-
+                AudioSaves.teleportSound.play();
                 return 1;
             }
         }

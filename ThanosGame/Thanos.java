@@ -6,6 +6,7 @@ import ThanosGame.weapons.player.Gant;
 import ThanosGame.weapons.player.Stone;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import resources.AudioSaves;
 import resources.ImagesSaves;
 
 public class Thanos extends PlayerClass{
@@ -39,6 +40,7 @@ public class Thanos extends PlayerClass{
         }
 
         if(PV <=0){
+            AudioSaves.deathSound.play();
             currentWorld.myGame.switchWorlds(0);
             PV = maxPv;
         }
