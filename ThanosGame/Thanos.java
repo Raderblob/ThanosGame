@@ -61,6 +61,8 @@ public class Thanos extends PlayerClass{
         animatedShield.draw(gc,new Point2D(myPosition.getX() - mySize.getX() - getCameraPosition().getX(), myPosition.getY() - mySize.getY() - getCameraPosition().getY()),mySize.multiply(2));
         gc.restore();
     }
+
+
 }
 
  

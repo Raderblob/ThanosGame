@@ -13,7 +13,9 @@ public class ReboundRifle extends Rifle {
 
     @Override
     public Projectile createProjectile(Point2D direction) {
-        AudioSaves.gunSound.play(0.4);
+        if(owner.pointOnScreen(owner.myPosition)) {
+            AudioSaves.gunSound.play(0.4);
+        }
         return new ReboundProjectile(owner.myPosition,new Point2D(4,3),damage,direction.multiply(bulletSpeed));
     }
 }

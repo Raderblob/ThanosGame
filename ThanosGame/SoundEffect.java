@@ -29,6 +29,10 @@ public class SoundEffect {
         }
     }
 
+    public boolean isPlaying(){
+        return myClip.isPlaying();
+    }
+
     public void loop() {
         loopMe = true;
         try {

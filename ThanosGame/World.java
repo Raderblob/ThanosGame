@@ -44,6 +44,7 @@ public class World {
                 new LargeBase(BuildingSaves.captainBase,new Point2D(2500,40)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.thorBase,new Point2D(2000,0)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.SpidermanBase,new Point2D(3000,0)).changeTerrain(terrain);
+                System.out.println(enemies.size());
                 enemies.add(new Personnage(new Point2D(1000,50),terrain,this));
                 break;
             case 0:
@@ -106,7 +107,9 @@ public class World {
 
         //remove all unwanted items
         for (Projectile p : pToRemove) {
-            AudioSaves.explosionSound.play(p.degats/100d);
+            if(thanos.pointOnScreen(p.position)) {
+                AudioSaves.explosionSound.play(p.degats / 100d);
+            }
             worldExplosions.add(new Explosion(p.position, 28, p.degats, terrain,p.enemyOwned));
             worldProjectiles.remove(p);
         }
@@ -133,6 +136,8 @@ public class World {
             myGame.switchWorlds(teleportTo);
         }
     }
+
+
 
     public void renderWorld(GraphicsContext gc, Group root) {
         terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain

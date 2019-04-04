@@ -176,4 +176,8 @@ public class PlayerClass {
     public double getMaxPv(){
         return maxPv;
     }
+
+    public boolean pointOnScreen(Point2D p){
+        return p.getX()>getCameraPosition().getX() && p.getY()<getCameraPosition().getX()+Game.winParam.getX();
+    }
 }
