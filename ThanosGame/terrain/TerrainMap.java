@@ -66,8 +66,8 @@ public class TerrainMap {
                 }
             }
 
-
-            for (int i = 400; i < (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000; i += 700) {//generate buildings
+            int maxMap =  (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000;
+            for (int i = 400; i <maxMap; i += 700) {//generate buildings
                 if (Main.numberGenerator.nextInt(100) > 50) {
                     int y = 0;
                     int x = Main.numberGenerator.nextInt(200) + i;
@@ -75,6 +75,15 @@ public class TerrainMap {
                         y += 1;
                     } while (getTerrainVal(x, y) == 0);
                     new Building(new Point2D(x, y),enemyList,myWorld,this).changeTerrain(this);
+                }
+            }
+
+            for (int i = 100; i <maxMap; i += 1000) {//generate buildings
+                if (Main.numberGenerator.nextInt(maxMap) < i) {
+                    int y = 50;
+                    int x = Main.numberGenerator.nextInt(200) + i;
+
+                   enemyList.add(new Personnage(new Point2D(x,y),this,myWorld));
                 }
             }
 

@@ -19,6 +19,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.stage.Stage;
+import resources.AudioSaves;
 import resources.ImagesSaves;
 
 
@@ -35,6 +36,8 @@ public class Game extends Application {
     private Scene scene;
     private GraphicalUserInterface gui;
     private MenuInventaire inventaire;
+    private boolean leftPressed = false;
+    private boolean rightPressed = false;
 
     @Override
     public void start(Stage stage) {
@@ -42,6 +45,7 @@ public class Game extends Application {
         try {
             this.stage=stage;
             ImagesSaves.loadImages();
+            AudioSaves.loadMusic();
             System.out.println("Loading Game...");
             loadGame();
             inventaire = new MenuInventaire(thanos);
@@ -51,6 +55,8 @@ public class Game extends Application {
             e.printStackTrace();
         }
 
+        AudioSaves.mainMusic.loop();
+
     }
 
     private void loadEvents(){
@@ -59,9 +65,9 @@ public class Game extends Application {
                 hideGame();
                 Main.mainMenu.setVisible(true);
             } else if (key.getCode() == Keyboard.left) {
-                thanos.movingState = -1;
+                leftPressed = true;
             } else if (key.getCode() == Keyboard.right) {
-                thanos.movingState = 1;
+                rightPressed = true;
             } else if (key.getCode() == Keyboard.jump) {
                 thanos.jump();
             } else if (key.getCode() == Keyboard.down) {
@@ -82,9 +88,9 @@ public class Game extends Application {
         });
         scene.addEventHandler(KeyEvent.KEY_RELEASED, key -> {
             if (key.getCode() == Keyboard.left) {
-                thanos.movingState = 0;
+                leftPressed = false;
             } else if (key.getCode() == Keyboard.right) {
-                thanos.movingState = 0;
+                rightPressed= false;
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouse -> {
@@ -97,7 +103,7 @@ public class Game extends Application {
 
         });
         scene.addEventHandler(ScrollEvent.SCROLL,mouse->{
-            if(mouse.getDeltaY()>0){
+            if(mouse.getDeltaY()<0){
                 thanos.infinity.selectNextStone();
             }else{
                 thanos.infinity.selectPreviousStone();
@@ -151,6 +157,13 @@ public class Game extends Application {
 
     public void gameLoop(GraphicsContext gc) { //the game loop
         long lastTime = System.nanoTime();
+        if(leftPressed){
+            thanos.movingState = -1;
+        }else if(rightPressed){
+            thanos.movingState = 1;
+        }else{
+            thanos.movingState = 0;
+        }
 
         gameWorld.runWorld(Math.min(lastLength * 0.0000001, 3));//run logic for the selected world
 
@@ -161,7 +174,7 @@ public class Game extends Application {
         gui.draw(gc);
 
         lastLength = ((System.nanoTime() - lastTime));
-        //System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);

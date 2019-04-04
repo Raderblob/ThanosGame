@@ -9,6 +9,7 @@ import ThanosGame.weapons.Projectile;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
+import resources.AudioSaves;
 import resources.BuildingSaves;
 
 import java.util.LinkedList;
@@ -43,6 +44,7 @@ public class World {
                 new LargeBase(BuildingSaves.captainBase,new Point2D(2500,40)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.thorBase,new Point2D(2000,0)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.SpidermanBase,new Point2D(3000,0)).changeTerrain(terrain);
+                System.out.println(enemies.size());
                 enemies.add(new Personnage(new Point2D(1000,50),terrain,this));
                 break;
             case 0:
@@ -70,7 +72,7 @@ public class World {
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
         LinkedList<Heal> hToRemove = new LinkedList<>();
 
-        for(Personnage enemy: enemies){
+        for(Personnage enemy: enemies){//run physics for ai
             enemy.run(terrain,this,currentNanoTime);//run ai
             if(enemy.PV<=0){
                 ennToRemove.add(enemy);
@@ -89,28 +91,33 @@ public class World {
             }
         }
         for (FXEffect cExplosion : worldExplosions) {
-            cExplosion.runExplosion(this, terrain, currentNanoTime); //run explosion logic (possible repulsion and animation)
+            cExplosion.runExplosion(this, terrain, currentNanoTime); //run explosion logic
             if (cExplosion.mylife <= 0) {
                 eToRemove.add(cExplosion);
             }
         }
 
-        for (Heal cHeal : worldHeal){
+        for (Heal cHeal : worldHeal){//run collision for healitems
             cHeal.runLogic(this, terrain);
             if (cHeal.mylife<= 0) {
                 hToRemove.add(cHeal);
             }
         }
 
+
+        //remove all unwanted items
         for (Projectile p : pToRemove) {
-            worldExplosions.add(new Explosion(p.position, new Point2D( p.degats,  p.degats), 28, p.degats, terrain,p.enemyOwned));
+            if(thanos.pointOnScreen(p.position)) {
+                AudioSaves.explosionSound.play(p.degats / 100d);
+            }
+            worldExplosions.add(new Explosion(p.position, 28, p.degats, terrain,p.enemyOwned));
             worldProjectiles.remove(p);
         }
         for (FXEffect e : eToRemove) {
             worldExplosions.remove(e);
         }
         for (Personnage e : ennToRemove) {
-            worldExplosions.add(new Explosion(e.myPosition, new Point2D(10, 10), 28, 10, terrain,true));
+            worldExplosions.add(new Explosion(e.myPosition, 28, 10, terrain,true));
             enemies.remove(e);
         }
 
@@ -118,6 +125,9 @@ public class World {
             worldHeal.remove(h);
         }
 
+
+
+        //run collision for teleporters
         for(Teleporter teleporter:teleporters){
             teleporter.checkForTeleport(thanos);
         }
@@ -126,6 +136,8 @@ public class World {
             myGame.switchWorlds(teleportTo);
         }
     }
+
+
 
     public void renderWorld(GraphicsContext gc, Group root) {
         terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain

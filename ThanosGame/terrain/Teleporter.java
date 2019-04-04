@@ -4,6 +4,7 @@ import ThanosGame.Game;
 import ThanosGame.Item;
 import ThanosGame.Thanos;
 import javafx.geometry.Point2D;
+import resources.AudioSaves;
 import resources.ImagesSaves;
 
 public class Teleporter extends Item {
@@ -17,7 +18,9 @@ public class Teleporter extends Item {
 
     public void checkForTeleport(Thanos player){
         if(isInRectangle(player.myPosition,player.mySize)){
+            AudioSaves.teleportSound.play();
             game.switchWorlds(teleportTo);
+
         }
     }
 }

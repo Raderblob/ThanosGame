@@ -82,12 +82,12 @@ public class Personnage extends PlayerClass {
         double playerDistance = pDir.distance(0,0);
         Point2D pDirN = pDir.multiply(1/playerDistance);
 
-        if(myState!=AiState.STUNNED) {
+        if(myState!=AiState.STUNNED && myState != AiState.ATTACK) {
             if (playerDistance < SIGHTRANGE) {
-                myState = AiState.ATTACK;
+                stunMe(10);
             }
             if (PV < maxPv) {
-                myState = AiState.ATTACK;
+                stunMe(10);
             }
         }
 
@@ -159,7 +159,7 @@ public class Personnage extends PlayerClass {
     public void stunMe(int power){
         myState = AiState.STUNNED;
         timeKeeper = System.currentTimeMillis();
-        timeLapse = Main.numberGenerator.nextInt(power*10)+500;
+        timeLapse = Main.numberGenerator.nextInt(power*50)+500;
     }
 
     private Point2D playerDirection() {

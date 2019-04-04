@@ -5,6 +5,8 @@ import javafx.scene.input.KeyCode;
 public class Keyboard {
     public static KeyCode right, left, jump, down;
     public static boolean isInQWERTY;
+    public static double difficulty=2;
+    public static double gameVolume =1;
     public Keyboard(){
         right = KeyCode.D;
         left = KeyCode.Q;

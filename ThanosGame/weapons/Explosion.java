@@ -11,7 +11,7 @@ public class Explosion extends FXEffect { //does the damage
     private boolean damaged;
     private boolean enemyOwned;
 
-    public Explosion(Point2D maPosition, Point2D Size, double myL, double damageT, TerrainMap mTerrain,boolean eOwned) {
+    public Explosion(Point2D maPosition, double myL, double damageT, TerrainMap mTerrain,boolean eOwned) {
         super(maPosition, new Point2D(Math.tanh((damageT-10)*0.005)*70+10,Math.tanh((damageT-10)*0.005)*70+10), myL, mTerrain);
         damagePerTick = damageT;
         myAnimation.setMyMode(0);
@@ -25,18 +25,17 @@ public class Explosion extends FXEffect { //does the damage
         super.runExplosion(myWorld, terrain, nanoTime);
 
         if (!damaged) {
-            if (enemyOwned) {
-                if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)){
-                    myWorld.thanos.removeHp(damagePerTick);
-                    damaged = true;
-                }
-            } else {
+            if (!enemyOwned) {
                 for(Personnage enemy:myWorld.enemies){
                     if(!enemy.turned && isInRectangle(enemy.myPosition,enemy.mySize)){
                         enemy.removeHp(damagePerTick);
                         damaged=true;
                     }
                 }
+            }
+            if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)){
+                myWorld.thanos.removeHp(damagePerTick);
+                damaged = true;
             }
 
         }
