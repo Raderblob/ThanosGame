@@ -22,6 +22,7 @@ public class World {
     public LinkedList<FXEffect> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
     public LinkedList<Heal> worldHeal;
+    public LinkedList<Pierre> worldPierre;
 
     private Point2D starterPos;
     private int teleportTo;
@@ -32,6 +33,7 @@ public class World {
         worldProjectiles = new LinkedList<>();
         worldExplosions = new LinkedList<>();
         worldHeal = new LinkedList<>();
+        worldPierre = new LinkedList<>();
         teleporters = new LinkedList<>();
         enemies = new LinkedList<>();
         switch (worldType) {
@@ -40,10 +42,10 @@ public class World {
                 teleportTo = 0;
                 terrain = new TerrainMap(30,true,this,enemies);
                 new LargeBase(BuildingSaves.pal,new Point2D(10000,0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.ironManBase,new Point2D(1500,0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.captainBase,new Point2D(2500,40)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.thorBase,new Point2D(2000,0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.SpidermanBase,new Point2D(3000,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.ironManBase,new Point2D(2500,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.captainBase,new Point2D(2000,40)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.thorBase,new Point2D(3500,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.SpidermanBase,new Point2D(1500,0)).changeTerrain(terrain);
                 System.out.println(enemies.size());
                 enemies.add(new Personnage(new Point2D(1000,50),terrain,this));
                 break;
@@ -71,6 +73,7 @@ public class World {
         LinkedList<Projectile> pToRemove = new LinkedList<>();
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
         LinkedList<Heal> hToRemove = new LinkedList<>();
+        LinkedList<Pierre> sToRemove = new LinkedList<>();
 
         for(Personnage enemy: enemies){//run physics for ai
             enemy.run(terrain,this,currentNanoTime);//run ai
@@ -79,7 +82,7 @@ public class World {
                 thanos.infinity.PierreAme();
                 int vieOuPas = (int)(Math.random()*1000);
                 if(vieOuPas <= 200){
-                    worldHeal.add(new Heal(enemy.myPosition,new Point2D (5,5),10));
+                    worldHeal.add(new Heal(enemy.myPosition,new Point2D (5,5),50));
                 }
             }
         }
@@ -98,9 +101,16 @@ public class World {
         }
 
         for (Heal cHeal : worldHeal){//run collision for healitems
-            cHeal.runLogic(this, terrain);
-            if (cHeal.mylife<= 0) {
+            cHeal.runLogic(this);
+            if (cHeal.mylife <= 0) {
                 hToRemove.add(cHeal);
+            }
+        }
+
+        for (Pierre cPierre : worldPierre){
+            cPierre.runLogic(this);
+            if (cPierre.mylife <= 0) {
+                sToRemove.add(cPierre);
             }
         }
 
@@ -123,6 +133,10 @@ public class World {
 
         for (Heal h : hToRemove) {
             worldHeal.remove(h);
+        }
+
+        for (Pierre s : sToRemove) {
+            worldPierre.remove(s);
         }
 
 
@@ -150,6 +164,9 @@ public class World {
         }
         for (Heal cHeal : worldHeal) {
             cHeal.renderMe(gc, thanos.getCameraPosition());
+        }
+        for (Pierre cPierre : worldPierre) {
+            cPierre.renderMe(gc,thanos.getCameraPosition());
         }
         for (FXEffect cExplosion : worldExplosions) {
             cExplosion.renderMe(gc, thanos.getCameraPosition());

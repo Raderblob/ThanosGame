@@ -127,11 +127,8 @@ public class Game extends Application {
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
 
-        thanos = new Thanos(100);
-        thanos.addStone(new RealityStone(thanos));
-        thanos.addStone(new SpaceStone(thanos));
-        thanos.addStone(new PowerStone(thanos));
-        thanos.addStone(new MindStone(thanos));
+        thanos = new Thanos(500);
+
 
         gui = new GraphicalUserInterface(thanos);
 
