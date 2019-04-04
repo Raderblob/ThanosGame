@@ -23,7 +23,7 @@ public class Personnage extends PlayerClass {
 
     public Personnage(Point2D pos, TerrainMap myTerrain, World myWorld) {
         turned=false;
-        this.PV=100 ;
+        this.PV=100 * myWorld.getDifficulty() ;
         maxPv = PV;
         if(Main.numberGenerator.nextInt(10)<7){
             myState = AiState.STATIC;
@@ -40,11 +40,11 @@ public class Personnage extends PlayerClass {
 
         int rndgen = Main.numberGenerator.nextInt(100);
         if(rndgen<20){
-            myGun = new ReboundRifle(myWorld.worldProjectiles, this, 10);
+            myGun = new ReboundRifle(myWorld.worldProjectiles, this, 10*myWorld.getDifficulty());
         }else if(rndgen<50){
-            myGun = new Rifle(myWorld.worldProjectiles, this, 10);
+            myGun = new Rifle(myWorld.worldProjectiles, this, 10*myWorld.getDifficulty());
         }else{
-            myGun = new Spear(myWorld.worldProjectiles, this, 10);
+            myGun = new Spear(myWorld.worldProjectiles, this, 10*myWorld.getDifficulty());
         }
 
 

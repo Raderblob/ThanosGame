@@ -26,6 +26,7 @@ public class World {
     private Point2D starterPos;
     private int teleportTo;
     private LinkedList<Teleporter> teleporters;
+    private int myDifficulty;
     public World(int worldType, Thanos p,Game myGame) {
         this.myGame = myGame;
         thanos = p;
@@ -37,6 +38,7 @@ public class World {
         switch (worldType) {
             case 1:
                 starterPos = new Point2D(50,50);
+                myDifficulty=1;
                 teleportTo = 0;
                 terrain = new TerrainMap(30,true,this,enemies);
                 new LargeBase(BuildingSaves.pal,new Point2D(10000,0)).changeTerrain(terrain);
@@ -47,6 +49,17 @@ public class World {
                 System.out.println(enemies.size());
                 enemies.add(new Personnage(new Point2D(1000,50),terrain,this));
                 break;
+            case 2:
+                starterPos = new Point2D(50,50);
+                myDifficulty=2;
+                teleportTo = 0;
+                terrain = new TerrainMap(30,true,this,enemies);
+                new LargeBase(BuildingSaves.pal,new Point2D(10000,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.ironManBase,new Point2D(1500,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.captainBase,new Point2D(2500,40)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.thorBase,new Point2D(2000,0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.SpidermanBase,new Point2D(3000,0)).changeTerrain(terrain);
+                   break;
             case 0:
                 starterPos = new Point2D(720,320);
                 teleportTo = 1;
@@ -166,6 +179,9 @@ public class World {
 
     public Point2D getStarterPos() {
         return new Point2D(starterPos.getX(),starterPos.getY());
+    }
+    public int getDifficulty(){
+        return myDifficulty;
     }
 }
 
