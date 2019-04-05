@@ -54,10 +54,10 @@ public class World {
                 enemies.add(new Personnage(new Point2D(1000, 50), terrain, this));
 
 
-                StoneItem.addStone(new Point2D(500, 40), 0, worldStoneItem, thanos.infinity);
-                StoneItem.addStone(new Point2D(2700, 40), 1, worldStoneItem, thanos.infinity);
-                StoneItem.addStone(new Point2D(5200, 40), 2, worldStoneItem, thanos.infinity);
-                StoneItem.addStone(new Point2D(7700, 40), 3, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(75, 40), 0, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(100, 40), 1, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(150, 40), 2, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(200, 40), 3, worldStoneItem, thanos.infinity);
                 break;
             case 2:
                 starterPos = new Point2D(50, 50);

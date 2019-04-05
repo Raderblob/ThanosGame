@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import resources.AudioSaves;
 import resources.ImagesSaves;
@@ -22,6 +23,7 @@ import resources.ImagesSaves;
 public class Game extends Application {
     private Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
+    public double windowScale = 1.1;
     private World gameWorld;
     private int selectedWorld;
     private long lastLength;
@@ -90,11 +92,12 @@ public class Game extends Application {
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouse -> {
+            Point2D realMouse = new Point2D(mouse.getSceneX(),mouse.getSceneY()).multiply(1/windowScale);
             if (mouse.isPrimaryButtonDown()) {
-                thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
+                thanos.fireAt(realMouse.getX(),realMouse.getY());
             } else {
                 thanos.secondary=true;
-                thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
+                thanos.fireAt(realMouse.getX(),realMouse.getY());
             }
 
         });
@@ -115,7 +118,9 @@ public class Game extends Application {
 
     private void loadGame(){
         root = new Group();
-        scene = new Scene(root, winParam.getX(), winParam.getY());
+        Scale tScale = new Scale(windowScale,windowScale);
+        root.getTransforms().add(tScale);
+        scene = new Scene(root, winParam.getX()*windowScale, winParam.getY()*windowScale);
         stage.setTitle("ThanosGame.Thanos rules the world");
         stage.setScene(scene);
 
