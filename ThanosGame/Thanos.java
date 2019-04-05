@@ -15,6 +15,7 @@ public class Thanos extends PlayerClass{
     public boolean secondary;
     public Thanos(int PV){
         super();
+        recoverTime=500;
         myShield = 0;
         this.PV = PV ;
         maxPv = PV;

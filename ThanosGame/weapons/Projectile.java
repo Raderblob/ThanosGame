@@ -3,6 +3,7 @@ package ThanosGame.weapons;
 
 import ThanosGame.Item;
 import ThanosGame.Main;
+import ThanosGame.Personnage;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
@@ -25,6 +26,15 @@ public class Projectile extends Item {
         enemyOwned = true;
         mylife = maxLife;
     }
+    public Projectile(Point2D position, Point2D size, int degats , Point2D speed,double mLife,int projectileId,boolean eOwned){
+        super(position,size,ImagesSaves.projectiles[projectileId],new Point2D(20,10),100);
+        this.degats=degats;
+        this.speed=speed;
+        canDamage =true;
+        maxLife = mLife;
+        enemyOwned = eOwned;
+        mylife = maxLife;
+    }
     public Projectile(Point2D position, Point2D size, int degats , double speed,double angle){
         super(position,size,ImagesSaves.projectiles[0],new Point2D(20,10),100);
         this.degats=degats;
@@ -37,9 +47,16 @@ public class Projectile extends Item {
 
     public void runLogic(World myWorld,TerrainMap myTerrain,double nanoTime){
         if(runBasicPhysics(myTerrain,nanoTime)) {
-            if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)) {
+            if (enemyOwned && isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)) {
                 mylife = 0;
                 //create explosion (does not do the damage directly)
+            }
+            if(!enemyOwned){
+                for(Personnage p :myWorld.enemies){
+                    if(isInRectangle(p.myPosition,p.mySize)){
+                        mylife=0;
+                    }
+                }
             }
             if (myTerrain.getTerrainValCollision(position.getX(), position.getY()) != 0) {
                 mylife = 0;

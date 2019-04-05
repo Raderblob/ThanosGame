@@ -18,21 +18,16 @@ public class RealityStone extends Stone {
         stoneType = 1;
         stoneName = "Reality Stone";
         myPower = 10;
-        coolDown = 1500;
+        coolDown = 10000;
         secondaryCoolDown = 1;
     }
 
     @Override
     protected int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
-        LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destroyAt, 40);
-        doDamage(currentWorld, destroyAt, pointsToChange);
-        doChanges(pointsToChange, (byte) 0, currentTerrain);
-        currentWorld.worldExplosions.add(new FXEffect(destroyAt, new Point2D(60, 60), 25, currentTerrain));
-
-
-        AudioSaves.realityDestroySound.play();
-
+        AudioSaves.shieldSound.play();
+        currentWorld.thanos.myShield += myPower*10;
         return 1;
+
     }
 
     @Override

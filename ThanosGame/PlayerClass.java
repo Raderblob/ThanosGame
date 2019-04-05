@@ -7,7 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 import resources.ImagesSaves;
 
 public class PlayerClass {
-    protected double PV ;
+    protected double PV;
     protected double maxPv;
     public double myShield;
 
@@ -19,10 +19,12 @@ public class PlayerClass {
     public Point2D mySpeed;
     protected Point2D destroyAt;
     protected AnimatedPerson myAnimation;
-    protected int obsClear ;
+    protected int obsClear;
+    protected int recoverTime;
+    protected long lastHit;
 
     public PlayerClass() {
-
+        recoverTime = 0;
 
         myPosition = new Point2D(50, 50);
         mySize = new Point2D(10, 10);
@@ -32,17 +34,22 @@ public class PlayerClass {
 
         myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 64);
     }
-    public void removeHp(double amount){
+
+    public void removeHp(double amount) {
+
         double toRemove = amount;
-        if(myShield>0){
-            toRemove-=myShield;
-            myShield-=amount;
+        if (myShield > 0) {
+            toRemove -= myShield;
+            myShield -= amount;
         }
-        PV -= Math.max(0,toRemove);
+        if (!recovering() && toRemove>0) {
+            PV -= toRemove;
+            lastHit = System.currentTimeMillis();
+        }
     }
 
-    public void addHp(int amount){
-        if(PV + amount >= maxPv){
+    public void addHp(int amount) {
+        if (PV + amount >= maxPv) {
             PV = maxPv;
         } else {
             PV += amount;
@@ -50,7 +57,13 @@ public class PlayerClass {
     }
 
     public void draw(GraphicsContext gc) {
-        myAnimation.draw(gc, new Point2D(myPosition.getX() - mySize.getX() - getCameraPosition().getX(), myPosition.getY() - mySize.getY() - getCameraPosition().getY()), new Point2D(mySize.getX() * 2, mySize.getY() * 2));
+        if (!recovering() || Main.numberGenerator.nextInt(10) < 5) {
+            myAnimation.draw(gc, new Point2D(myPosition.getX() - mySize.getX() - getCameraPosition().getX(), myPosition.getY() - mySize.getY() - getCameraPosition().getY()), new Point2D(mySize.getX() * 2, mySize.getY() * 2));
+        }
+    }
+
+    private boolean recovering() {
+        return System.currentTimeMillis() - lastHit < recoverTime;
     }
 
     public void fireAt(double fX, double fY) {
@@ -62,16 +75,16 @@ public class PlayerClass {
         return new Point2D(Math.max(myPosition.getX() - 200, 0), 0);
     }
 
-    public void run(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
-        if(myShield>0){
-            myShield-=currentNanoTime*0.04;
+    public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
+        if (myShield > 0) {
+            myShield -= currentNanoTime * 0.04;
         }
-        myShield= Math.min(Math.max(myShield,0),maxPv);
-        doPlayerMovement(currentTerrain, currentWorld,currentNanoTime);
+        myShield = Math.min(Math.max(myShield, 0), maxPv);
+        doPlayerMovement(currentTerrain, currentWorld, currentNanoTime);
         myAnimation.setWalkingMode(movingState);
     }
 
-    private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld,double currentNanoTime) {
+    private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
         boolean tooLow = playerTrimmingTerrain(currentTerrain);
         boolean tooHigh = terrainIsObstacleOverhead(currentTerrain);
@@ -92,21 +105,20 @@ public class PlayerClass {
 
         if (tooLow) {
             myPosition = myPosition.add(0, -4);
-        }else if(tooHigh || myPosition.getY() - mySize.getY() <= 0){
+        } else if (tooHigh || myPosition.getY() - mySize.getY() <= 0) {
             mySpeed = new Point2D(mySpeed.getX(), 0);
             myPosition = myPosition.add(0, 4);
         }
 
         if (movingState > 0) {
             obsClear = terrainIsObstacleRight(currentTerrain) ? 0 : 1;
-            myPosition = myPosition.add( currentNanoTime*2 * movingState * (obsClear), 0);
+            myPosition = myPosition.add(currentNanoTime * 2 * movingState * (obsClear), 0);
         } else if (movingState < 0) {
             obsClear = terrainIsObstacleLeft(currentTerrain) ? 0 : 1;
-            myPosition = myPosition.add( currentNanoTime*2 * movingState * (obsClear), 0);
+            myPosition = myPosition.add(currentNanoTime * 2 * movingState * (obsClear), 0);
         }
         myPosition = currentTerrain.clampPoint(myPosition.add(mySpeed.multiply(currentNanoTime)), mySize.multiply(1.2));
     }
-
 
 
     public void jump() {
@@ -124,7 +136,7 @@ public class PlayerClass {
             if (currentTerrain.getTerrainValCollision(x, myPosition.getY() + mySize.getY()) != 0) {
                 return true;
             }
-            if (currentTerrain.getTerrainValCollision(x , myPosition.getY() + mySize.getY()-3) != 0) {
+            if (currentTerrain.getTerrainValCollision(x, myPosition.getY() + mySize.getY() - 3) != 0) {
                 return true;
             }
         }
@@ -133,7 +145,7 @@ public class PlayerClass {
 
     private boolean terrainIsObstacleRight(TerrainMap currentTerrain) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (currentTerrain.getTerrainValCollision(myPosition.getX() + mySize.getX()+3, y) != 0) {
+            if (currentTerrain.getTerrainValCollision(myPosition.getX() + mySize.getX() + 3, y) != 0) {
                 return true;
             }
         }
@@ -142,7 +154,7 @@ public class PlayerClass {
 
     private boolean terrainIsObstacleLeft(TerrainMap currentTerrain) {
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (currentTerrain.getTerrainValCollision(myPosition.getX() - mySize.getX()-3, y) != 0) {
+            if (currentTerrain.getTerrainValCollision(myPosition.getX() - mySize.getX() - 3, y) != 0) {
                 return true;
             }
         }
@@ -167,17 +179,19 @@ public class PlayerClass {
         return false;
     }
 
-    public double getHp(){
-        return PV/maxPv;
+    public double getHp() {
+        return PV / maxPv;
     }
-    public double getPV(){
+
+    public double getPV() {
         return PV;
     }
-    public double getMaxPv(){
+
+    public double getMaxPv() {
         return maxPv;
     }
 
-    public boolean pointOnScreen(Point2D p){
-        return p.getX()>getCameraPosition().getX() && p.getY()<getCameraPosition().getX()+Game.winParam.getX();
+    public boolean pointOnScreen(Point2D p) {
+        return p.getX() > getCameraPosition().getX() && p.getY() < getCameraPosition().getX() + Game.winParam.getX();
     }
 }

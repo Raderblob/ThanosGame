@@ -68,8 +68,6 @@ public class Stone {
         }
     }
     protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
-        AudioSaves.shieldSound.play();
-        currentWorld.thanos.myShield += myPower*10;
         return 1;
     }
 
@@ -79,7 +77,7 @@ public class Stone {
 
         hitDistance = hitDistance.normalize().multiply(owner.mySize.getX());
         destination = hitDistance.add(currentWorld.thanos.myPosition);
-        LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 10);
+        LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 15);
 
         doDamage(currentWorld,destination,pointsToChange);
         doChanges(pointsToChange, (byte) 0, currentTerrain);
