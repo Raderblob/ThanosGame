@@ -12,7 +12,9 @@ import resources.ImagesSaves;
 public class Thanos extends PlayerClass{
     public Gant infinity ;
     private AnimatedImage animatedShield;
+    private boolean secondaryActive;
     public boolean secondary;
+    private Point2D secAim;
     public Thanos(int PV){
         super();
         recoverTime=500;
@@ -24,10 +26,22 @@ public class Thanos extends PlayerClass{
         secondary = false;
     }
 
+    public void overrideSecondary(Point2D pos){
+        secondaryActive=true;
+        secAim=pos;
+    }
+    public void desactivateSecondary(){
+        secondaryActive=false;
+    }
+
     @Override
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         super.run(currentTerrain, currentWorld, currentNanoTime);
 
+        if(secondaryActive){
+            secondary=true;
+            fireAt(secAim.getX(),secAim.getY());
+        }
 
 
         if (destroyAt.getX() != -1) {

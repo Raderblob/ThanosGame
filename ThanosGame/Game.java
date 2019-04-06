@@ -23,7 +23,7 @@ import resources.ImagesSaves;
 public class Game extends Application {
     private Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
-    public double windowScale = 1.1;
+    public double windowScale = 2;
     private World gameWorld;
     private int selectedWorld;
     private long lastLength;
@@ -96,10 +96,12 @@ public class Game extends Application {
             if (mouse.isPrimaryButtonDown()) {
                 thanos.fireAt(realMouse.getX(),realMouse.getY());
             } else {
-                thanos.secondary=true;
-                thanos.fireAt(realMouse.getX(),realMouse.getY());
+                thanos.overrideSecondary(realMouse);
             }
 
+        });
+        scene.addEventHandler(MouseEvent.MOUSE_RELEASED, mouse -> {
+            thanos.desactivateSecondary();
         });
         scene.addEventHandler(ScrollEvent.SCROLL,mouse->{
             if(mouse.getDeltaY()<0){
@@ -109,9 +111,9 @@ public class Game extends Application {
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_DRAGGED,mouse->{
+            Point2D realMouse = new Point2D(mouse.getSceneX(),mouse.getSceneY()).multiply(1/windowScale);
             if(!mouse.isPrimaryButtonDown()){
-                thanos.secondary=true;
-                thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
+                thanos.overrideSecondary(realMouse);
             }
         });
     }
@@ -133,7 +135,7 @@ public class Game extends Application {
 
         gui = new GraphicalUserInterface(thanos);
 
-        switchWorlds(1);
+        switchWorlds(0);
 
         new AnimationTimer() {
             public void handle(long currentNanoTime) {
@@ -171,7 +173,7 @@ public class Game extends Application {
         gui.draw(gc);
 
         lastLength = ((System.nanoTime() - lastTime));
-        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+        //System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);

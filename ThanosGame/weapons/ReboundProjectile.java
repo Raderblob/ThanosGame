@@ -9,9 +9,7 @@ public class ReboundProjectile extends Projectile {
         super(position, Size, degats, speed,1000,2);
     }
 
-    public ReboundProjectile(Point2D position, Point2D size, int degats, double speed, double angle) {
-        super(position, size, degats, speed, angle);
-    }
+
 
 
     public void runLogic(World myWorld, TerrainMap myTerrain, double nanoTime) {

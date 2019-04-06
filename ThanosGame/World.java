@@ -1,5 +1,6 @@
 package ThanosGame;
 
+import ThanosGame.enemies.Personnage;
 import ThanosGame.terrain.LargeBase;
 import ThanosGame.terrain.Teleporter;
 import ThanosGame.terrain.TerrainMap;
@@ -51,7 +52,7 @@ public class World {
                 new LargeBase(BuildingSaves.thorBase, new Point2D(10000, 0)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.SpidermanBase, new Point2D(2500, 0)).changeTerrain(terrain);
                 System.out.println(enemies.size());
-                enemies.add(new Personnage(new Point2D(1000, 50), terrain, this));
+                enemies.add(Personnage.getEnemy(new Point2D(1000, 50), terrain, this));
 
 
                 StoneItem.addStone(new Point2D(75, 40), 0, worldStoneItem, thanos.infinity);

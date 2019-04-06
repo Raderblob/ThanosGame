@@ -1,9 +1,9 @@
 package ThanosGame.weapons.player;
 
 import ThanosGame.Main;
-import ThanosGame.Personnage;
 import ThanosGame.Thanos;
 import ThanosGame.World;
+import ThanosGame.enemies.Personnage;
 import ThanosGame.terrain.TerrainMap;
 import ThanosGame.weapons.FXEffect;
 import javafx.geometry.Point2D;

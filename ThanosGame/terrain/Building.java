@@ -1,8 +1,8 @@
 package ThanosGame.terrain;
 
 import ThanosGame.Main;
-import ThanosGame.Personnage;
 import ThanosGame.World;
+import ThanosGame.enemies.Personnage;
 import javafx.geometry.Point2D;
 import resources.BuildingSaves;
 
@@ -34,28 +34,28 @@ public class Building {
                             buildingPlan[x][y] = getCanLeft(buildingPlan[x - 1][y].myPosition.add(80, 0));
                             plannedBuilding.add(buildingPlan[x][y]);
                             if (Main.numberGenerator.nextInt(10) < 1)
-                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
+                                enemyList.add(Personnage.getEnemy(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                         if (buildingPlan[x + 1][y] != null && buildingPlan[x + 1][y].canLeft) {
                             buildingPlan[x][y] = getCanRight(buildingPlan[x + 1][y].myPosition.add(-80, 0));
                             plannedBuilding.add(buildingPlan[x][y]);
                             if (Main.numberGenerator.nextInt(10) < 1)
-                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
+                                enemyList.add(Personnage.getEnemy(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                         if (buildingPlan[x][y + 1] != null && buildingPlan[x][y + 1].canUp) {
                             buildingPlan[x][y] = getCanDown(buildingPlan[x][y + 1].myPosition.add(0, -80));
                             plannedBuilding.add(buildingPlan[x][y]);
                             if (Main.numberGenerator.nextInt(10) < 1)
-                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
+                                enemyList.add(Personnage.getEnemy(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                         if (buildingPlan[x][y - 1] != null && buildingPlan[x][y - 1].canDown) {
                             buildingPlan[x][y] = getCanUp(buildingPlan[x][y - 1].myPosition.add(0, 80));
                             plannedBuilding.add(buildingPlan[x][y]);
                             if (Main.numberGenerator.nextInt(10) < 1)
-                                enemyList.add(new Personnage(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
+                                enemyList.add(Personnage.getEnemy(buildingPlan[x][y].myPosition.add(40, 40), myTerrain, myWorld));
                             buildingComplete = false;
                         }
                     }

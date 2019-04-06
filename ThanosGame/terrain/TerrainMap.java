@@ -2,8 +2,8 @@ package ThanosGame.terrain;
 
 import ThanosGame.Game;
 import ThanosGame.Main;
-import ThanosGame.Personnage;
 import ThanosGame.World;
+import ThanosGame.enemies.Personnage;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -83,7 +83,7 @@ public class TerrainMap {
                     int y = 50;
                     int x = Main.numberGenerator.nextInt(200) + i;
 
-                   enemyList.add(new Personnage(new Point2D(x,y),this,myWorld));
+                   enemyList.add(Personnage.getEnemy(new Point2D(x,y),this,myWorld));
                 }
             }
 

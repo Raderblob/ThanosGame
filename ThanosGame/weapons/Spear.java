@@ -1,6 +1,6 @@
 package ThanosGame.weapons;
 
-import ThanosGame.Personnage;
+import ThanosGame.enemies.Personnage;
 import javafx.geometry.Point2D;
 
 import java.util.LinkedList;

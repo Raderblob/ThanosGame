@@ -21,7 +21,7 @@ public class PowerStone extends Stone {
     @Override
     protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
         AudioSaves.gunSound.play();
-        currentWorld.worldProjectiles.add(new Projectile(owner.myPosition,new Point2D(4,3),(int)(myPower*0.01),destroyAt.add(owner.myPosition.multiply(-1)).normalize().multiply(2),1000,0,false));
+        currentWorld.worldProjectiles.add(new Projectile(owner.myPosition,new Point2D(8,6),(int)(myPower*0.03),destroyAt.add(owner.myPosition.multiply(-1)).normalize().multiply(4),1000,4,false));
         return 1;
     }
 }

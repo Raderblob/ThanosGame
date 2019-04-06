@@ -268,7 +268,7 @@ public class MenuOption extends JFrame implements ActionListener {
             if (easy.isSelected()) {
                 Keyboard.difficulty = 1;
             }
-            if (easy.isSelected()) {
+            if (normal.isSelected()) {
                 Keyboard.difficulty = 2;
             }
             if (hard.isSelected()) {

@@ -1,7 +1,7 @@
 package ThanosGame.weapons;
 
 import ThanosGame.Keyboard;
-import ThanosGame.Personnage;
+import ThanosGame.enemies.Personnage;
 import javafx.geometry.Point2D;
 
 import java.util.LinkedList;
@@ -18,6 +18,7 @@ public class Weapon {
         this.owner=owner;
         this.worldProjectiles = worldProjectiles;
         this.damage =(int) (damage*Keyboard.difficulty);
+        System.out.println(Keyboard.difficulty);
         this.bulletSpeed = bulletSpeed;
         this.reloadTime = reloadTime;
     }
