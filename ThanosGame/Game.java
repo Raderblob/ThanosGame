@@ -24,6 +24,7 @@ public class Game extends Application {
     private Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
     public double windowScale = 2;
+    public int unlockedWorld=10;
     private World gameWorld;
     private int selectedWorld;
     private long lastLength;

@@ -7,7 +7,7 @@ import resources.AudioSaves;
 import java.util.LinkedList;
 
 public class ReboundRifle extends Rifle {
-    public ReboundRifle(LinkedList<Projectile> worldProjectiles, Personnage owner, int damage) {
+    public ReboundRifle(LinkedList<Projectile> worldProjectiles, Personnage owner, double damage) {
         super(worldProjectiles, owner, damage);
     }
 

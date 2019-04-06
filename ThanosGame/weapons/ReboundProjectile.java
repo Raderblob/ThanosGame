@@ -5,7 +5,7 @@ import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 
 public class ReboundProjectile extends Projectile {
-    public ReboundProjectile(Point2D position, Point2D Size, int degats, Point2D speed) {
+    public ReboundProjectile(Point2D position, Point2D Size, double degats, Point2D speed) {
         super(position, Size, degats, speed,1000,2);
     }
 

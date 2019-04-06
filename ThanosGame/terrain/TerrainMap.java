@@ -21,10 +21,10 @@ public class TerrainMap {
     public boolean terrainRendered;
     public Point2D mySize;
 
-    public TerrainMap(int numC, boolean withBuildings, World myWorld, LinkedList<Personnage> enemyList) {
+    public TerrainMap(int numP, boolean withBuildings, World myWorld, LinkedList<Personnage> enemyList) {
 
         mySize = new Point2D(10, 10);
-        numChunks = numC;
+        numChunks = (int) (numP / (TerrainChunck.chunkParam.getX() * 4)) + 1;
         maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks));
         maxPixelsY = (int) (TerrainChunck.chunkParam.getY() * 4 - 1);
         terrainRendered = false;
@@ -42,55 +42,62 @@ public class TerrainMap {
                 for (int y = 0; y < (int) TerrainChunck.chunkParam.getY(); y++) {
                     double a = Math.min(1, Math.abs(geny.getNoise(x, y)) * Math.pow(y / TerrainChunck.chunkParam.getY() + 0.6, 10));
                     double b = Math.abs(biomeGeny.getNoise(x, y));
-                    if (y > TerrainChunck.chunkParam.getY() - 4) {
-                        setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
-                    } else if (a > 0.38) {//dirt stone
-
-                        if (b < 0.2) {
-                            setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
-                        } else {
-                            setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
-                        }
-
-                    } else if (a > 0.30) {
-                        if (b < 0.6) {
-                            setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
-                        } else {
-                            setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
-                        }
-                    } else if (a > 0.25) {
-                        setTerrainVal(x, y, PixelBlockType.GRASS.getMyVal());//grass
-                    } else {
-                        setTerrainVal(x, y, PixelBlockType.NOTHING.getMyVal());
-                    }
+                    generateCountry(a, b, x, y);
                 }
             }
 
-            int maxMap =  (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000;
-            for (int i = 400; i <maxMap; i += 700) {//generate buildings
+            int maxMap = (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000;
+            for (int i = 400; i < maxMap; i += 700) {//generate buildings
                 if (Main.numberGenerator.nextInt(100) > 50) {
                     int y = 0;
                     int x = Main.numberGenerator.nextInt(200) + i;
                     do {
                         y += 1;
                     } while (getTerrainVal(x, y) == 0);
-                    new Building(new Point2D(x, y),enemyList,myWorld,this).changeTerrain(this);
+                    new Building(new Point2D(x, y), enemyList, myWorld, this).changeTerrain(this);
                 }
             }
 
-            for (int i = 100; i <maxMap; i += 1000) {//generate buildings
+            for (int i = 100; i < maxMap; i += 500) {
                 if (Main.numberGenerator.nextInt(maxMap) < i) {
                     int y = 50;
                     int x = Main.numberGenerator.nextInt(200) + i;
 
-                   enemyList.add(Personnage.getEnemy(new Point2D(x,y),this,myWorld));
+                    enemyList.add(Personnage.getEnemy(new Point2D(x, y), this, myWorld));
                 }
             }
 
 
+            myWorld.teleporters.add(new Teleporter(new Point2D(getEndPos() - 500, 0), 0, myWorld.myGame));
+            new LargeBase(BuildingSaves.largeBases[0], new Point2D(getEndPos(), 0)).changeTerrain(this); //end of World
+        }
+    }
 
+    public int getEndPos() {
+        return (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000;
+    }
 
-            new LargeBase(BuildingSaves.largeBases[0], new Point2D((int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000, 0)).changeTerrain(this); //end of World
+    private void generateCountry(double a, double b, int x, int y) {
+        if (y > TerrainChunck.chunkParam.getY() - 4) {
+            setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
+        } else if (a > 0.38) {//dirt stone
+
+            if (b < 0.2) {
+                setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
+            } else {
+                setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
+            }
+
+        } else if (a > 0.30) {
+            if (b < 0.6) {
+                setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
+            } else {
+                setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
+            }
+        } else if (a > 0.25) {
+            setTerrainVal(x, y, PixelBlockType.GRASS.getMyVal());//grass
+        } else {
+            setTerrainVal(x, y, PixelBlockType.NOTHING.getMyVal());
         }
     }
 

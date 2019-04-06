@@ -16,11 +16,11 @@ public class Teleporter extends Item {
         this.game=game;
     }
 
-    public void checkForTeleport(Thanos player){
+    public void checkForTeleport(Thanos player,int currentUnlock){
         if(isInRectangle(player.myPosition,player.mySize)){
+            game.unlockedWorld = Math.max(game.unlockedWorld,currentUnlock+1);
             AudioSaves.teleportSound.play();
             game.switchWorlds(teleportTo);
-
         }
     }
 }

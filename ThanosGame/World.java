@@ -27,9 +27,9 @@ public class World {
     public LinkedList<StoneItem> worldStoneItem;
 
     private Point2D starterPos;
-    private int teleportTo;
-    private LinkedList<Teleporter> teleporters;
-    private int myDifficulty;
+    private int unlockLevel;
+    public LinkedList<Teleporter> teleporters;
+    private double myDifficulty;
 
     public World(int worldType, Thanos p, Game myGame) {
         this.myGame = myGame;
@@ -43,17 +43,10 @@ public class World {
         switch (worldType) {
             case 1:
                 starterPos = new Point2D(50, 50);
-                myDifficulty = 1;
-                teleportTo = 0;
-                terrain = new TerrainMap(30, true, this, enemies);
-                new LargeBase(BuildingSaves.pal, new Point2D(10000, 0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.ironManBase, new Point2D(7500, 0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.captainBase, new Point2D(5000, 40)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.thorBase, new Point2D(10000, 0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.SpidermanBase, new Point2D(2500, 0)).changeTerrain(terrain);
-                System.out.println(enemies.size());
-                enemies.add(Personnage.getEnemy(new Point2D(1000, 50), terrain, this));
-
+                myDifficulty = 0.5;
+                unlockLevel =1;
+                terrain = new TerrainMap(6000, true, this, enemies);
+                new LargeBase(BuildingSaves.SpidermanBase, new Point2D(5000, 0)).changeTerrain(terrain);
 
                 StoneItem.addStone(new Point2D(75, 40), 0, worldStoneItem, thanos.infinity);
                 StoneItem.addStone(new Point2D(100, 40), 1, worldStoneItem, thanos.infinity);
@@ -62,22 +55,29 @@ public class World {
                 break;
             case 2:
                 starterPos = new Point2D(50, 50);
-                myDifficulty = 2;
-                teleportTo = 0;
-                terrain = new TerrainMap(30, true, this, enemies);
-                new LargeBase(BuildingSaves.pal, new Point2D(10000, 0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.ironManBase, new Point2D(1500, 0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.captainBase, new Point2D(2500, 40)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.thorBase, new Point2D(2000, 0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.SpidermanBase, new Point2D(3000, 0)).changeTerrain(terrain);
+                myDifficulty = 1;
+                unlockLevel = 2;
+                terrain = new TerrainMap(50000, true, this, enemies);
+                new LargeBase(BuildingSaves.ironManBase, new Point2D(7500, 0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.captainBase, new Point2D(5000, 40)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.thorBase, new Point2D(10000, 0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.SpidermanBase, new Point2D(2500, 0)).changeTerrain(terrain);
+
+
                 break;
             case 0:
                 starterPos = new Point2D(720, 320);
-                teleportTo = 1;
-                terrain = new TerrainMap(2, false, this, enemies);
+                unlockLevel = 0;
+                terrain = new TerrainMap(2000, false, this, enemies);
                 System.out.println("loading base");
                 new LargeBase(BuildingSaves.thanosBase, new Point2D(0, 0)).changeTerrain(terrain);//generate home base
-                teleporters.add(new Teleporter(new Point2D(600, 190), 1, myGame));
+                if(myGame.unlockedWorld >=1){
+                    teleporters.add(new Teleporter(new Point2D(600, 190), 1, myGame));
+                }
+                if(myGame.unlockedWorld>=2){
+                    teleporters.add(new Teleporter(new Point2D(900, 190), 2, myGame));
+                }
+
                 break;
             default:
                 starterPos = new Point2D(50, 50);
@@ -163,11 +163,11 @@ public class World {
 
         //run collision for teleporters
         for (Teleporter teleporter : teleporters) {
-            teleporter.checkForTeleport(thanos);
+            teleporter.checkForTeleport(thanos,unlockLevel);
         }
         //test for temp teleport
         if (thanos.myPosition.getX() < 20) {
-            myGame.switchWorlds(teleportTo);
+            myGame.switchWorlds(0);
         }
     }
 
@@ -204,7 +204,7 @@ public class World {
         return new Point2D(starterPos.getX(), starterPos.getY());
     }
 
-    public int getDifficulty() {
+    public double getDifficulty() {
         return myDifficulty;
     }
 }
