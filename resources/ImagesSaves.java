@@ -13,6 +13,9 @@ public class ImagesSaves {
     public static Image wakandaisSprites;
     public static Image healSprite;
     public static Image stoneSprite;
+    public static Image desertBackground;
+    public static Image spaceBackground;
+    public static Image cityBackground;
 
     public static void loadImages(){
         thanosSprites = new Image(ImagesSaves.class.getResource("sprites/thanosSprites.png").toExternalForm());
@@ -28,6 +31,10 @@ public class ImagesSaves {
         shieldSprite = new Image(ImagesSaves.class.getResource("sprites/shieldSprite.png").toExternalForm());
         healSprite = new Image(ImagesSaves.class.getResource("sprites/healSprite.png").toExternalForm());
         stoneSprite = new Image(ImagesSaves.class.getResource("sprites/stones/stoneSprite.png").toExternalForm());
+
+        desertBackground =  new Image(ImagesSaves.class.getResource("buildings/backgrounds/desertWorld.png").toExternalForm());
+        spaceBackground = new Image(ImagesSaves.class.getResource("buildings/backgrounds/space.png").toExternalForm());
+        cityBackground = new Image(ImagesSaves.class.getResource("buildings/backgrounds/city.png").toExternalForm());
     }
 }
 

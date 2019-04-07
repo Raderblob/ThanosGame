@@ -11,8 +11,10 @@ import ThanosGame.weapons.player.StoneItem;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import resources.AudioSaves;
 import resources.BuildingSaves;
+import resources.ImagesSaves;
 
 import java.util.LinkedList;
 
@@ -30,6 +32,7 @@ public class World {
     private int unlockLevel;
     public LinkedList<Teleporter> teleporters;
     private double myDifficulty;
+    public Image myBackground;
 
     public World(int worldType, Thanos p, Game myGame) {
         this.myGame = myGame;
@@ -42,6 +45,7 @@ public class World {
         enemies = new LinkedList<>();
         switch (worldType) {
             case 1:
+                myBackground = ImagesSaves.desertBackground;
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 0.5;
                 unlockLevel =1;
@@ -54,6 +58,7 @@ public class World {
                 StoneItem.addStone(new Point2D(200, 40), 3, worldStoneItem, thanos.infinity);
                 break;
             case 2:
+                myBackground = ImagesSaves.cityBackground;
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 1;
                 unlockLevel = 2;
@@ -66,6 +71,7 @@ public class World {
 
                 break;
             case 0:
+                myBackground = ImagesSaves.spaceBackground;
                 starterPos = new Point2D(720, 320);
                 unlockLevel = 0;
                 terrain = new TerrainMap(2000, false, this, enemies,TerrainMap.TerrainVType.CITY);

@@ -54,7 +54,6 @@ public class TerrainMap {
                 }
             }
 
-            System.out.println(terrainVersion.myVal);
             int maxMap = (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000;
             for (int i = 400; i < maxMap; i += 700) {//generate buildings
                 if (Main.numberGenerator.nextInt(100) < terrainVersion.myVal) {
@@ -85,6 +84,7 @@ public class TerrainMap {
     public enum TerrainVType {
         COUNTRY(50), CITY(75);
         private int myVal;
+
         TerrainVType(int i) {
             myVal = i;
         }
@@ -127,7 +127,7 @@ public class TerrainMap {
             }
         } else if (y > TerrainChunck.chunkParam.getY() - 34) {
             setTerrainVal(x, y, PixelBlockType.BRICK2.getMyVal());
-        }else{
+        } else {
             setTerrainVal(x, y, PixelBlockType.NOTHING.getMyVal());
         }
     }
@@ -268,10 +268,12 @@ class TerrainChunck {
     private byte terrain[][];
     public Canvas myCanvas;
     public boolean addedToRoot = false;
+    private GraphicsContext gc;
 
     public TerrainChunck() {
         terrain = new byte[(int) chunkParam.getX()][(int) chunkParam.getY()];
         myCanvas = new Canvas((int) chunkParam.getX() * 4 + 1, (int) chunkParam.getY() * 4);
+        gc = myCanvas.getGraphicsContext2D();
     }
 
     public void setVal(int x, int y, byte val) {
@@ -288,12 +290,15 @@ class TerrainChunck {
     }
 
     private void drawVal(int x, int y, byte val) {
-        GraphicsContext gc = myCanvas.getGraphicsContext2D();
-        gc.setFill(getTerrainColor(val));
-        if (x < (int) chunkParam.getX() - 5) {
-            gc.fillRect(x, y, 4, 4);
+        if (val != 0) {
+            gc.setFill(getTerrainColor(val));
+            if (x < (int) chunkParam.getX() * 4 - 5) {
+                gc.fillRect(x, y, 4, 4);
+            } else {
+                gc.fillRect(x, y, 5, 4);
+            }
         } else {
-            gc.fillRect(x, y, 5, 4);
+            gc.clearRect(x + 1, y + 1, 3, 3);
         }
     }
 
@@ -327,7 +332,7 @@ class TerrainChunck {
         } else if (a == PixelBlockType.UNDEFINED3.getMyVal()) {
             c = new javafx.scene.paint.Color(1, 0, 0, 1);
         } else {
-            c = Color.BLUE;
+            c = new Color(1, 1, 1, 0);
         }
         if (aR < 0) {
             c = c.desaturate().darker();

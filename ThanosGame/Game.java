@@ -37,6 +37,7 @@ public class Game extends Application {
     private MenuInventaire inventaire;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
+    private Canvas backgroundImage;
 
     @Override
     public void start(Stage stage) {
@@ -130,6 +131,8 @@ public class Game extends Application {
         Canvas canvas = new Canvas(winParam.getX(), winParam.getY());
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        backgroundImage = new Canvas(winParam.getX()*2,winParam.getY());
+        root.getChildren().add(backgroundImage);
 
         thanos = new Thanos(100);
 
@@ -172,13 +175,23 @@ public class Game extends Application {
 
         gameWorld.renderWorld(gc, root);//render the selected world
         gui.draw(gc);
+        renderBackground();
 
         lastLength = ((System.nanoTime() - lastTime));
-        //System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+       // System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);
 
+    }
+    private void renderBackground(){
+        backgroundImage.toBack();
+        GraphicsContext gcb = backgroundImage.getGraphicsContext2D();
+        double backgroundOffset;
+        backgroundOffset =- (thanos.getCameraPosition().getX()*0.2)%backgroundImage.getWidth();
+
+        gcb.drawImage(gameWorld.myBackground,backgroundOffset,0,backgroundImage.getWidth(),backgroundImage.getHeight());
+        gcb.drawImage(gameWorld.myBackground,backgroundImage.getWidth()+backgroundOffset,0,backgroundImage.getWidth(),backgroundImage.getHeight());
     }
 
     public void switchWorlds(int newWorld){

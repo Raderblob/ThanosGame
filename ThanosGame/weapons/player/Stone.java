@@ -68,7 +68,7 @@ public class Stone {
         }
     }
     protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
-        return 1;
+        return 0;
     }
 
     protected int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
