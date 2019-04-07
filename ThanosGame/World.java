@@ -52,10 +52,13 @@ public class World {
                 terrain = new TerrainMap(6000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY);
                 new LargeBase(BuildingSaves.SpidermanBase, new Point2D(5000, 0)).changeTerrain(terrain);
 
-                StoneItem.addStone(new Point2D(75, 40), 0, worldStoneItem, thanos.infinity);
-                StoneItem.addStone(new Point2D(100, 40), 1, worldStoneItem, thanos.infinity);
-                StoneItem.addStone(new Point2D(150, 40), 2, worldStoneItem, thanos.infinity);
-                StoneItem.addStone(new Point2D(200, 40), 3, worldStoneItem, thanos.infinity);
+
+                enemies.add(Personnage.getEnemy(new Point2D(500, 50), terrain, this));
+
+                StoneItem.addStone(new Point2D(600, 40), 0, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(5000, 40), 1, worldStoneItem, thanos.infinity);
+
+
                 break;
             case 2:
                 myBackground = ImagesSaves.desertBackground;
@@ -64,6 +67,10 @@ public class World {
                 unlockLevel = 2;
                 terrain = new TerrainMap(11000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY);
                 new LargeBase(BuildingSaves.captainBase, new Point2D(10000, 40)).changeTerrain(terrain);
+
+                StoneItem.addStone(new Point2D(150, 40), 2, worldStoneItem, thanos.infinity);
+
+                StoneItem.addStone(new Point2D(10000, 40), 3, worldStoneItem, thanos.infinity);
                 break;
             case 3:
                 myBackground = ImagesSaves.cityBackground;
