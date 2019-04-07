@@ -45,7 +45,7 @@ public class World {
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 0.5;
                 unlockLevel =1;
-                terrain = new TerrainMap(6000, true, this, enemies);
+                terrain = new TerrainMap(6000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY);
                 new LargeBase(BuildingSaves.SpidermanBase, new Point2D(5000, 0)).changeTerrain(terrain);
 
                 StoneItem.addStone(new Point2D(75, 40), 0, worldStoneItem, thanos.infinity);
@@ -57,7 +57,7 @@ public class World {
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 1;
                 unlockLevel = 2;
-                terrain = new TerrainMap(50000, true, this, enemies);
+                terrain = new TerrainMap(50000, true, this, enemies,TerrainMap.TerrainVType.CITY);
                 new LargeBase(BuildingSaves.ironManBase, new Point2D(7500, 0)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.captainBase, new Point2D(5000, 40)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.thorBase, new Point2D(10000, 0)).changeTerrain(terrain);
@@ -68,8 +68,7 @@ public class World {
             case 0:
                 starterPos = new Point2D(720, 320);
                 unlockLevel = 0;
-                terrain = new TerrainMap(2000, false, this, enemies);
-                System.out.println("loading base");
+                terrain = new TerrainMap(2000, false, this, enemies,TerrainMap.TerrainVType.CITY);
                 new LargeBase(BuildingSaves.thanosBase, new Point2D(0, 0)).changeTerrain(terrain);//generate home base
                 if(myGame.unlockedWorld >=1){
                     teleporters.add(new Teleporter(new Point2D(600, 190), 1, myGame));
