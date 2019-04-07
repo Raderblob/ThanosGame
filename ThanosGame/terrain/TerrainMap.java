@@ -20,9 +20,10 @@ public class TerrainMap {
     private int maxPixelsY;
     public boolean terrainRendered;
     public Point2D mySize;
+    public TerrainVType myTerrainVersion;
 
     public TerrainMap(int numP, boolean withBuildings, World myWorld, LinkedList<Personnage> enemyList, TerrainVType terrainVersion) {
-
+        myTerrainVersion = terrainVersion;
         mySize = new Point2D(10, 10);
         numChunks = (int) (numP / (TerrainChunck.chunkParam.getX() * 4)) + 1;
         maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks));
@@ -298,7 +299,12 @@ class TerrainChunck {
                 gc.fillRect(x, y, 5, 4);
             }
         } else {
-            gc.clearRect(x + 1, y + 1, 3, 3);
+            if (x < (int) chunkParam.getX() * 4 - 5) {
+                gc.clearRect(x + 1, y + 1, 3, 3);
+            } else {
+                gc.clearRect(x + 1, y + 1, 4, 3);
+            }
+
         }
     }
 

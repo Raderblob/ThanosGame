@@ -2,6 +2,7 @@ package ThanosGame.weapons;
 
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
+import ThanosGame.weapons.projectiles.Projectile;
 import javafx.geometry.Point2D;
 
 public class ReboundProjectile extends Projectile {

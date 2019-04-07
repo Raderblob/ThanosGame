@@ -3,7 +3,7 @@ package ThanosGame.weapons.player;
 import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
-import ThanosGame.weapons.FXEffect;
+import ThanosGame.weapons.projectiles.FXEffect;
 import javafx.geometry.Point2D;
 import resources.AudioSaves;
 

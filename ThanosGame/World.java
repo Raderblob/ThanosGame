@@ -4,10 +4,10 @@ import ThanosGame.enemies.Personnage;
 import ThanosGame.terrain.LargeBase;
 import ThanosGame.terrain.Teleporter;
 import ThanosGame.terrain.TerrainMap;
-import ThanosGame.weapons.Explosion;
-import ThanosGame.weapons.FXEffect;
-import ThanosGame.weapons.Projectile;
 import ThanosGame.weapons.player.StoneItem;
+import ThanosGame.weapons.projectiles.Explosion;
+import ThanosGame.weapons.projectiles.FXEffect;
+import ThanosGame.weapons.projectiles.Projectile;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
@@ -44,7 +44,7 @@ public class World {
         teleporters = new LinkedList<>();
         enemies = new LinkedList<>();
         switch (worldType) {
-            case 1:
+            case 1: //generates 1st world
                 myBackground = ImagesSaves.desertBackground;
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 0.5;
@@ -58,17 +58,22 @@ public class World {
                 StoneItem.addStone(new Point2D(200, 40), 3, worldStoneItem, thanos.infinity);
                 break;
             case 2:
-                myBackground = ImagesSaves.cityBackground;
+                myBackground = ImagesSaves.desertBackground;
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 1;
                 unlockLevel = 2;
+                terrain = new TerrainMap(11000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY);
+                new LargeBase(BuildingSaves.captainBase, new Point2D(10000, 40)).changeTerrain(terrain);
+                break;
+            case 3:
+                myBackground = ImagesSaves.cityBackground;
+                starterPos = new Point2D(50, 50);
+                myDifficulty = 2;
+                unlockLevel = 3;
                 terrain = new TerrainMap(50000, true, this, enemies,TerrainMap.TerrainVType.CITY);
                 new LargeBase(BuildingSaves.ironManBase, new Point2D(7500, 0)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.captainBase, new Point2D(5000, 40)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.thorBase, new Point2D(10000, 0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.SpidermanBase, new Point2D(2500, 0)).changeTerrain(terrain);
-
-
                 break;
             case 0:
                 myBackground = ImagesSaves.spaceBackground;
@@ -76,11 +81,8 @@ public class World {
                 unlockLevel = 0;
                 terrain = new TerrainMap(2000, false, this, enemies,TerrainMap.TerrainVType.CITY);
                 new LargeBase(BuildingSaves.thanosBase, new Point2D(0, 0)).changeTerrain(terrain);//generate home base
-                if(myGame.unlockedWorld >=1){
-                    teleporters.add(new Teleporter(new Point2D(600, 190), 1, myGame));
-                }
-                if(myGame.unlockedWorld>=2){
-                    teleporters.add(new Teleporter(new Point2D(900, 190), 2, myGame));
+                for(int i=1;i<=Math.min(myGame.unlockedWorld,3);i++){
+                    teleporters.add(new Teleporter(new Point2D(300 + 300*i, 190), i, myGame)); // add the teleporters
                 }
 
                 break;
@@ -153,7 +155,7 @@ public class World {
             worldExplosions.remove(e);
         }
         for (Personnage e : ennToRemove) {
-            worldExplosions.add(new Explosion(e.myPosition, 28, 10, terrain, true));
+            worldExplosions.add(new Explosion(e.myPosition, 28, 2, terrain, true));
             enemies.remove(e);
         }
 

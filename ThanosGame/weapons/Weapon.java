@@ -2,6 +2,7 @@ package ThanosGame.weapons;
 
 import ThanosGame.Keyboard;
 import ThanosGame.enemies.Personnage;
+import ThanosGame.weapons.projectiles.Projectile;
 import javafx.geometry.Point2D;
 
 import java.util.LinkedList;
@@ -10,7 +11,7 @@ public class Weapon {
     private LinkedList<Projectile> worldProjectiles;
     protected double damage;
     protected double bulletSpeed;
-    private long reloadTime;
+    long reloadTime;
     private long lastFire;
     protected Personnage owner;
 

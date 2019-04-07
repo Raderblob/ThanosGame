@@ -4,8 +4,8 @@ import ThanosGame.Main;
 import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
-import ThanosGame.weapons.FXEffect;
-import ThanosGame.weapons.Tnt;
+import ThanosGame.weapons.projectiles.FXEffect;
+import ThanosGame.weapons.projectiles.Tnt;
 import javafx.geometry.Point2D;
 import resources.AudioSaves;
 

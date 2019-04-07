@@ -34,12 +34,7 @@ public class Gant {
     }
 
     public void addStones(Stone nStone) {
-        for (int i = 0; i < stones.length; i++) {
-            if (!stones[i].isReal()) {
-                stones[i] = nStone;
-                return;
-            }
-        }
+        stones[nStone.stoneType] = nStone;
     }
 
     public void selectStone(int stoneToSelect) {

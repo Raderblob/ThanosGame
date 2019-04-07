@@ -1,4 +1,4 @@
-package ThanosGame.weapons;
+package ThanosGame.weapons.projectiles;
 
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;

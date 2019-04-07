@@ -9,7 +9,7 @@ public class ImagesSaves {
     public static Image shieldSprite;
     public static Image projectiles[] = new Image[5];
     public static Image explosions[] = new Image[1];
-    public static Image shieldSprites;
+    public static Image agentSprites;
     public static Image wakandaisSprites;
     public static Image healSprite;
     public static Image stoneSprite;
@@ -28,6 +28,7 @@ public class ImagesSaves {
         teleporterSprite =  new Image(ImagesSaves.class.getResource("sprites/teleporterSprite.png").toExternalForm());
 
         wakandaisSprites = new Image(ImagesSaves.class.getResource("sprites/WakandaisSprites.png").toExternalForm());
+        agentSprites = new Image(ImagesSaves.class.getResource("sprites/agentSprites.png").toExternalForm());
         shieldSprite = new Image(ImagesSaves.class.getResource("sprites/shieldSprite.png").toExternalForm());
         healSprite = new Image(ImagesSaves.class.getResource("sprites/healSprite.png").toExternalForm());
         stoneSprite = new Image(ImagesSaves.class.getResource("sprites/stones/stoneSprite.png").toExternalForm());

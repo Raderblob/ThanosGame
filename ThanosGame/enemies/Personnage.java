@@ -3,8 +3,8 @@ package ThanosGame.enemies;
 import ThanosGame.*;
 import ThanosGame.graphics.AnimatedPerson;
 import ThanosGame.terrain.TerrainMap;
-import ThanosGame.weapons.FXEffect;
 import ThanosGame.weapons.Weapon;
+import ThanosGame.weapons.projectiles.FXEffect;
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
 
@@ -47,7 +47,21 @@ public class Personnage extends PlayerClass {
     }
 
     public static Personnage getEnemy(Point2D pos, TerrainMap myTerrain, World myWorld) {
-        return new Wakandan(pos, myTerrain, myWorld);
+        switch (myTerrain.myTerrainVersion) {
+            case CITY:
+                int rndGen = Main.numberGenerator.nextInt(10);
+                if (rndGen < 1) {
+                    return new Wakandan(pos, myTerrain, myWorld);
+                } else {
+                    return new Agent(pos, myTerrain, myWorld);
+                }
+
+            case COUNTRY:
+                return new Wakandan(pos, myTerrain, myWorld);
+            default:
+                return new Wakandan(pos, myTerrain, myWorld);
+        }
+
     }
 
 
@@ -172,7 +186,7 @@ public class Personnage extends PlayerClass {
 
 
     private boolean obstacleAtDistance(int atDistance) {
-        for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
+        for (int y = (int) (myPosition.getY() - mySize.getY() * 2); y < myPosition.getY() - mySize.getY(); y += 4) {
             if (myTerrain.getTerrainValCollision(Math.max(myPosition.getX() + atDistance, 0), Math.max(y, 0)) != 0) {
                 return true;
             }
