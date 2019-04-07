@@ -6,6 +6,8 @@ import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import resources.ImagesSaves;
 
+import static ThanosGame.terrain.PixelBlockType.SPIKES;
+
 public class PlayerClass {
     protected double PV;
     protected double maxPv;
@@ -42,7 +44,7 @@ public class PlayerClass {
             toRemove -= myShield;
             myShield -= amount;
         }
-        if (!recovering() && toRemove>0) {
+        if (!recovering() && toRemove > 0) {
             PV -= toRemove;
             lastHit = System.currentTimeMillis();
         }
@@ -132,33 +134,60 @@ public class PlayerClass {
     }
 
     private boolean terrainUnderFoot(TerrainMap currentTerrain) {
+        return whatTerrainUnderFoot(currentTerrain)!=0;
+    }
+    private byte whatTerrainUnderFoot(TerrainMap currentTerrain){
+        byte terr;
         for (int x = (int) (myPosition.getX() - mySize.getX()); x < myPosition.getX() + mySize.getX(); x += 4) {
-            if (currentTerrain.getTerrainValCollision(x, myPosition.getY() + mySize.getY()) != 0) {
-                return true;
+            terr = currentTerrain.getTerrainValCollision(x, myPosition.getY() + mySize.getY());
+            if (terr != 0) {
+                return terr;
             }
-            if (currentTerrain.getTerrainValCollision(x, myPosition.getY() + mySize.getY() - 3) != 0) {
-                return true;
+            terr = currentTerrain.getTerrainValCollision(x, myPosition.getY() + mySize.getY() - 3);
+            if ( terr!= 0) {
+                return terr;
             }
         }
+        return 0;
+    }
+
+    protected boolean dangerBlockPresent(TerrainMap currentTerrain) {
+
+       if(whatTerrainIsObstacleLeft(currentTerrain)==SPIKES.getMyVal()||whatTerrainIsObstacleRight(currentTerrain)==SPIKES.getMyVal()||whatTerrainUnderFoot(currentTerrain)==SPIKES.getMyVal()){
+           return true;
+       }
+
+
         return false;
     }
 
     private boolean terrainIsObstacleRight(TerrainMap currentTerrain) {
+        return whatTerrainIsObstacleRight(currentTerrain)!=0;
+    }
+
+    private byte whatTerrainIsObstacleRight(TerrainMap currentTerrain){
+        byte terr;
         for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (currentTerrain.getTerrainValCollision(myPosition.getX() + mySize.getX() + 3, y) != 0) {
-                return true;
+            terr = currentTerrain.getTerrainValCollision(myPosition.getX() + mySize.getX() + 3, y);
+            if (terr != 0) {
+                return terr;
             }
         }
-        return false;
+        return 0;
+    }
+    private byte whatTerrainIsObstacleLeft(TerrainMap currentTerrain){
+        byte terr;
+        for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
+            terr = currentTerrain.getTerrainValCollision(myPosition.getX() - mySize.getX() - 3, y);
+            if (terr != 0) {
+                return terr;
+            }
+        }
+        return 0;
     }
 
     private boolean terrainIsObstacleLeft(TerrainMap currentTerrain) {
-        for (int y = (int) (myPosition.getY() - mySize.getY()); y < myPosition.getY(); y += 4) {
-            if (currentTerrain.getTerrainValCollision(myPosition.getX() - mySize.getX() - 3, y) != 0) {
-                return true;
-            }
-        }
-        return false;
+       return whatTerrainIsObstacleLeft(currentTerrain)!=0;
     }
 
     private boolean terrainIsObstacleOverhead(TerrainMap currentTerrain) {

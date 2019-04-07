@@ -337,6 +337,8 @@ class TerrainChunck {
             c = new javafx.scene.paint.Color(0.5, 0, 0.5, 1);
         } else if (a == PixelBlockType.UNDEFINED3.getMyVal()) {
             c = new javafx.scene.paint.Color(1, 0, 0, 1);
+        }else if(a== PixelBlockType.SPIKES.getMyVal()){
+            c= new Color(Math.random()*0.4+0.6,Math.random()*0.5,Math.random()*0.5,1);
         } else {
             c = new Color(1, 1, 1, 0);
         }

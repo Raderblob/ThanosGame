@@ -16,9 +16,9 @@ public class Agent extends Personnage {
         int rndgen = Main.numberGenerator.nextInt(100);
 
         if(rndgen<20) {
-            myGun = new MachineReboundGun(myWorld.worldProjectiles, this, 10*myWorld.getDifficulty());
+            myGun = new MachineReboundGun(myWorld.worldProjectiles, this, 2*myWorld.getDifficulty());
         }else if(rndgen<50){
-            myGun = new MachineGun(myWorld.worldProjectiles, this, 10*myWorld.getDifficulty());
+            myGun = new MachineGun(myWorld.worldProjectiles, this, 2*myWorld.getDifficulty());
         }else if(rndgen<75){
             myGun = new ReboundRifle(myWorld.worldProjectiles, this, 10*myWorld.getDifficulty());
         }else{

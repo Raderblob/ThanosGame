@@ -59,6 +59,12 @@ public class World {
                 StoneItem.addStone(new Point2D(5000, 40), 1, worldStoneItem, thanos.infinity);
 
 
+
+
+                //StoneItem.addStone(new Point2D(50, 40), 0, worldStoneItem, thanos.infinity);
+               // StoneItem.addStone(new Point2D(60, 40), 1, worldStoneItem, thanos.infinity);
+               // StoneItem.addStone(new Point2D(70, 40), 2, worldStoneItem, thanos.infinity);
+               // StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones
                 break;
             case 2:
                 myBackground = ImagesSaves.desertBackground;
@@ -69,7 +75,6 @@ public class World {
                 new LargeBase(BuildingSaves.captainBase, new Point2D(10000, 40)).changeTerrain(terrain);
 
                 StoneItem.addStone(new Point2D(150, 40), 2, worldStoneItem, thanos.infinity);
-
                 StoneItem.addStone(new Point2D(10000, 40), 3, worldStoneItem, thanos.infinity);
                 break;
             case 3:

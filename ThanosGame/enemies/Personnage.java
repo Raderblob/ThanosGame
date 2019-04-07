@@ -85,6 +85,10 @@ public class Personnage extends PlayerClass {
     @Override
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         if (myPosition.getX() > getCameraPosition().getX() - 500 && myPosition.getX() < getCameraPosition().getX() + Game.winParam.getX() + 1000) {
+            if(dangerBlockPresent(currentTerrain)){
+                removeHp(Math.pow(1,-8)*currentNanoTime);
+            }
+
             myTarget = player.myPosition;
             for (FXEffect fx : currentWorld.worldExplosions) {
                 if (fx.myType() == 1) {

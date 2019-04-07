@@ -38,6 +38,10 @@ public class Thanos extends PlayerClass{
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         super.run(currentTerrain, currentWorld, currentNanoTime);
 
+        if(dangerBlockPresent(currentTerrain)){
+            removeHp(10);
+        }
+
         if(secondaryActive){
             secondary=true;
             fireAt(secAim.getX(),secAim.getY());

@@ -50,6 +50,8 @@ public class Main {
             return damageDone > 20;
         } else if (terrainByte == PixelBlockType.BRICK3.getMyVal()) {
             return damageDone > 15;
+        }else if(terrainByte == PixelBlockType.SPIKES.getMyVal()){
+            return damageDone>12;
         }
 
 
