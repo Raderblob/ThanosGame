@@ -27,6 +27,7 @@ public class SoundEffect {
         }
     }
 
+
     public boolean isPlaying() {
         return myClip.isPlaying();
     }

@@ -3,6 +3,7 @@ package ThanosGame.weapons.player;
 import ThanosGame.Item;
 import ThanosGame.World;
 import javafx.geometry.Point2D;
+import resources.AudioSaves;
 import resources.ImagesSaves;
 
 import java.util.LinkedList;
@@ -19,6 +20,7 @@ public class StoneItem extends Item {
     public void runLogic(World myWorld){
         if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)) {
             mylife = 0;
+            AudioSaves.powerUpSound.play();
             switch (typePierre) {
                 case 0:
                     myWorld.thanos.addStone(new PowerStone(myWorld.thanos));

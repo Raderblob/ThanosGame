@@ -119,11 +119,6 @@ public class World {
             enemy.run(terrain, this, currentNanoTime);//run ai
             if (enemy.PV <= 0) {
                 ennToRemove.add(enemy);
-                thanos.infinity.PierreAme();
-                int vieOuPas = (int) (Math.random() * 1000);
-                if (vieOuPas <= 200) {
-                    worldHeal.add(new Heal(enemy.myPosition, new Point2D(5, 5), 10));
-                }
             }
         }
 
@@ -168,6 +163,10 @@ public class World {
         }
         for (Personnage e : ennToRemove) {
             worldExplosions.add(new Explosion(e.myPosition, 28, 2, terrain, true));
+            thanos.infinity.PierreAme();
+            if (Main.numberGenerator.nextInt(1000) <= 400) {
+                worldHeal.add(new Heal(e.myPosition, new Point2D(5, 5), 10));
+            }
             enemies.remove(e);
         }
 

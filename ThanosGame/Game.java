@@ -45,7 +45,6 @@ public class Game extends Application {
         try {
             this.stage=stage;
             ImagesSaves.loadImages();
-            AudioSaves.loadMusic();
             System.out.println("Loading Game...");
             loadGame();
             inventaire = new MenuInventaire(thanos);
