@@ -150,6 +150,7 @@ public class Game extends Application {
                     toShow=0;
                 }else if(toShow ==-1){
                     toShow=0;
+                   // stage.hide();
                 }
             }
         }.start();
@@ -209,6 +210,7 @@ public class Game extends Application {
     }
     public void hideGame(){
         playing=false;
+        toShow=-1;
     }
 
     @Override
