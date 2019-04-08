@@ -44,18 +44,18 @@ public class World {
         teleporters = new LinkedList<>();
         enemies = new LinkedList<>();
         switch (worldType) {
-            case 1: //generates 1st world
-                myBackground = ImagesSaves.desertBackground;
-                starterPos = new Point2D(50, 50);
-                myDifficulty = 0.5;
-                unlockLevel =1;
-                terrain = new TerrainMap(6000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY);
+            case 1: //generates very first world
+                myBackground = ImagesSaves.desertBackground; //sets background
+                starterPos = new Point2D(50, 50); //Position where the player spawns
+                myDifficulty = 0.5; //difficulty of this world
+                unlockLevel =1; //unlock level required for this world
+                terrain = new TerrainMap(6000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY); //generate terrain with random enemies
                 new LargeBase(BuildingSaves.SpidermanBase, new Point2D(5000, 0)).changeTerrain(terrain);
 
 
-                enemies.add(Personnage.getEnemy(new Point2D(500, 50), terrain, this));
+                enemies.add(Personnage.getEnemy(new Point2D(500, 50), terrain, this));//generate first hurdle for player
 
-                StoneItem.addStone(new Point2D(600, 40), 0, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(600, 40), 0, worldStoneItem, thanos.infinity);//create stone items
                 StoneItem.addStone(new Point2D(5000, 40), 1, worldStoneItem, thanos.infinity);
 
 
@@ -66,7 +66,7 @@ public class World {
                // StoneItem.addStone(new Point2D(70, 40), 2, worldStoneItem, thanos.infinity);
                // StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones
                 break;
-            case 2:
+            case 2://generates second world
                 myBackground = ImagesSaves.desertBackground;
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 1;
@@ -87,7 +87,7 @@ public class World {
                 new LargeBase(BuildingSaves.captainBase, new Point2D(5000, 40)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.thorBase, new Point2D(10000, 0)).changeTerrain(terrain);
                 break;
-            case 0:
+            case 0://generate home base
                 myBackground = ImagesSaves.spaceBackground;
                 starterPos = new Point2D(720, 320);
                 unlockLevel = 0;
@@ -109,7 +109,7 @@ public class World {
         //run physics for the player
 
 
-        LinkedList<Personnage> ennToRemove = new LinkedList<>();
+        LinkedList<Personnage> ennToRemove = new LinkedList<>();//list of thingd that will get removed
         LinkedList<Projectile> pToRemove = new LinkedList<>();
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
         LinkedList<Heal> hToRemove = new LinkedList<>();
@@ -118,7 +118,7 @@ public class World {
         for (Personnage enemy : enemies) {//run physics for ai
             enemy.run(terrain, this, currentNanoTime);//run ai
             if (enemy.PV <= 0) {
-                ennToRemove.add(enemy);
+                ennToRemove.add(enemy);//add enemy to remove-list
             }
         }
 
@@ -135,14 +135,14 @@ public class World {
             }
         }
 
-        for (Heal cHeal : worldHeal) {//run collision for healitems
+        for (Heal cHeal : worldHeal) {//run collisions for heal-items
             cHeal.runLogic(this);
             if (cHeal.mylife <= 0) {
                 hToRemove.add(cHeal);
             }
         }
 
-        for (StoneItem cStoneItem : worldStoneItem) {
+        for (StoneItem cStoneItem : worldStoneItem) { //run collisions for stone pickup items
             cStoneItem.runLogic(this);
             if (cStoneItem.mylife <= 0) {
                 sToRemove.add(cStoneItem);

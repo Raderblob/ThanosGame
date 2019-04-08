@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuPrincipal extends JFrame implements ActionListener {
-    private Game game;
+    public Game game;
     private JButton bouton;
     private JButton bouton2;
     private JButton bouton3;

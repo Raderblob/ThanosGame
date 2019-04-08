@@ -37,7 +37,7 @@ public class PlayerClass {
         myAnimation = new AnimatedPerson(ImagesSaves.thanosSprites, new Point2D(400, 330), 64);
     }
 
-    public void removeHp(double amount) {
+    public void removeHp(double amount) {//remove hp of entity counting the potential shield
 
         double toRemove = amount;
         if (myShield > 0) {
@@ -50,8 +50,8 @@ public class PlayerClass {
         }
     }
 
-    public void addHp(int amount) {
-        if (PV + amount >= maxPv) {
+    public void addHp(int amount) {//adds required hp
+        if (PV + amount >= maxPv) {//could be simpler with math.min
             PV = maxPv;
         } else {
             PV += amount;
@@ -59,7 +59,7 @@ public class PlayerClass {
     }
 
     public void draw(GraphicsContext gc) {
-        if (!recovering() || Main.numberGenerator.nextInt(10) < 5) {
+        if (!recovering() || Main.numberGenerator.nextInt(10) < 5) { //use the recovery effect for rendering when needed
             myAnimation.draw(gc, new Point2D(myPosition.getX() - mySize.getX() - getCameraPosition().getX(), myPosition.getY() - mySize.getY() - getCameraPosition().getY()), new Point2D(mySize.getX() * 2, mySize.getY() * 2));
         }
     }
@@ -79,22 +79,22 @@ public class PlayerClass {
 
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         if (myShield > 0) {
-            myShield -= currentNanoTime * 0.04;
+            myShield -= currentNanoTime * 0.04; //lower shields slowly
         }
-        myShield = Math.min(Math.max(myShield, 0), maxPv);
+        myShield = Math.min(Math.max(myShield, 0), maxPv); //cap shields
         doPlayerMovement(currentTerrain, currentWorld, currentNanoTime);
         myAnimation.setWalkingMode(movingState);
     }
 
     private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
-        boolean tooLow = playerTrimmingTerrain(currentTerrain);
+        boolean tooLow = playerTrimmingTerrain(currentTerrain); //check if player is in terrain
         boolean tooHigh = terrainIsObstacleOverhead(currentTerrain);
         obsClear = 1;
-        mySpeed = mySpeed.add(0, currentNanoTime * 0.5 * (tUnderFoot ? 0 : 1));
+        mySpeed = mySpeed.add(0, currentNanoTime * 0.5 * (tUnderFoot ? 0 : 1)); //do gravity
 
 
-        if (tUnderFoot) {
+        if (tUnderFoot) {//run jumping physics with double jumping
             if (jumpingState == 2) {
                 jumpingState -= 1;
             } else {
