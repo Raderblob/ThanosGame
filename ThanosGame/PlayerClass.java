@@ -233,6 +233,7 @@ public class PlayerClass {
         }else if (prixVie==125) {
             prixVie = 0;
             this.setPv(maxPv*2);
+
         }
     }
 
