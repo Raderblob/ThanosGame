@@ -6,7 +6,6 @@ import ThanosGame.enemies.Thor;
 import ThanosGame.terrain.LargeBase;
 import ThanosGame.terrain.Teleporter;
 import ThanosGame.terrain.TerrainMap;
-import ThanosGame.weapons.player.MindStone;
 import ThanosGame.weapons.player.StoneItem;
 import ThanosGame.weapons.projectiles.Explosion;
 import ThanosGame.weapons.projectiles.FXEffect;
@@ -106,7 +105,6 @@ public class World {
                 enemies.add(levelBoss);
                 break;
             case 0://generate home base
-                thanos.infinity.addStones(new MindStone(thanos));
 
                 myBackground = ImagesSaves.spaceBackground;
                 starterPos = new Point2D(720, 320);
