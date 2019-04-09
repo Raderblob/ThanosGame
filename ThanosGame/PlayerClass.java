@@ -191,7 +191,7 @@ public class PlayerClass {
     }
 
     private boolean terrainIsObstacleOverhead(TerrainMap currentTerrain) {
-        for (int x = (int) (myPosition.getX() - mySize.getX()+2); x < myPosition.getX() + mySize.getX()-2; x += 4) {
+        for (int x = (int) (myPosition.getX() - mySize.getX()+3); x < myPosition.getX() + mySize.getX()-3; x += 4) {
             if (currentTerrain.getTerrainValCollision(x, myPosition.getY() - mySize.getY()) != 0) {
                 return true;
             }

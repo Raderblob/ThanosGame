@@ -16,10 +16,15 @@ public class GraphicalUserInterface {
         this.thanos = thanos;
         tutorialMessages = new LinkedList<>();
         addTutorial("Use the portals to go to the different world, for the moment you only have one unlocked", new Point2D(600, 100), 0);
+        addTutorial("To move simply use either ad/qd and to jump use space/q/w", new Point2D(800, 200), 0);
     }
 
     public void addTutorial(String msg, Point2D messagePosition, int worldType) {
-        tutorialMessages.add(new PopupText(msg, messagePosition, 10000, messagePosition, worldType));
+        PopupText nMsg = new PopupText(msg, messagePosition, 10000, messagePosition, worldType);
+        if(!tutorialMessages.contains(nMsg)){
+            tutorialMessages.add(nMsg);
+        }
+
     }
 
     public void draw(GraphicsContext gc,int selectedWorld) {

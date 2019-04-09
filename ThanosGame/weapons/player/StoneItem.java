@@ -38,9 +38,11 @@ public class StoneItem extends Item {
         }
     }
 
-    public static void addStone(Point2D pos, int type, LinkedList<StoneItem> stones, Gant infinity) {
+    public static boolean addStone(Point2D pos, int type, LinkedList<StoneItem> stones, Gant infinity) {
         if (!infinity.hasStone(type)) {
             stones.add(new StoneItem(pos, new Point2D(5, 5), type));
+            return true;
         }
+        return false;
     }
 }

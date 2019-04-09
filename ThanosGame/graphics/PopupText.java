@@ -7,7 +7,7 @@ import javafx.scene.canvas.GraphicsContext;
 
 public class PopupText {
     private final int TRIGGERDISTANCE = (int) Math.pow(500, 2);
-    private String myText;
+    public String myText;
     private Point2D myPosition;
     private long showTime;
     private long lifeSpan;
@@ -55,6 +55,17 @@ public class PopupText {
             if (System.currentTimeMillis() - showTime > lifeSpan) {
                 hideMe();
             }
+        }
+    }
+
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof PopupText){
+            return myText.equals(((PopupText) obj).myText);
+        }else{
+            return false;
         }
     }
 }

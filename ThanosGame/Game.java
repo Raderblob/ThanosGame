@@ -35,7 +35,7 @@ public class Game extends Application {
     private int toShow = 0;
     private Stage stage;
     private Scene scene;
-    private GraphicalUserInterface gui;
+    public GraphicalUserInterface gui;
     private MenuInventaire inventaire;
     private boolean leftPressed = false;
     private boolean rightPressed = false;

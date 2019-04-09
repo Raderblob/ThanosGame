@@ -56,7 +56,9 @@ public class World {
                 enemies.add(Personnage.getEnemy(new Point2D(500, 50), terrain, this));//generate first hurdle for player
 
                 StoneItem.addStone(new Point2D(600, 40), 0, worldStoneItem, thanos.infinity);//create stone items
+                myGame.gui.addTutorial("You should get this stone to make it easier",new Point2D(600,40),1);
                 StoneItem.addStone(new Point2D(5000, 40), 1, worldStoneItem, thanos.infinity);
+                myGame.gui.addTutorial("The second Stone is here! Don't forget it",new Point2D(5000,40),1);
 
 
                 //StoneItem.addStone(new Point2D(50, 40), 0, worldStoneItem, thanos.infinity);
