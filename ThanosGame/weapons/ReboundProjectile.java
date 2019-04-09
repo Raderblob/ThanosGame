@@ -2,16 +2,15 @@ package ThanosGame.weapons;
 
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
+import ThanosGame.weapons.projectiles.Projectile;
 import javafx.geometry.Point2D;
 
 public class ReboundProjectile extends Projectile {
-    public ReboundProjectile(Point2D position, Point2D Size, int degats, Point2D speed) {
+    public ReboundProjectile(Point2D position, Point2D Size, double degats, Point2D speed) {
         super(position, Size, degats, speed,1000,2);
     }
 
-    public ReboundProjectile(Point2D position, Point2D size, int degats, double speed, double angle) {
-        super(position, size, degats, speed, angle);
-    }
+
 
 
     public void runLogic(World myWorld, TerrainMap myTerrain, double nanoTime) {

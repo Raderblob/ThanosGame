@@ -1,16 +1,20 @@
 package ThanosGame;
 
+import ThanosGame.enemies.Personnage;
 import ThanosGame.terrain.LargeBase;
 import ThanosGame.terrain.Teleporter;
 import ThanosGame.terrain.TerrainMap;
-import ThanosGame.weapons.Explosion;
-import ThanosGame.weapons.FXEffect;
-import ThanosGame.weapons.Projectile;
+import ThanosGame.weapons.player.StoneItem;
+import ThanosGame.weapons.projectiles.Explosion;
+import ThanosGame.weapons.projectiles.FXEffect;
+import ThanosGame.weapons.projectiles.Projectile;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
 import resources.AudioSaves;
 import resources.BuildingSaves;
+import resources.ImagesSaves;
 
 import java.util.LinkedList;
 
@@ -18,45 +22,84 @@ public class World {
     public Game myGame;
     public Thanos thanos;
     private TerrainMap terrain;
-    public  LinkedList<Personnage> enemies;
+    public LinkedList<Personnage> enemies;
     public LinkedList<FXEffect> worldExplosions;
     public LinkedList<Projectile> worldProjectiles;
     public LinkedList<Heal> worldHeal;
+    public LinkedList<StoneItem> worldStoneItem;
 
     private Point2D starterPos;
-    private int teleportTo;
-    private LinkedList<Teleporter> teleporters;
-    public World(int worldType, Thanos p,Game myGame) {
+    private int unlockLevel;
+    public LinkedList<Teleporter> teleporters;
+    private double myDifficulty;
+    public Image myBackground;
+
+    public World(int worldType, Thanos p, Game myGame) {
         this.myGame = myGame;
         thanos = p;
         worldProjectiles = new LinkedList<>();
         worldExplosions = new LinkedList<>();
         worldHeal = new LinkedList<>();
+        worldStoneItem = new LinkedList<>();
         teleporters = new LinkedList<>();
         enemies = new LinkedList<>();
         switch (worldType) {
-            case 1:
-                starterPos = new Point2D(50,50);
-                teleportTo = 0;
-                terrain = new TerrainMap(30,true,this,enemies);
-                new LargeBase(BuildingSaves.pal,new Point2D(10000,0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.ironManBase,new Point2D(1500,0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.captainBase,new Point2D(2500,40)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.thorBase,new Point2D(2000,0)).changeTerrain(terrain);
-                new LargeBase(BuildingSaves.SpidermanBase,new Point2D(3000,0)).changeTerrain(terrain);
-                System.out.println(enemies.size());
-                enemies.add(new Personnage(new Point2D(1000,50),terrain,this));
+            case 1: //generates very first world
+                myBackground = ImagesSaves.desertBackground; //sets background
+                starterPos = new Point2D(50, 50); //Position where the player spawns
+                myDifficulty = 0.5; //difficulty of this world
+                unlockLevel =1; //unlock level required for this world
+                terrain = new TerrainMap(6000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY); //generate terrain with random enemies
+                new LargeBase(BuildingSaves.SpidermanBase, new Point2D(5000, 0)).changeTerrain(terrain);
+
+
+                enemies.add(Personnage.getEnemy(new Point2D(500, 50), terrain, this));//generate first hurdle for player
+
+                StoneItem.addStone(new Point2D(600, 40), 0, worldStoneItem, thanos.infinity);//create stone items
+                StoneItem.addStone(new Point2D(5000, 40), 1, worldStoneItem, thanos.infinity);
+
+
+
+
+                //StoneItem.addStone(new Point2D(50, 40), 0, worldStoneItem, thanos.infinity);
+               // StoneItem.addStone(new Point2D(60, 40), 1, worldStoneItem, thanos.infinity);
+               // StoneItem.addStone(new Point2D(70, 40), 2, worldStoneItem, thanos.infinity);
+               // StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones
                 break;
-            case 0:
-                starterPos = new Point2D(720,320);
-                teleportTo = 1;
-                terrain = new TerrainMap(2,false,this,enemies);
-                System.out.println("loading base");
-                new LargeBase(BuildingSaves.thanosBase,new Point2D(0,0)).changeTerrain(terrain);//generate home base
-                teleporters.add(new Teleporter(new Point2D(600,190),1,myGame));
+            case 2://generates second world
+                myBackground = ImagesSaves.desertBackground;
+                starterPos = new Point2D(50, 50);
+                myDifficulty = 1;
+                unlockLevel = 2;
+                terrain = new TerrainMap(11000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY);
+                new LargeBase(BuildingSaves.captainBase, new Point2D(10000, 40)).changeTerrain(terrain);
+
+                StoneItem.addStone(new Point2D(150, 40), 2, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(10000, 40), 3, worldStoneItem, thanos.infinity);
+                break;
+            case 3:
+                myBackground = ImagesSaves.cityBackground;
+                starterPos = new Point2D(50, 50);
+                myDifficulty = 2;
+                unlockLevel = 3;
+                terrain = new TerrainMap(50000, true, this, enemies,TerrainMap.TerrainVType.CITY);
+                new LargeBase(BuildingSaves.ironManBase, new Point2D(7500, 0)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.captainBase, new Point2D(5000, 40)).changeTerrain(terrain);
+                new LargeBase(BuildingSaves.thorBase, new Point2D(10000, 0)).changeTerrain(terrain);
+                break;
+            case 0://generate home base
+                myBackground = ImagesSaves.spaceBackground;
+                starterPos = new Point2D(720, 320);
+                unlockLevel = 0;
+                terrain = new TerrainMap(2000, false, this, enemies,TerrainMap.TerrainVType.CITY);
+                new LargeBase(BuildingSaves.thanosBase, new Point2D(0, 0)).changeTerrain(terrain);//generate home base
+                for(int i=1;i<=Math.min(myGame.unlockedWorld,3);i++){
+                    teleporters.add(new Teleporter(new Point2D(300 + 300*i, 190), i, myGame)); // add the teleporters
+                }
+
                 break;
             default:
-                starterPos = new Point2D(50,50);
+                starterPos = new Point2D(50, 50);
                 break;
         }
     }
@@ -66,21 +109,16 @@ public class World {
         //run physics for the player
 
 
-
-        LinkedList<Personnage> ennToRemove = new LinkedList<>();
+        LinkedList<Personnage> ennToRemove = new LinkedList<>();//list of thingd that will get removed
         LinkedList<Projectile> pToRemove = new LinkedList<>();
         LinkedList<FXEffect> eToRemove = new LinkedList<>();
         LinkedList<Heal> hToRemove = new LinkedList<>();
+        LinkedList<StoneItem> sToRemove = new LinkedList<>();
 
-        for(Personnage enemy: enemies){//run physics for ai
-            enemy.run(terrain,this,currentNanoTime);//run ai
-            if(enemy.PV<=0){
-                ennToRemove.add(enemy);
-                thanos.infinity.PierreAme();
-                int vieOuPas = (int)(Math.random()*1000);
-                if(vieOuPas <= 200){
-                    worldHeal.add(new Heal(enemy.myPosition,new Point2D (5,5),10));
-                }
+        for (Personnage enemy : enemies) {//run physics for ai
+            enemy.run(terrain, this, currentNanoTime);//run ai
+            if (enemy.PV <= 0) {
+                ennToRemove.add(enemy);//add enemy to remove-list
             }
         }
 
@@ -97,27 +135,38 @@ public class World {
             }
         }
 
-        for (Heal cHeal : worldHeal){//run collision for healitems
-            cHeal.runLogic(this, terrain);
-            if (cHeal.mylife<= 0) {
+        for (Heal cHeal : worldHeal) {//run collisions for heal-items
+            cHeal.runLogic(this);
+            if (cHeal.mylife <= 0) {
                 hToRemove.add(cHeal);
+            }
+        }
+
+        for (StoneItem cStoneItem : worldStoneItem) { //run collisions for stone pickup items
+            cStoneItem.runLogic(this);
+            if (cStoneItem.mylife <= 0) {
+                sToRemove.add(cStoneItem);
             }
         }
 
 
         //remove all unwanted items
         for (Projectile p : pToRemove) {
-            if(thanos.pointOnScreen(p.position)) {
+            if (thanos.pointOnScreen(p.position)) {
                 AudioSaves.explosionSound.play(p.degats / 100d);
             }
-            worldExplosions.add(new Explosion(p.position, 28, p.degats, terrain,p.enemyOwned));
+            worldExplosions.add(new Explosion(p.position, 28, p.degats, terrain, p.enemyOwned));
             worldProjectiles.remove(p);
         }
         for (FXEffect e : eToRemove) {
             worldExplosions.remove(e);
         }
         for (Personnage e : ennToRemove) {
-            worldExplosions.add(new Explosion(e.myPosition, 28, 10, terrain,true));
+            worldExplosions.add(new Explosion(e.myPosition, 28, 2, terrain, true));
+            thanos.infinity.PierreAme();
+            if (Main.numberGenerator.nextInt(1000) <= 400) {
+                worldHeal.add(new Heal(e.myPosition, new Point2D(5, 5), 10));
+            }
             enemies.remove(e);
         }
 
@@ -125,24 +174,26 @@ public class World {
             worldHeal.remove(h);
         }
 
+        for (StoneItem s : sToRemove) {
+            worldStoneItem.remove(s);
+        }
 
 
         //run collision for teleporters
-        for(Teleporter teleporter:teleporters){
-            teleporter.checkForTeleport(thanos);
+        for (Teleporter teleporter : teleporters) {
+            teleporter.checkForTeleport(thanos,unlockLevel);
         }
         //test for temp teleport
-        if(thanos.myPosition.getX()<20){
-            myGame.switchWorlds(teleportTo);
+        if (thanos.myPosition.getX() < 20) {
+            myGame.switchWorlds(0);
         }
     }
-
 
 
     public void renderWorld(GraphicsContext gc, Group root) {
         terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain
         thanos.draw(gc);//draw the player
-        for(Personnage enemy: enemies){
+        for (Personnage enemy : enemies) {
             enemy.draw(gc);//draw ai
         }
         for (Projectile cProjectile : worldProjectiles) {
@@ -151,21 +202,28 @@ public class World {
         for (Heal cHeal : worldHeal) {
             cHeal.renderMe(gc, thanos.getCameraPosition());
         }
+        for (StoneItem cStoneItem : worldStoneItem) {
+            cStoneItem.renderMe(gc, thanos.getCameraPosition());
+        }
         for (FXEffect cExplosion : worldExplosions) {
             cExplosion.renderMe(gc, thanos.getCameraPosition());
         }
 
-        for(Teleporter teleporter:teleporters){
-            teleporter.renderMe(gc,thanos.getCameraPosition());
+        for (Teleporter teleporter : teleporters) {
+            teleporter.renderMe(gc, thanos.getCameraPosition());
         }
     }
 
-    public void dispose(Group root){
+    public void dispose(Group root) {
         terrain.removeCanvas(root);
     }
 
     public Point2D getStarterPos() {
-        return new Point2D(starterPos.getX(),starterPos.getY());
+        return new Point2D(starterPos.getX(), starterPos.getY());
+    }
+
+    public double getDifficulty() {
+        return myDifficulty;
     }
 }
 

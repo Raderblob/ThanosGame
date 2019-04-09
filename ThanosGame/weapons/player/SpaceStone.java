@@ -4,8 +4,8 @@ import ThanosGame.Main;
 import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
-import ThanosGame.weapons.FXEffect;
-import ThanosGame.weapons.Tnt;
+import ThanosGame.weapons.projectiles.FXEffect;
+import ThanosGame.weapons.projectiles.Tnt;
 import javafx.geometry.Point2D;
 import resources.AudioSaves;
 
@@ -50,10 +50,10 @@ public class SpaceStone extends Stone {
     @Override
     protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
         if(owner.infinity.nbAme>0) {
-            owner.infinity.nbAme--;
             Point2D destination = getDestination(destroyAt, currentWorld, currentTerrain);
 
             if (terrainClear(currentWorld.thanos, currentTerrain, destination)) {
+                owner.infinity.nbAme--;
                 currentWorld.worldProjectiles.add(new Tnt(destination, myPower, 100));
                 AudioSaves.teleportSound.play();
                 return 1;

@@ -9,7 +9,6 @@ public class Gant {
     public Thanos owner;
     public int selectedStone;
     public Stone[] stones;
-    public boolean pierreAme;
     public int nbAme;
     public int [] prixCooldown = new int [6];
     public int [] prixPuissance = new int [6];
@@ -17,7 +16,6 @@ public class Gant {
     public Gant(Thanos owner) {
         this.owner = owner;
         stones = new Stone[4];
-        pierreAme = true;
         nbAme = 0;
         for (int i = 0; i < stones.length; i++) {
             stones[i] = new Stone(owner);
@@ -32,18 +30,11 @@ public class Gant {
     }
 
     public void PierreAme(){
-        if(pierreAme){
-            nbAme += 1;
-        }
+        nbAme += 1;
     }
 
     public void addStones(Stone nStone) {
-        for (int i = 0; i < stones.length; i++) {
-            if (!stones[i].isReal()) {
-                stones[i] = nStone;
-                return;
-            }
-        }
+        stones[nStone.stoneType] = nStone;
     }
 
     public void selectStone(int stoneToSelect) {
@@ -103,5 +94,15 @@ public class Gant {
             prixPuissance[n]= 0;
             stones[n].myPower =  stones[n].myPower*2;
         }
+    }
+
+    public boolean hasStone(int s){
+        for(int i=0;i<stones.length;i++){
+            if (stones[i].myType()==s){
+                return true;
+            }
+
+        }
+        return false;
     }
 }

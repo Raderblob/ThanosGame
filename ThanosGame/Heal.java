@@ -1,7 +1,7 @@
 package ThanosGame;
 
-import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
+import resources.AudioSaves;
 import resources.ImagesSaves;
 
 public class Heal extends Item{
@@ -13,10 +13,11 @@ public class Heal extends Item{
         mylife = 1;
     }
 
-    public void runLogic(World myWorld,TerrainMap myTerrain){
+    public void runLogic(World myWorld){
         if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)) {
             mylife = 0;
             myWorld.thanos.addHp(vieRendue);
+            AudioSaves.healSound.play();
         }
     }
 }

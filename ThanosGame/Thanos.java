@@ -12,21 +12,40 @@ import resources.ImagesSaves;
 public class Thanos extends PlayerClass{
     public Gant infinity ;
     private AnimatedImage animatedShield;
+    private boolean secondaryActive;
     public boolean secondary;
+    private Point2D secAim;
     public Thanos(int PV){
         super();
-        myShield=0;
-        this.PV=PV ;
+        recoverTime=500;
+        myShield = 0;
+        this.PV = PV ;
         maxPv = PV;
-        this.infinity= new Gant(this);
+        this.infinity = new Gant(this);
         animatedShield = new AnimatedImage(ImagesSaves.shieldSprite,new Point2D(556,556),1000);
-        secondary=false;
+        secondary = false;
+    }
+
+    public void overrideSecondary(Point2D pos){
+        secondaryActive=true;
+        secAim=pos;
+    }
+    public void desactivateSecondary(){
+        secondaryActive=false;
     }
 
     @Override
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         super.run(currentTerrain, currentWorld, currentNanoTime);
 
+        if(dangerBlockPresent(currentTerrain)){
+            removeHp(10);
+        }
+
+        if(secondaryActive){
+            secondary=true;
+            fireAt(secAim.getX(),secAim.getY());
+        }
 
 
         if (destroyAt.getX() != -1) {

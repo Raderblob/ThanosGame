@@ -11,7 +11,7 @@ import java.io.IOException;
 public class BuildingSaves {
     private static final int MODULEDIMENSION = 20;
     public static byte[][][] moduleTemplates = new byte[10][MODULEDIMENSION][MODULEDIMENSION];
-    public static byte[][][] largeBases=new byte[1][][];
+    public static byte[][][] largeBases = new byte[1][][];
 
     public static byte[][] pal;
     public static byte[][] thanosBase;
@@ -22,7 +22,7 @@ public class BuildingSaves {
 
 
     public static void loadBuildings(){
-        for(int i =0;i<moduleTemplates.length;i++){
+        for(int i=0;i<moduleTemplates.length;i++){
             moduleTemplates[i]=readModule("module" + i + ".png");
         }
         //load largeBase

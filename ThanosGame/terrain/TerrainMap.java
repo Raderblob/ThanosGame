@@ -2,8 +2,8 @@ package ThanosGame.terrain;
 
 import ThanosGame.Game;
 import ThanosGame.Main;
-import ThanosGame.Personnage;
 import ThanosGame.World;
+import ThanosGame.enemies.Personnage;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
 import javafx.scene.canvas.Canvas;
@@ -20,11 +20,12 @@ public class TerrainMap {
     private int maxPixelsY;
     public boolean terrainRendered;
     public Point2D mySize;
+    public TerrainVType myTerrainVersion;
 
-    public TerrainMap(int numC, boolean withBuildings, World myWorld, LinkedList<Personnage> enemyList) {
-
+    public TerrainMap(int numP, boolean withBuildings, World myWorld, LinkedList<Personnage> enemyList, TerrainVType terrainVersion) {
+        myTerrainVersion = terrainVersion;
         mySize = new Point2D(10, 10);
-        numChunks = numC;
+        numChunks = (int) (numP / (TerrainChunck.chunkParam.getX() * 4)) + 1;
         maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks));
         maxPixelsY = (int) (TerrainChunck.chunkParam.getY() * 4 - 1);
         terrainRendered = false;
@@ -42,55 +43,93 @@ public class TerrainMap {
                 for (int y = 0; y < (int) TerrainChunck.chunkParam.getY(); y++) {
                     double a = Math.min(1, Math.abs(geny.getNoise(x, y)) * Math.pow(y / TerrainChunck.chunkParam.getY() + 0.6, 10));
                     double b = Math.abs(biomeGeny.getNoise(x, y));
-                    if (y > TerrainChunck.chunkParam.getY() - 4) {
-                        setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
-                    } else if (a > 0.38) {//dirt stone
-
-                        if (b < 0.2) {
-                            setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
-                        } else {
-                            setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
-                        }
-
-                    } else if (a > 0.30) {
-                        if (b < 0.6) {
-                            setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
-                        } else {
-                            setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
-                        }
-                    } else if (a > 0.25) {
-                        setTerrainVal(x, y, PixelBlockType.GRASS.getMyVal());//grass
-                    } else {
-                        setTerrainVal(x, y, PixelBlockType.NOTHING.getMyVal());
+                    switch (terrainVersion) {
+                        case COUNTRY:
+                            generateCountry(a, b, x, y);
+                            break;
+                        case CITY:
+                            generateCity(a, b, x, y);
+                            break;
                     }
+
                 }
             }
 
-            int maxMap =  (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000;
-            for (int i = 400; i <maxMap; i += 700) {//generate buildings
-                if (Main.numberGenerator.nextInt(100) > 50) {
+            int maxMap = (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000;
+            for (int i = 400; i < maxMap; i += 700) {//generate buildings
+                if (Main.numberGenerator.nextInt(100) < terrainVersion.myVal) {
                     int y = 0;
                     int x = Main.numberGenerator.nextInt(200) + i;
                     do {
                         y += 1;
                     } while (getTerrainVal(x, y) == 0);
-                    new Building(new Point2D(x, y),enemyList,myWorld,this).changeTerrain(this);
+                    new Building(new Point2D(x, y), enemyList, myWorld, this).changeTerrain(this);
                 }
             }
 
-            for (int i = 100; i <maxMap; i += 1000) {//generate buildings
+            for (int i = 100; i < maxMap; i += 500) {
                 if (Main.numberGenerator.nextInt(maxMap) < i) {
                     int y = 50;
                     int x = Main.numberGenerator.nextInt(200) + i;
 
-                   enemyList.add(new Personnage(new Point2D(x,y),this,myWorld));
+                    enemyList.add(Personnage.getEnemy(new Point2D(x, y), this, myWorld));
                 }
             }
 
 
+            myWorld.teleporters.add(new Teleporter(new Point2D(getEndPos() - 500, 0), 0, myWorld.myGame));
+            new LargeBase(BuildingSaves.largeBases[0], new Point2D(getEndPos(), 0)).changeTerrain(this); //end of World
+        }
+    }
 
+    public enum TerrainVType {
+        COUNTRY(50), CITY(75);
+        private int myVal;
 
-            new LargeBase(BuildingSaves.largeBases[0], new Point2D((int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000, 0)).changeTerrain(this); //end of World
+        TerrainVType(int i) {
+            myVal = i;
+        }
+    }
+
+    public int getEndPos() {
+        return (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000;
+    }
+
+    private void generateCountry(double a, double b, int x, int y) {
+        if (y > TerrainChunck.chunkParam.getY() - 4) {
+            setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
+        } else if (a > 0.38) {//dirt stone
+            if (b < 0.2) {
+                setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
+            } else {
+                setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
+            }
+        } else if (a > 0.30) {
+            if (b < 0.6) {
+                setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
+            } else {
+                setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
+            }
+        } else if (a > 0.25) {
+            setTerrainVal(x, y, PixelBlockType.GRASS.getMyVal());//grass
+        } else {
+            setTerrainVal(x, y, PixelBlockType.NOTHING.getMyVal());
+        }
+    }
+
+    private void generateCity(double a, double b, int x, int y) {
+        if (y > TerrainChunck.chunkParam.getY() - 4) {
+            setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
+        } else if (y > TerrainChunck.chunkParam.getY() - 30) {
+            if (b < 0.2) {
+                setTerrainVal(x, y, PixelBlockType.DIRT.getMyVal());
+            } else {
+                setTerrainVal(x, y, PixelBlockType.STONE.getMyVal());
+            }
+        } else if (y > TerrainChunck.chunkParam.getY() - 34) {
+            setTerrainVal(x, y, PixelBlockType.BRICK2.getMyVal());
+        } else {
+            setTerrainVal(x, y, PixelBlockType.NOTHING.getMyVal());
         }
     }
 
@@ -230,10 +269,12 @@ class TerrainChunck {
     private byte terrain[][];
     public Canvas myCanvas;
     public boolean addedToRoot = false;
+    private GraphicsContext gc;
 
     public TerrainChunck() {
         terrain = new byte[(int) chunkParam.getX()][(int) chunkParam.getY()];
         myCanvas = new Canvas((int) chunkParam.getX() * 4 + 1, (int) chunkParam.getY() * 4);
+        gc = myCanvas.getGraphicsContext2D();
     }
 
     public void setVal(int x, int y, byte val) {
@@ -250,12 +291,20 @@ class TerrainChunck {
     }
 
     private void drawVal(int x, int y, byte val) {
-        GraphicsContext gc = myCanvas.getGraphicsContext2D();
-        gc.setFill(getTerrainColor(val));
-        if (x < (int) chunkParam.getX() - 5) {
-            gc.fillRect(x, y, 4, 4);
+        if (val != 0) {
+            gc.setFill(getTerrainColor(val));
+            if (x < (int) chunkParam.getX() * 4 - 5) {
+                gc.fillRect(x, y, 4, 4);
+            } else {
+                gc.fillRect(x, y, 5, 4);
+            }
         } else {
-            gc.fillRect(x, y, 5, 4);
+            if (x < (int) chunkParam.getX() * 4 - 5) {
+                gc.clearRect(x + 1, y + 1, 3, 3);
+            } else {
+                gc.clearRect(x + 1, y + 1, 4, 3);
+            }
+
         }
     }
 
@@ -288,8 +337,10 @@ class TerrainChunck {
             c = new javafx.scene.paint.Color(0.5, 0, 0.5, 1);
         } else if (a == PixelBlockType.UNDEFINED3.getMyVal()) {
             c = new javafx.scene.paint.Color(1, 0, 0, 1);
+        }else if(a== PixelBlockType.SPIKES.getMyVal()){
+            c= new Color(Math.random()*0.4+0.6,Math.random()*0.5,Math.random()*0.5,1);
         } else {
-            c = Color.BLUE;
+            c = new Color(1, 1, 1, 0);
         }
         if (aR < 0) {
             c = c.desaturate().darker();

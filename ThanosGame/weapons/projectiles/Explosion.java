@@ -1,8 +1,8 @@
-package ThanosGame.weapons;
+package ThanosGame.weapons.projectiles;
 
 import ThanosGame.Main;
-import ThanosGame.Personnage;
 import ThanosGame.World;
+import ThanosGame.enemies.Personnage;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 

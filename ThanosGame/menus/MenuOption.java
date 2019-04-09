@@ -132,6 +132,7 @@ public class MenuOption extends JFrame implements ActionListener {
         son.setFont(f);
 
         option.add(volume);
+        volume.setValue(100);
         volume.setVisible(false);
         volume.setBounds(950, 205, 225, 50);
         volume.setMinimum(0);volume.setMaximum(100);
@@ -268,7 +269,7 @@ public class MenuOption extends JFrame implements ActionListener {
             if (easy.isSelected()) {
                 Keyboard.difficulty = 1;
             }
-            if (easy.isSelected()) {
+            if (normal.isSelected()) {
                 Keyboard.difficulty = 2;
             }
             if (hard.isSelected()) {
@@ -287,7 +288,7 @@ public class MenuOption extends JFrame implements ActionListener {
             hard.setSelected(true);
             qwerty.setSelected(true);
             space.setSelected(true);
-            volume.setValue(10);
+            volume.setValue(100);
 
         }
 

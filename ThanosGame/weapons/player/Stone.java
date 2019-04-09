@@ -1,11 +1,11 @@
 package ThanosGame.weapons.player;
 
 import ThanosGame.Main;
-import ThanosGame.Personnage;
 import ThanosGame.Thanos;
 import ThanosGame.World;
+import ThanosGame.enemies.Personnage;
 import ThanosGame.terrain.TerrainMap;
-import ThanosGame.weapons.FXEffect;
+import ThanosGame.weapons.projectiles.FXEffect;
 import javafx.geometry.Point2D;
 import resources.AudioSaves;
 
@@ -68,9 +68,7 @@ public class Stone {
         }
     }
     protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
-        AudioSaves.shieldSound.play();
-        currentWorld.thanos.myShield += myPower*10;
-        return 1;
+        return 0;
     }
 
     protected int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
@@ -79,11 +77,11 @@ public class Stone {
 
         hitDistance = hitDistance.normalize().multiply(owner.mySize.getX());
         destination = hitDistance.add(currentWorld.thanos.myPosition);
-        LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 20);
+        LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 15);
 
         doDamage(currentWorld,destination,pointsToChange);
         doChanges(pointsToChange, (byte) 0, currentTerrain);
-        currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(40,40),10,currentTerrain));
+        currentWorld.worldExplosions.add(new FXEffect(destination,new Point2D(20,20),10,currentTerrain));
         AudioSaves.punchSound.play();
         return 1;
     }
@@ -124,6 +122,10 @@ public class Stone {
             }
         }
         return res.toArray(new Point2D[0]);
+    }
+
+    public int myType(){
+        return stoneType;
     }
 
     public String toString() {

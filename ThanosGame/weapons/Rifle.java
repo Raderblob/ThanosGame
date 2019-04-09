@@ -1,13 +1,14 @@
 package ThanosGame.weapons;
 
-import ThanosGame.Personnage;
+import ThanosGame.enemies.Personnage;
+import ThanosGame.weapons.projectiles.Projectile;
 import javafx.geometry.Point2D;
 import resources.AudioSaves;
 
 import java.util.LinkedList;
 
 public class Rifle extends Weapon {
-    public Rifle(LinkedList<Projectile> worldProjectiles, Personnage owner, int damage) {
+    public Rifle(LinkedList<Projectile> worldProjectiles, Personnage owner, double damage) {
         super(worldProjectiles, owner, damage, 5, 1500);
     }
 

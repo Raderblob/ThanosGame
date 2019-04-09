@@ -3,10 +3,6 @@ package ThanosGame;
 import ThanosGame.graphics.GraphicalUserInterface;
 import ThanosGame.menus.MenuInventaire;
 import ThanosGame.menus.MenuPrincipal;
-import ThanosGame.weapons.player.MindStone;
-import ThanosGame.weapons.player.PowerStone;
-import ThanosGame.weapons.player.RealityStone;
-import ThanosGame.weapons.player.SpaceStone;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.geometry.Point2D;
@@ -18,34 +14,39 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import resources.AudioSaves;
 import resources.ImagesSaves;
+
+import java.awt.*;
 
 
 public class Game extends Application {
     private Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
+    public double windowScale = 1; //a window scale parameter
+    public int unlockedWorld = 1; //You start off with level 1 world unlocked
     private World gameWorld;
     private int selectedWorld;
     private long lastLength;
     private Group root;
     private boolean playing;
-    private int toShow =0;
+    private int toShow = 0;
     private Stage stage;
     private Scene scene;
     private GraphicalUserInterface gui;
     private MenuInventaire inventaire;
     private boolean leftPressed = false;
     private boolean rightPressed = false;
+    private Canvas backgroundImage;
 
     @Override
     public void start(Stage stage) {
 
         try {
-            this.stage=stage;
+            this.stage = stage;
             ImagesSaves.loadImages();
-            AudioSaves.loadMusic();
             System.out.println("Loading Game...");
             loadGame();
             inventaire = new MenuInventaire(thanos);
@@ -55,11 +56,11 @@ public class Game extends Application {
             e.printStackTrace();
         }
 
-        AudioSaves.mainMusic.loop();
+        AudioSaves.mainMusic.loop(); // starts the music
 
     }
 
-    private void loadEvents(){
+    private void loadEvents() {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, key -> {
             if (key.getCode() == KeyCode.ESCAPE) {
                 hideGame();
@@ -70,17 +71,15 @@ public class Game extends Application {
                 rightPressed = true;
             } else if (key.getCode() == Keyboard.jump) {
                 thanos.jump();
-            } else if (key.getCode() == Keyboard.down) {
-                //PEUT SERVIR...
-            }else if(key.getCode() == KeyCode.DIGIT1){
+            } else if (key.getCode() == KeyCode.DIGIT1) {
                 thanos.infinity.selectStone(0);
-            }else if(key.getCode()==KeyCode.DIGIT2){
+            } else if (key.getCode() == KeyCode.DIGIT2) {
                 thanos.infinity.selectStone(1);
-            }else if(key.getCode()==KeyCode.DIGIT3){
+            } else if (key.getCode() == KeyCode.DIGIT3) {
                 thanos.infinity.selectStone(2);
-            }else if(key.getCode()==KeyCode.DIGIT4){
+            } else if (key.getCode() == KeyCode.DIGIT4) {
                 thanos.infinity.selectStone(3);
-            }else if (key.getCode()== KeyCode.I && selectedWorld==0){
+            } else if (key.getCode() == KeyCode.I && selectedWorld == 0) {
                 inventaire.setVisible(true);
                 inventaire.update();
             }
@@ -90,113 +89,131 @@ public class Game extends Application {
             if (key.getCode() == Keyboard.left) {
                 leftPressed = false;
             } else if (key.getCode() == Keyboard.right) {
-                rightPressed= false;
+                rightPressed = false;
             }
         });
         scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouse -> {
+            Point2D realMouse = new Point2D(mouse.getSceneX(), mouse.getSceneY()).multiply(1 / windowScale);
             if (mouse.isPrimaryButtonDown()) {
-                thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
+                thanos.fireAt(realMouse.getX(), realMouse.getY());
             } else {
-                thanos.secondary=true;
-                thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
+                thanos.overrideSecondary(realMouse);
             }
 
         });
-        scene.addEventHandler(ScrollEvent.SCROLL,mouse->{
-            if(mouse.getDeltaY()<0){
+        scene.addEventHandler(MouseEvent.MOUSE_RELEASED, mouse -> {
+            thanos.desactivateSecondary();
+        });
+        scene.addEventHandler(ScrollEvent.SCROLL, mouse -> {
+            if (mouse.getDeltaY() < 0) {
                 thanos.infinity.selectNextStone();
-            }else{
+            } else {
                 thanos.infinity.selectPreviousStone();
             }
         });
-        scene.addEventHandler(MouseEvent.MOUSE_DRAGGED,mouse->{
-            if(!mouse.isPrimaryButtonDown()){
-                thanos.secondary=true;
-                thanos.fireAt(mouse.getSceneX(), mouse.getSceneY());
+        scene.addEventHandler(MouseEvent.MOUSE_DRAGGED, mouse -> {
+            Point2D realMouse = new Point2D(mouse.getSceneX(), mouse.getSceneY()).multiply(1 / windowScale);
+            if (!mouse.isPrimaryButtonDown()) {
+                thanos.overrideSecondary(realMouse);
             }
         });
     }
 
-    private void loadGame(){
+    private void loadGame() {
         root = new Group();
-        scene = new Scene(root, winParam.getX(), winParam.getY());
+        windowScale=Math.min((Toolkit.getDefaultToolkit().getScreenSize().height-100)/winParam.getY(),(Toolkit.getDefaultToolkit().getScreenSize().width-100)/winParam.getX());
+        Scale tScale = new Scale(windowScale, windowScale);//autoscale to screen size
+        root.getTransforms().add(tScale);
+        scene = new Scene(root, winParam.getX() * windowScale, winParam.getY() * windowScale);
         stage.setTitle("ThanosGame.Thanos rules the world");
         stage.setScene(scene);
 
         Canvas canvas = new Canvas(winParam.getX(), winParam.getY());
         root.getChildren().add(canvas);
         GraphicsContext gc = canvas.getGraphicsContext2D();
+        backgroundImage = new Canvas(winParam.getX() * 2, winParam.getY());
+        root.getChildren().add(backgroundImage);
 
         thanos = new Thanos(100);
-        thanos.addStone(new RealityStone(thanos));
-        thanos.addStone(new SpaceStone(thanos));
-        thanos.addStone(new PowerStone(thanos));
-        thanos.addStone(new MindStone(thanos));
+
 
         gui = new GraphicalUserInterface(thanos);
 
-
-        switchWorlds(1);
+        switchWorlds(0);
 
         new AnimationTimer() {
-            public void handle(long currentNanoTime) {
+            public void handle(long currentNanoTime) {//this is the main game loop
                 if (playing) {
                     gameLoop(gc);
                 }
-                if(toShow ==1){
+                if (toShow == 1) {
                     stage.show();
-                    toShow=0;
-                }else if(toShow ==-1){
-                    toShow=0;
+                    toShow = 0;
+                } else if (toShow == -1) {
+                    toShow = 0;
+                    // stage.hide();
                 }
             }
         }.start();
-        //Displaying the contents of the stage
-        stage.setResizable(false);
+
+        stage.setResizable(false);//Make sure they don't change something they should not
     }
 
     public void gameLoop(GraphicsContext gc) { //the game loop
         long lastTime = System.nanoTime();
-        if(leftPressed){
+        if (leftPressed) {//Player basic control
             thanos.movingState = -1;
-        }else if(rightPressed){
+        } else if (rightPressed) {
             thanos.movingState = 1;
-        }else{
+        } else {
             thanos.movingState = 0;
         }
 
         gameWorld.runWorld(Math.min(lastLength * 0.0000001, 3));//run logic for the selected world
 
-        gc.clearRect(0, 0, 1000, 1000);//clear the game screen
+        gc.clearRect(0, 0, winParam.getX()*4, winParam.getY()*4);//clear the game screen
 
 
         gameWorld.renderWorld(gc, root);//render the selected world
         gui.draw(gc);
+        renderBackground();
 
         lastLength = ((System.nanoTime() - lastTime));
-        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
+        // System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
         do {
             lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
         } while (lastLength < 10000000);
 
     }
 
-    public void switchWorlds(int newWorld){
-        if(gameWorld != null){
+    private void renderBackground() {//render the slow moving background at 20%speed
+        backgroundImage.toBack();
+        GraphicsContext gcb = backgroundImage.getGraphicsContext2D();
+        double backgroundOffset;
+        backgroundOffset = -(thanos.getCameraPosition().getX() * 0.2) % backgroundImage.getWidth();
+
+        gcb.drawImage(gameWorld.myBackground, backgroundOffset, 0, backgroundImage.getWidth(), backgroundImage.getHeight());
+        gcb.drawImage(gameWorld.myBackground, backgroundImage.getWidth() + backgroundOffset, 0, backgroundImage.getWidth(), backgroundImage.getHeight());
+    }
+
+    public void switchWorlds(int newWorld) {//disposes of old world and loads new one
+        if (gameWorld != null) {
             gameWorld.dispose(root);
         }
 
         selectedWorld = newWorld;
-        gameWorld = new World(selectedWorld,thanos,this);
-        thanos.myPosition =gameWorld.getStarterPos();
+        gameWorld = new World(selectedWorld, thanos, this);
+        thanos.myPosition = gameWorld.getStarterPos();
     }
 
-    public void showGame(){
-        playing=true;
-        toShow=1;
+    public void showGame() {
+        playing = true;
+        toShow = 1;
     }
-    public void hideGame(){
-        playing=false;
+
+    public void hideGame() {
+        playing = false;
+        toShow = -1;
     }
 
     @Override

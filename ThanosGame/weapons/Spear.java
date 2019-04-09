@@ -1,12 +1,13 @@
 package ThanosGame.weapons;
 
-import ThanosGame.Personnage;
+import ThanosGame.enemies.Personnage;
+import ThanosGame.weapons.projectiles.Projectile;
 import javafx.geometry.Point2D;
 
 import java.util.LinkedList;
 
 public class Spear extends Weapon {
-    public Spear(LinkedList<Projectile> worldProjectiles, Personnage owner, int damage) {
+    public Spear(LinkedList<Projectile> worldProjectiles, Personnage owner, double damage) {
         super(worldProjectiles, owner, damage, 5, 500);
     }
 
