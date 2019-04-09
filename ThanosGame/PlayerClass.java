@@ -24,6 +24,7 @@ public class PlayerClass {
     protected int obsClear;
     protected int recoverTime;
     protected long lastHit;
+    public int prixVie = 5;
 
     public PlayerClass() {
         recoverTime = 0;
@@ -50,7 +51,7 @@ public class PlayerClass {
         }
     }
 
-    public void addHp(int amount) {//adds required hp
+    public void addHp(double amount) {//adds required hp
         if (PV + amount >= maxPv) {//could be simpler with math.min
             PV = maxPv;
         } else {
@@ -218,6 +219,21 @@ public class PlayerClass {
 
     public double getMaxPv() {
         return maxPv;
+    }
+
+    public void setPv(double a) {
+        this.maxPv = a;
+        this.PV = a;
+    }
+
+    public void niveauVie(){
+        if(prixVie<=25 && prixVie>0){
+            this.setPv(maxPv*2);
+            prixVie=prixVie*5;
+        }else if (prixVie==125) {
+            prixVie = 0;
+            this.setPv(maxPv*2);
+        }
     }
 
     public boolean pointOnScreen(Point2D p) {

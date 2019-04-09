@@ -10,6 +10,8 @@ import resources.AudioSaves;
 import resources.ImagesSaves;
 
 public class Thanos extends PlayerClass{
+    public int unlockedWorld = 10; //You start off with level 1 world unlocked
+    public boolean finishedGame=false;
     public Gant infinity ;
     private AnimatedImage animatedShield;
     private boolean secondaryActive;

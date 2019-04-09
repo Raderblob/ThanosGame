@@ -79,11 +79,15 @@ public class Gant {
         if(prixCooldown[n]<=25 && prixCooldown[n]>0){
             prixCooldown[n]=(prixCooldown[n]*5);
             stones[n].coolDown =  stones[n].coolDown/2;
-            stones[n].secondaryCoolDown =  stones[n].secondaryCoolDown/2;
+            if(stones[n].secondaryCoolDown!=1) {
+                stones[n].secondaryCoolDown = stones[n].secondaryCoolDown / 2;
+            }
         }else if (prixCooldown[n]==125){
             prixCooldown[n]= 0;
             stones[n].coolDown =  stones[n].coolDown/2;
-            stones[n].secondaryCoolDown =  stones[n].secondaryCoolDown/2;
+            if(stones[n].secondaryCoolDown!=1) {
+                stones[n].secondaryCoolDown = stones[n].secondaryCoolDown / 2;
+            }
         }
     }
     public void niveauPuissance(int n){

@@ -15,6 +15,7 @@ public class AudioSaves {
     public final static SoundEffect shieldSound = new SoundEffect("shieldSound.wav");
     public final static SoundEffect powerUpSound = new SoundEffect("powerUpSound.wav");
     public final static SoundEffect healSound = new SoundEffect("healSound.wav");
-
+    public final static SoundEffect thunderSound = new SoundEffect("thunderSound.wav");
+    public final static SoundEffect thorSound = new SoundEffect("thorSound.wav");
 
 }
