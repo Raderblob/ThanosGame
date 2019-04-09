@@ -228,11 +228,11 @@ public class PlayerClass {
 
     public void niveauVie(){
         if(prixVie<=25 && prixVie>0){
-            this.setPv(PV*2);
+            this.setPv(maxPv*2);
             prixVie=prixVie*5;
         }else if (prixVie==125) {
             prixVie = 0;
-            this.setPv(PV*2);
+            this.setPv(maxPv*2);
         }
     }
 
