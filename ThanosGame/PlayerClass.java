@@ -50,7 +50,7 @@ public class PlayerClass {
         }
     }
 
-    public void addHp(int amount) {//adds required hp
+    public void addHp(double amount) {//adds required hp
         if (PV + amount >= maxPv) {//could be simpler with math.min
             PV = maxPv;
         } else {

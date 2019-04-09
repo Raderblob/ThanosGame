@@ -18,7 +18,7 @@ public class Teleporter extends Item {
 
     public void checkForTeleport(Thanos player,int currentUnlock){
         if(isInRectangle(player.myPosition,player.mySize)){
-            game.unlockedWorld = Math.max(game.unlockedWorld,currentUnlock+1);
+            player.unlockedWorld = Math.max(player.unlockedWorld,currentUnlock+1);
             AudioSaves.teleportSound.play();
             game.switchWorlds(teleportTo);
         }

@@ -16,17 +16,16 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
-import resources.AudioSaves;
 import resources.ImagesSaves;
 
 import java.awt.*;
 
 
 public class Game extends Application {
+    public AudioManager myAudio = new AudioManager();
     private Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
     public double windowScale = 1; //a window scale parameter
-    public int unlockedWorld = 1; //You start off with level 1 world unlocked
     private World gameWorld;
     private int selectedWorld;
     private long lastLength;
@@ -40,6 +39,7 @@ public class Game extends Application {
     private boolean leftPressed = false;
     private boolean rightPressed = false;
     private Canvas backgroundImage;
+    private long lastTime = System.nanoTime();
 
     @Override
     public void start(Stage stage) {
@@ -56,8 +56,7 @@ public class Game extends Application {
             e.printStackTrace();
         }
 
-        AudioSaves.mainMusic.loop(); // starts the music
-
+        myAudio.restartAll();//run Music
     }
 
     private void loadEvents() {
@@ -160,30 +159,31 @@ public class Game extends Application {
     }
 
     public void gameLoop(GraphicsContext gc) { //the game loop
-        long lastTime = System.nanoTime();
-        if (leftPressed) {//Player basic control
-            thanos.movingState = -1;
-        } else if (rightPressed) {
-            thanos.movingState = 1;
-        } else {
-            thanos.movingState = 0;
+        lastLength=System.nanoTime()-lastTime;
+        if ( lastLength> 10000000) {
+          //  System.out.println("Fps :" + 1 / (lastLength * 0.000000001));//showfps
+
+            if (leftPressed) {//Player basic control
+                thanos.movingState = -1;
+            } else if (rightPressed) {
+                thanos.movingState = 1;
+            } else {
+                thanos.movingState = 0;
+            }
+
+            gameWorld.runWorld(Math.min(lastLength * 0.000000065, 3));//run logic for the selected world
+
+            gc.clearRect(0, 0, winParam.getX() * 4, winParam.getY() * 4);//clear the game screen
+
+
+            gameWorld.renderWorld(gc, root);//render the selected world
+            gui.draw(gc, selectedWorld);
+            renderBackground();
+
+
+            myAudio.runMusic();
+            lastTime=System.nanoTime();
         }
-
-        gameWorld.runWorld(Math.min(lastLength * 0.0000001, 3));//run logic for the selected world
-
-        gc.clearRect(0, 0, winParam.getX() * 4, winParam.getY() * 4);//clear the game screen
-
-
-        gameWorld.renderWorld(gc, root);//render the selected world
-        gui.draw(gc,selectedWorld);
-        renderBackground();
-
-        lastLength = ((System.nanoTime() - lastTime));
-        // System.out.println("Fps :" + 1 / (lastLength * 0.000000001));
-        do {
-            lastLength = ((System.nanoTime() - lastTime));//do fps and capping calculations
-        } while (lastLength < 10000000);
-
     }
 
     private void renderBackground() {//render the slow moving background at 20%speed

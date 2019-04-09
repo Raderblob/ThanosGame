@@ -24,8 +24,8 @@ public class MindStone extends SpaceStone {
     protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
         for(Personnage enemy:currentWorld.enemies){
             if(Main.getMagnitudeSquared(enemy.myPosition.add(destroyAt.multiply(-1)))<Math.pow(enemy.mySize.getX()*2,2)+Math.pow(enemy.mySize.getY()*2,2)){
-                enemy.stunMe(myPower);
-                currentWorld.worldExplosions.add(new FXEffect(enemy.myPosition,new Point2D(40,40),myPower/100,currentTerrain));
+                enemy.stunMe((int)(myPower*0.5));
+                currentWorld.worldExplosions.add(new FXEffect(enemy.myPosition,new Point2D(40,40),20,currentTerrain));
                 AudioSaves.mindSound.play();
                 return 1;
             }
@@ -37,7 +37,7 @@ public class MindStone extends SpaceStone {
         Point2D destination = getDestination(destroyAt,currentWorld,currentTerrain);
 
         if(terrainClear(currentWorld.thanos,currentTerrain,destination)){
-            currentWorld.worldExplosions.add(new DistractionFX(destination,new Point2D(10,10),myPower*0.3,currentTerrain));
+            currentWorld.worldExplosions.add(new DistractionFX(destination,new Point2D(10,10),myPower*2,currentTerrain));
             AudioSaves.mindSound.play();
             return 1;
         }

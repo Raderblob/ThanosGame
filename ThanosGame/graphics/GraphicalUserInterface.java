@@ -20,7 +20,7 @@ public class GraphicalUserInterface {
     }
 
     public void addTutorial(String msg, Point2D messagePosition, int worldType) {
-        PopupText nMsg = new PopupText(msg, messagePosition, 10000, messagePosition, worldType);
+        PopupText nMsg = new PopupText(msg, messagePosition, 20000, messagePosition, worldType);
         if(!tutorialMessages.contains(nMsg)){
             tutorialMessages.add(nMsg);
         }

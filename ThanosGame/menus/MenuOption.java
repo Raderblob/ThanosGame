@@ -1,7 +1,6 @@
 package ThanosGame.menus;
 
 import ThanosGame.Keyboard;
-import resources.AudioSaves;
 import resources.ImagesSaves;
 
 import javax.swing.*;
@@ -278,8 +277,7 @@ public class MenuOption extends JFrame implements ActionListener {
             }
 
             Keyboard.gameVolume = volume.getValue() / 100d;
-            AudioSaves.mainMusic.stop();
-            AudioSaves.mainMusic.loop();
+            myMenu.game.myAudio.restartAll();
             myMenu.setVisible(true);
             this.setVisible(false);
         }
