@@ -11,13 +11,13 @@ import java.util.LinkedList;
 public class StoneItem extends Item {
     public int typePierre;
 
-    public StoneItem(Point2D position, Point2D Size, int type){
-        super(position, Size, ImagesSaves.stoneSprite, new Point2D(20,20),1000);
+    public StoneItem(Point2D position, Point2D Size, int type) {
+        super(position, Size, ImagesSaves.stoneSprite, new Point2D(20, 20), 1000);
         typePierre = type;
         mylife = 1;
     }
 
-    public void runLogic(World myWorld){
+    public void runLogic(World myWorld) {
         if (isInRectangle(myWorld.thanos.myPosition, myWorld.thanos.mySize)) {
             mylife = 0;
             AudioSaves.powerUpSound.play();
@@ -38,8 +38,8 @@ public class StoneItem extends Item {
         }
     }
 
-    public static void addStone(Point2D pos, int type, LinkedList<StoneItem> stones,Gant infinity){
-        if(!infinity.hasStone(type)){
+    public static void addStone(Point2D pos, int type, LinkedList<StoneItem> stones, Gant infinity) {
+        if (!infinity.hasStone(type)) {
             stones.add(new StoneItem(pos, new Point2D(5, 5), type));
         }
     }

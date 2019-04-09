@@ -121,11 +121,11 @@ public class Game extends Application {
 
     private void loadGame() {
         root = new Group();
-        windowScale=Math.min((Toolkit.getDefaultToolkit().getScreenSize().height-100)/winParam.getY(),(Toolkit.getDefaultToolkit().getScreenSize().width-100)/winParam.getX());
+        windowScale = Math.min((Toolkit.getDefaultToolkit().getScreenSize().height - 100) / winParam.getY(), (Toolkit.getDefaultToolkit().getScreenSize().width - 100) / winParam.getX());
         Scale tScale = new Scale(windowScale, windowScale);//autoscale to screen size
         root.getTransforms().add(tScale);
         scene = new Scene(root, winParam.getX() * windowScale, winParam.getY() * windowScale);
-        stage.setTitle("ThanosGame.Thanos rules the world");
+        stage.setTitle("ThanosGame.Thanos rules the world v1.2");
         stage.setScene(scene);
 
         Canvas canvas = new Canvas(winParam.getX(), winParam.getY());
@@ -171,11 +171,11 @@ public class Game extends Application {
 
         gameWorld.runWorld(Math.min(lastLength * 0.0000001, 3));//run logic for the selected world
 
-        gc.clearRect(0, 0, winParam.getX()*4, winParam.getY()*4);//clear the game screen
+        gc.clearRect(0, 0, winParam.getX() * 4, winParam.getY() * 4);//clear the game screen
 
 
         gameWorld.renderWorld(gc, root);//render the selected world
-        gui.draw(gc);
+        gui.draw(gc,selectedWorld);
         renderBackground();
 
         lastLength = ((System.nanoTime() - lastTime));

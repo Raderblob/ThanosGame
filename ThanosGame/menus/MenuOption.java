@@ -135,7 +135,8 @@ public class MenuOption extends JFrame implements ActionListener {
         volume.setValue(100);
         volume.setVisible(false);
         volume.setBounds(950, 205, 225, 50);
-        volume.setMinimum(0);volume.setMaximum(100);
+        volume.setMinimum(0);
+        volume.setMaximum(100);
         /*volume.setBorderPainted(false); 	volume.setContentAreaFilled(false);	volume.setFocusPainted(false);*/
 
 
@@ -276,7 +277,7 @@ public class MenuOption extends JFrame implements ActionListener {
                 Keyboard.difficulty = 10;
             }
 
-            Keyboard.gameVolume = volume.getValue()/100d;
+            Keyboard.gameVolume = volume.getValue() / 100d;
             AudioSaves.mainMusic.stop();
             AudioSaves.mainMusic.loop();
             myMenu.setVisible(true);

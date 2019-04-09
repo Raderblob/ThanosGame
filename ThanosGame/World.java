@@ -48,8 +48,8 @@ public class World {
                 myBackground = ImagesSaves.desertBackground; //sets background
                 starterPos = new Point2D(50, 50); //Position where the player spawns
                 myDifficulty = 0.5; //difficulty of this world
-                unlockLevel =1; //unlock level required for this world
-                terrain = new TerrainMap(6000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY); //generate terrain with random enemies
+                unlockLevel = 1; //unlock level required for this world
+                terrain = new TerrainMap(6000, true, this, enemies, TerrainMap.TerrainVType.COUNTRY); //generate terrain with random enemies
                 new LargeBase(BuildingSaves.SpidermanBase, new Point2D(5000, 0)).changeTerrain(terrain);
 
 
@@ -59,19 +59,17 @@ public class World {
                 StoneItem.addStone(new Point2D(5000, 40), 1, worldStoneItem, thanos.infinity);
 
 
-
-
                 //StoneItem.addStone(new Point2D(50, 40), 0, worldStoneItem, thanos.infinity);
-               // StoneItem.addStone(new Point2D(60, 40), 1, worldStoneItem, thanos.infinity);
-               // StoneItem.addStone(new Point2D(70, 40), 2, worldStoneItem, thanos.infinity);
-               // StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones
+                // StoneItem.addStone(new Point2D(60, 40), 1, worldStoneItem, thanos.infinity);
+                // StoneItem.addStone(new Point2D(70, 40), 2, worldStoneItem, thanos.infinity);
+                // StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones
                 break;
             case 2://generates second world
                 myBackground = ImagesSaves.desertBackground;
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 1;
                 unlockLevel = 2;
-                terrain = new TerrainMap(11000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY);
+                terrain = new TerrainMap(11000, true, this, enemies, TerrainMap.TerrainVType.COUNTRY);
                 new LargeBase(BuildingSaves.captainBase, new Point2D(10000, 40)).changeTerrain(terrain);
 
                 StoneItem.addStone(new Point2D(150, 40), 2, worldStoneItem, thanos.infinity);
@@ -82,7 +80,7 @@ public class World {
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 2;
                 unlockLevel = 3;
-                terrain = new TerrainMap(50000, true, this, enemies,TerrainMap.TerrainVType.CITY);
+                terrain = new TerrainMap(50000, true, this, enemies, TerrainMap.TerrainVType.CITY);
                 new LargeBase(BuildingSaves.ironManBase, new Point2D(7500, 0)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.captainBase, new Point2D(5000, 40)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.thorBase, new Point2D(10000, 0)).changeTerrain(terrain);
@@ -91,10 +89,10 @@ public class World {
                 myBackground = ImagesSaves.spaceBackground;
                 starterPos = new Point2D(720, 320);
                 unlockLevel = 0;
-                terrain = new TerrainMap(2000, false, this, enemies,TerrainMap.TerrainVType.CITY);
+                terrain = new TerrainMap(2000, false, this, enemies, TerrainMap.TerrainVType.CITY);
                 new LargeBase(BuildingSaves.thanosBase, new Point2D(0, 0)).changeTerrain(terrain);//generate home base
-                for(int i=1;i<=Math.min(myGame.unlockedWorld,3);i++){
-                    teleporters.add(new Teleporter(new Point2D(300 + 300*i, 190), i, myGame)); // add the teleporters
+                for (int i = 1; i <= Math.min(myGame.unlockedWorld, 3); i++) {
+                    teleporters.add(new Teleporter(new Point2D(300 + 300 * i, 190), i, myGame)); // add the teleporters
                 }
 
                 break;
@@ -181,7 +179,7 @@ public class World {
 
         //run collision for teleporters
         for (Teleporter teleporter : teleporters) {
-            teleporter.checkForTeleport(thanos,unlockLevel);
+            teleporter.checkForTeleport(thanos, unlockLevel);
         }
         //test for temp teleport
         if (thanos.myPosition.getX() < 20) {
