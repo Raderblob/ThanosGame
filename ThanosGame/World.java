@@ -56,9 +56,9 @@ public class World {
                 enemies.add(Personnage.getEnemy(new Point2D(500, 50), terrain, this));//generate first hurdle for player
 
                 StoneItem.addStone(new Point2D(600, 40), 0, worldStoneItem, thanos.infinity);//create stone items
-                myGame.gui.addTutorial("You should get this stone to make it easier",new Point2D(600,40),1);
+                myGame.gui.addTutorial("You should get this stone to make it easier\nYou can select the stone use want to use with numbers or scroll the mouse\nThe two skills for this one are punch(leftClick) and meteor(rightClick)",new Point2D(600,40),1);
                 StoneItem.addStone(new Point2D(5000, 40), 1, worldStoneItem, thanos.infinity);
-                myGame.gui.addTutorial("The second Stone is here! Don't forget it",new Point2D(5000,40),1);
+                myGame.gui.addTutorial("The second Stone is here! Don't forget it\nThis stone will allow you to shield yourself with left click and place damaging bricks with right click",new Point2D(5000,40),1);
 
 
                 //StoneItem.addStone(new Point2D(50, 40), 0, worldStoneItem, thanos.infinity);
@@ -75,7 +75,9 @@ public class World {
                 new LargeBase(BuildingSaves.captainBase, new Point2D(10000, 40)).changeTerrain(terrain);
 
                 StoneItem.addStone(new Point2D(150, 40), 2, worldStoneItem, thanos.infinity);
+                myGame.gui.addTutorial("Third stone you are supposed to collect\nThis one will allow you to teleport and spawn tnt, although the tnt will cost 1 soul",new Point2D(150,40),2);
                 StoneItem.addStone(new Point2D(10000, 40), 3, worldStoneItem, thanos.infinity);
+                myGame.gui.addTutorial("And the very last stone, Don't forget to upgrade them.\nThe final one will allow you to stun people and distract them",new Point2D(10000,40),2);
                 break;
             case 3:
                 myBackground = ImagesSaves.cityBackground;
