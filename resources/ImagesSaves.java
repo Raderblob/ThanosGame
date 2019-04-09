@@ -3,7 +3,7 @@ package resources;
 
 import javafx.scene.image.Image;
 
-public class ImagesSaves {
+public class ddImagesSaves {
     public static Image thanosSprites;
     public static Image teleporterSprite;
     public static Image shieldSprite;
