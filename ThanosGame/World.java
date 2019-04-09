@@ -1,6 +1,8 @@
 package ThanosGame;
 
+import ThanosGame.enemies.Boss;
 import ThanosGame.enemies.Personnage;
+import ThanosGame.enemies.Thor;
 import ThanosGame.terrain.LargeBase;
 import ThanosGame.terrain.Teleporter;
 import ThanosGame.terrain.TerrainMap;
@@ -27,6 +29,7 @@ public class World {
     public LinkedList<Projectile> worldProjectiles;
     public LinkedList<Heal> worldHeal;
     public LinkedList<StoneItem> worldStoneItem;
+    public Boss levelBoss;
 
     private Point2D starterPos;
     private int unlockLevel;
@@ -48,54 +51,74 @@ public class World {
                 myBackground = ImagesSaves.desertBackground; //sets background
                 starterPos = new Point2D(50, 50); //Position where the player spawns
                 myDifficulty = 0.5; //difficulty of this world
-                unlockLevel =1; //unlock level required for this world
-                terrain = new TerrainMap(6000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY); //generate terrain with random enemies
+                unlockLevel = 1; //unlock level required for this world
+                terrain = new TerrainMap(6000, true, this, enemies, TerrainMap.TerrainVType.COUNTRY); //generate terrain with random enemies
                 new LargeBase(BuildingSaves.SpidermanBase, new Point2D(5000, 0)).changeTerrain(terrain);
+
 
 
                 enemies.add(Personnage.getEnemy(new Point2D(500, 50), terrain, this));//generate first hurdle for player
 
                 StoneItem.addStone(new Point2D(600, 40), 0, worldStoneItem, thanos.infinity);//create stone items
+                myGame.gui.addTutorial("You should get this stone to make it easier\nYou can select the stone use want to use with numbers or scroll the mouse\nThe two skills for this one are punch(leftClick) and meteor(rightClick)",new Point2D(600,40),1);
                 StoneItem.addStone(new Point2D(5000, 40), 1, worldStoneItem, thanos.infinity);
-
-
+                myGame.gui.addTutorial("The second Stone is here! Don't forget it\nThis stone will allow you to shield yourself with left click and place damaging bricks with right click",new Point2D(5000,40),1);
 
 
                 //StoneItem.addStone(new Point2D(50, 40), 0, worldStoneItem, thanos.infinity);
-               // StoneItem.addStone(new Point2D(60, 40), 1, worldStoneItem, thanos.infinity);
-               // StoneItem.addStone(new Point2D(70, 40), 2, worldStoneItem, thanos.infinity);
-               // StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones
+                // StoneItem.addStone(new Point2D(60, 40), 1, worldStoneItem, thanos.infinity);
+                // StoneItem.addStone(new Point2D(70, 40), 2, worldStoneItem, thanos.infinity);
+                // StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones
                 break;
             case 2://generates second world
                 myBackground = ImagesSaves.desertBackground;
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 1;
                 unlockLevel = 2;
-                terrain = new TerrainMap(11000, true, this, enemies,TerrainMap.TerrainVType.COUNTRY);
+                terrain = new TerrainMap(11000, true, this, enemies, TerrainMap.TerrainVType.COUNTRY);
                 new LargeBase(BuildingSaves.captainBase, new Point2D(10000, 40)).changeTerrain(terrain);
 
                 StoneItem.addStone(new Point2D(150, 40), 2, worldStoneItem, thanos.infinity);
+                myGame.gui.addTutorial("Third stone you are supposed to collect\nThis one will allow you to teleport and spawn tnt, although the tnt will cost 1 soul",new Point2D(150,40),2);
                 StoneItem.addStone(new Point2D(10000, 40), 3, worldStoneItem, thanos.infinity);
+                myGame.gui.addTutorial("And the very last stone, Don't forget to upgrade them.\nThe final one will allow you to stun people and distract them",new Point2D(10000,40),2);
                 break;
             case 3:
                 myBackground = ImagesSaves.cityBackground;
                 starterPos = new Point2D(50, 50);
                 myDifficulty = 2;
                 unlockLevel = 3;
-                terrain = new TerrainMap(50000, true, this, enemies,TerrainMap.TerrainVType.CITY);
+                terrain = new TerrainMap(12000, true, this, enemies, TerrainMap.TerrainVType.CITY);
                 new LargeBase(BuildingSaves.ironManBase, new Point2D(7500, 0)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.captainBase, new Point2D(5000, 40)).changeTerrain(terrain);
                 new LargeBase(BuildingSaves.thorBase, new Point2D(10000, 0)).changeTerrain(terrain);
+                myGame.gui.addTutorial("I would prepare a lot before going in the next portal",new Point2D(11000,40),3);
+                break;
+            case 4: //boss level with thor
+                myBackground = ImagesSaves.cityBackground;
+                starterPos = new Point2D(50, 50);
+                myDifficulty = 3;
+                unlockLevel = 4;
+                terrain = new TerrainMap(6000, true, this, enemies, TerrainMap.TerrainVType.COUNTRY);
+
+                levelBoss = new Thor(new Point2D(400,50),terrain,this);//add the boss
+                enemies.add(levelBoss);
                 break;
             case 0://generate home base
+
                 myBackground = ImagesSaves.spaceBackground;
                 starterPos = new Point2D(720, 320);
                 unlockLevel = 0;
-                terrain = new TerrainMap(2000, false, this, enemies,TerrainMap.TerrainVType.CITY);
+                terrain = new TerrainMap(2000, false, this, enemies, TerrainMap.TerrainVType.CITY);
                 new LargeBase(BuildingSaves.thanosBase, new Point2D(0, 0)).changeTerrain(terrain);//generate home base
-                for(int i=1;i<=Math.min(myGame.unlockedWorld,3);i++){
-                    teleporters.add(new Teleporter(new Point2D(300 + 300*i, 190), i, myGame)); // add the teleporters
+                for (int i = 1; i <= Math.min(thanos.unlockedWorld, 4); i++) {
+                    teleporters.add(new Teleporter(new Point2D(300 + 300 * i, 190), i, myGame)); // add the teleporters
                 }
+
+                if(thanos.finishedGame){
+                    myGame.gui.addTutorial("Looks like you finished the game. well done",new Point2D(800,200),0);
+                }
+
 
                 break;
             default:
@@ -120,6 +143,9 @@ public class World {
             if (enemy.PV <= 0) {
                 ennToRemove.add(enemy);//add enemy to remove-list
             }
+        }
+        if(levelBoss !=null){ //run bosses
+           levelBoss.playSong(myGame.myAudio);
         }
 
         for (Projectile cProjectile : worldProjectiles) {
@@ -181,7 +207,7 @@ public class World {
 
         //run collision for teleporters
         for (Teleporter teleporter : teleporters) {
-            teleporter.checkForTeleport(thanos,unlockLevel);
+            teleporter.checkForTeleport(thanos, unlockLevel);
         }
         //test for temp teleport
         if (thanos.myPosition.getX() < 20) {
@@ -216,6 +242,9 @@ public class World {
 
     public void dispose(Group root) {
         terrain.removeCanvas(root);
+        if(levelBoss!=null){
+           levelBoss.stopSong(myGame.myAudio);
+        }
     }
 
     public Point2D getStarterPos() {

@@ -16,7 +16,7 @@ public class Personnage extends PlayerClass {
     private TerrainMap myTerrain;
     private final int TERRAINRANGE = 45;
     private final int SIGHTRANGE = 350;
-    private AiState myState;
+    protected AiState myState;
     private int patrolFlipper;
     private long timeKeeper;
     private long timeLapse;
@@ -86,7 +86,7 @@ public class Personnage extends PlayerClass {
     public void run(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
         if (myPosition.getX() > getCameraPosition().getX() - 500 && myPosition.getX() < getCameraPosition().getX() + Game.winParam.getX() + 1000) {
             if(dangerBlockPresent(currentTerrain)){
-                removeHp(Math.pow(1,-8)*currentNanoTime);
+                removeHp(Math.pow(1,-8)*currentNanoTime*0.5);
             }
 
             myTarget = player.myPosition;

@@ -20,7 +20,7 @@ public class RealityStone extends Stone {
         stoneType = 1;
         stoneName = "Reality Stone";
         myPower = 10;
-        coolDown = 10000;
+        coolDown = 15000;
         secondaryCoolDown = 1;
     }
 
