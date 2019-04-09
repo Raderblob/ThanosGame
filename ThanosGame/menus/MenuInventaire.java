@@ -346,8 +346,6 @@ public class MenuInventaire extends JFrame implements ActionListener {
             bJaune.setVisible(true);
             b2Jaune.setVisible(true);
         }
-
-        thanos.infinity.nbAme=500;
     }
 
     public void actionPerformed(ActionEvent e) {
