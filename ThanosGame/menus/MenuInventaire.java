@@ -346,7 +346,6 @@ public class MenuInventaire extends JFrame implements ActionListener {
             bJaune.setVisible(true);
             b2Jaune.setVisible(true);
         }
-        this.thanos.infinity.nbAme=500;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -394,7 +393,14 @@ public class MenuInventaire extends JFrame implements ActionListener {
         //Vie
         {
             if (e.getSource() == moreLife && thanos.infinity.nbAme>=thanos.prixVie) {
-                thanos.niveauVie();
+                thanos.infinity.nbAme = thanos.infinity.nbAme - thanos.prixVie;
+                if(thanos.prixVie<=25 && thanos.prixVie>0){
+                    thanos.setPv(thanos.getMaxPv()*2);
+                    thanos.prixVie=thanos.prixVie*5;
+                }else if (thanos.prixVie==125) {
+                    thanos.prixVie = 0;
+                    thanos.setPv(thanos.getMaxPv() * 2);
+                }
             }
 
         }

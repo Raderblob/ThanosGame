@@ -136,6 +136,8 @@ public class MenuPrincipal extends JFrame implements ActionListener {
                 fileIn.close();
                 ep.loadGame(game.thanos);
                 System.out.println("Loaded Game");
+                setVisible(false);
+                game.showGame();
             } catch (Exception el) {
                 System.out.println("Failed to load game");
             }
