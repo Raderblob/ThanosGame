@@ -1,6 +1,5 @@
 package ThanosGame.weapons.player;
 
-import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
 import ThanosGame.weapons.projectiles.FXEffect;
@@ -15,8 +14,8 @@ public class RealityStone extends Stone {
     private final int SOUNDTIME =400;
     private long lastTime;
 
-    public RealityStone(Thanos owner) {
-        super(owner);
+    public RealityStone() {
+        super();
         stoneType = 1;
         stoneName = "Reality Stone";
         myPower = 10;

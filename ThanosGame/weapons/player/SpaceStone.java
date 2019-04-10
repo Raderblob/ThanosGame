@@ -11,8 +11,8 @@ import resources.AudioSaves;
 
 public class SpaceStone extends Stone {
     private double range = 500;
-    public SpaceStone(Thanos owner) {
-        super(owner);
+    public SpaceStone() {
+        super();
         stoneType = 2;
         stoneName="Space Stone";
         coolDown = 5000;
@@ -49,11 +49,11 @@ public class SpaceStone extends Stone {
 
     @Override
     protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
-        if(owner.infinity.nbAme>0) {
+        if(currentWorld.thanos.infinity.nbAme>0) {
             Point2D destination = getDestination(destroyAt, currentWorld, currentTerrain);
 
             if (terrainClear(currentWorld.thanos, currentTerrain, destination)) {
-                owner.infinity.nbAme--;
+                currentWorld.thanos.infinity.nbAme--;
                 currentWorld.worldProjectiles.add(new Tnt(destination, myPower, 100));
                 AudioSaves.teleportSound.play();
                 return 1;

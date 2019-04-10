@@ -226,17 +226,7 @@ public class PlayerClass {
         this.PV = a;
     }
 
-    public void niveauVie(){
-        if(prixVie<=25 && prixVie>0){
-            this.setPv(maxPv*2);
-            prixVie=prixVie*5;
-        }else if (prixVie==125) {
-            prixVie = 0;
-            this.setPv(maxPv*2);
-        }
-    }
-
     public boolean pointOnScreen(Point2D p) {
-        return p.getX() > getCameraPosition().getX() && p.getY() < getCameraPosition().getX() + Game.winParam.getX();
+        return p.getX() > getCameraPosition().getX() && p.getX() < getCameraPosition().getX() + Game.winParam.getX();
     }
 }
