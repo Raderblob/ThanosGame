@@ -56,12 +56,14 @@ public class GraphicalUserInterface {
             tM.renderMe(gc, thanos.getCameraPosition().getX());
         }
         if(levelBoss!=null){
-            gc.setFill(Color.BLACK);
-            gc.fillRect(0, 30, (Game.winParam.getX()), 25);
-            gc.setFill(Color.RED);
-            gc.fillRect(0, 30, (Game.winParam.getX()) * levelBoss.getHp(), 25);
-            gc.setFill(Color.YELLOW);
-            gc.fillText("Boss",Game.winParam.getX()/2,42);
+            if(levelBoss.pointOnScreen(levelBoss.myPosition)) {
+                gc.setFill(Color.BLACK);
+                gc.fillRect(0, 30, (Game.winParam.getX()), 25);
+                gc.setFill(Color.RED);
+                gc.fillRect(0, 30, (Game.winParam.getX()) * levelBoss.getHp(), 25);
+                gc.setFill(Color.YELLOW);
+                gc.fillText("Boss", Game.winParam.getX() / 2, 42);
+            }
         }
 
         if(thanos.finishedGame){

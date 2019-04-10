@@ -102,10 +102,10 @@ public class World {
                 enemies.add(levelBoss);
 
 
-                StoneItem.addStone(new Point2D(50, 40), 0, worldStoneItem, thanos.infinity);
+          /*      StoneItem.addStone(new Point2D(50, 40), 0, worldStoneItem, thanos.infinity);
                 StoneItem.addStone(new Point2D(60, 40), 1, worldStoneItem, thanos.infinity);
                 StoneItem.addStone(new Point2D(70, 40), 2, worldStoneItem, thanos.infinity);
-                StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones
+                StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones*/
                 break;
             case 0://generate home base
 

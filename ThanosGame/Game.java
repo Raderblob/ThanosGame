@@ -127,7 +127,7 @@ public class Game extends Application {
         Scale tScale = new Scale(windowScale, windowScale);//autoscale to screen size
         root.getTransforms().add(tScale);
         scene = new Scene(root, winParam.getX() * windowScale, winParam.getY() * windowScale);
-        stage.setTitle("ThanosGame.Thanos rules the world v1.2");
+        stage.setTitle("ThanosGame.Thanos rules the world v2.0");
         stage.setScene(scene);
 
         Canvas canvas = new Canvas(winParam.getX(), winParam.getY());
