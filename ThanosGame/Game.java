@@ -19,11 +19,14 @@ import javafx.stage.Stage;
 import resources.ImagesSaves;
 
 import java.awt.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 
 public class Game extends Application {
     public AudioManager myAudio = new AudioManager();
-    private Thanos thanos;
+    public Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
     public double windowScale = 1; //a window scale parameter
     private World gameWorld;
@@ -124,7 +127,7 @@ public class Game extends Application {
         Scale tScale = new Scale(windowScale, windowScale);//autoscale to screen size
         root.getTransforms().add(tScale);
         scene = new Scene(root, winParam.getX() * windowScale, winParam.getY() * windowScale);
-        stage.setTitle("ThanosGame.Thanos rules the world v1.2");
+        stage.setTitle("ThanosGame.Thanos rules the world v2.0");
         stage.setScene(scene);
 
         Canvas canvas = new Canvas(winParam.getX(), winParam.getY());
@@ -161,7 +164,8 @@ public class Game extends Application {
     public void gameLoop(GraphicsContext gc) { //the game loop
         lastLength=System.nanoTime()-lastTime;
         if ( lastLength> 10000000) {
-          //  System.out.println("Fps :" + 1 / (lastLength * 0.000000001));//showfps
+            lastTime=System.nanoTime();
+            System.out.println("Fps :" + 1 / (lastLength * 0.000000001));//showfps
 
             if (leftPressed) {//Player basic control
                 thanos.movingState = -1;
@@ -177,12 +181,12 @@ public class Game extends Application {
 
 
             gameWorld.renderWorld(gc, root);//render the selected world
-            gui.draw(gc, selectedWorld);
+            gui.draw(gc, gameWorld.levelBoss,selectedWorld);
             renderBackground();
 
 
             myAudio.runMusic();
-            lastTime=System.nanoTime();
+
         }
     }
 
@@ -218,6 +222,17 @@ public class Game extends Application {
 
     @Override
     public void stop() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("SaveGame");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            SaveGame sv = new SaveGame(thanos);
+            out.writeObject(sv);
+            out.close();
+            fileOut.close();
+            System.out.println("Saved Game");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Stage is closing");
         System.exit(0);
     }

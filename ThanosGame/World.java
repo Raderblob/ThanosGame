@@ -65,10 +65,7 @@ public class World {
                 myGame.gui.addTutorial("The second Stone is here! Don't forget it\nThis stone will allow you to shield yourself with left click and place damaging bricks with right click",new Point2D(5000,40),1);
 
 
-                //StoneItem.addStone(new Point2D(50, 40), 0, worldStoneItem, thanos.infinity);
-                // StoneItem.addStone(new Point2D(60, 40), 1, worldStoneItem, thanos.infinity);
-                // StoneItem.addStone(new Point2D(70, 40), 2, worldStoneItem, thanos.infinity);
-                // StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones
+
                 break;
             case 2://generates second world
                 myBackground = ImagesSaves.desertBackground;
@@ -101,8 +98,14 @@ public class World {
                 unlockLevel = 4;
                 terrain = new TerrainMap(6000, true, this, enemies, TerrainMap.TerrainVType.COUNTRY);
 
-                levelBoss = new Thor(new Point2D(400,50),terrain,this);//add the boss
+                levelBoss = new Thor(new Point2D(1400,50),terrain,this);//add the boss
                 enemies.add(levelBoss);
+
+
+          /*      StoneItem.addStone(new Point2D(50, 40), 0, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(60, 40), 1, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(70, 40), 2, worldStoneItem, thanos.infinity);
+                StoneItem.addStone(new Point2D(80, 40), 3, worldStoneItem, thanos.infinity); //Test Stones*/
                 break;
             case 0://generate home base
 
@@ -146,6 +149,9 @@ public class World {
         }
         if(levelBoss !=null){ //run bosses
            levelBoss.playSong(myGame.myAudio);
+           if(levelBoss.PV<0){
+               thanos.finishedGame=true;
+           }
         }
 
         for (Projectile cProjectile : worldProjectiles) {

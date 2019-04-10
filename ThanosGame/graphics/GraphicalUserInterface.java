@@ -2,6 +2,7 @@ package ThanosGame.graphics;
 
 import ThanosGame.Game;
 import ThanosGame.Thanos;
+import ThanosGame.enemies.Boss;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -11,12 +12,14 @@ import java.util.LinkedList;
 public class GraphicalUserInterface {
     private Thanos thanos;
     private LinkedList<PopupText> tutorialMessages;
+    private final long COUNTDOWNLENGTH = 5000;
+    private long countDownStart=-1;
 
     public GraphicalUserInterface(Thanos thanos) {
         this.thanos = thanos;
         tutorialMessages = new LinkedList<>();
         addTutorial("Use the portals to go to the different world, for the moment you only have one unlocked", new Point2D(600, 100), 0);
-        addTutorial("To move simply use either ad/qd and to jump use space/q/w", new Point2D(800, 200), 0);
+        addTutorial("To move simply use either ad/qd and to jump use space/q/w\nand i to open the inventory", new Point2D(800, 200), 0);
     }
 
     public void addTutorial(String msg, Point2D messagePosition, int worldType) {
@@ -27,7 +30,7 @@ public class GraphicalUserInterface {
 
     }
 
-    public void draw(GraphicsContext gc,int selectedWorld) {
+    public void draw(GraphicsContext gc, Boss levelBoss, int selectedWorld) {
         for (int i = 0; i < thanos.infinity.stones.length; i++) {
             if (thanos.infinity.selectedStone == i) {
                 gc.setFill(Color.RED);
@@ -51,6 +54,31 @@ public class GraphicalUserInterface {
         for (PopupText tM : tutorialMessages) {
             tM.testTrigger(thanos.myPosition, selectedWorld);
             tM.renderMe(gc, thanos.getCameraPosition().getX());
+        }
+        if(levelBoss!=null){
+            if(levelBoss.pointOnScreen(levelBoss.myPosition)) {
+                gc.setFill(Color.BLACK);
+                gc.fillRect(0, 30, (Game.winParam.getX()), 25);
+                gc.setFill(Color.RED);
+                gc.fillRect(0, 30, (Game.winParam.getX()) * levelBoss.getHp(), 25);
+                gc.setFill(Color.YELLOW);
+                gc.fillText("Boss", Game.winParam.getX() / 2, 42);
+            }
+        }
+
+        if(thanos.finishedGame){
+            gc.setFill(Color.PURPLE);
+            gc.fillRect(10,10,Game.winParam.getX()-10,Game.winParam.getY()-10);
+            gc.setFill(Color.WHITE);
+            if(countDownStart==-1){
+                countDownStart=System.currentTimeMillis();
+            }
+            long timeLeft = (COUNTDOWNLENGTH-(System.currentTimeMillis()-countDownStart));
+            gc.fillText("You Have Won the Game well Done\nSnapping fingures in : " + timeLeft,50,50);
+            thanos.addHp(thanos.getMaxPv());
+            if(timeLeft<0){
+                System.exit(0);
+            }
         }
     }
 }

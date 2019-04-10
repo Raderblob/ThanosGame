@@ -1,12 +1,15 @@
 package ThanosGame.menus;
 
 import ThanosGame.Game;
+import ThanosGame.SaveGame;
 import resources.ImagesSaves;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 
 public class MenuPrincipal extends JFrame implements ActionListener {
     public Game game;
@@ -52,14 +55,14 @@ public class MenuPrincipal extends JFrame implements ActionListener {
 
 
         //Bouton start
-        bouton = new JButton("Start");
+        bouton = new JButton("Start/Resume");
         bouton.setBounds((getWidth() - longueurBouton) / 2, 500, longueurBouton, hauteurBouton);
         bouton.setBackground(Color.blue);
         bouton.setForeground(Color.white);
         bouton.addActionListener(this);
 
         //Bouton Resume
-        bouton2 = new JButton("Resume");
+        bouton2 = new JButton("Load Save");
         bouton2.setBounds((getWidth() - longueurBouton) / 2, 600, longueurBouton, hauteurBouton);
         bouton2.setBackground(Color.green);
         bouton2.setForeground(Color.white);
@@ -125,6 +128,17 @@ public class MenuPrincipal extends JFrame implements ActionListener {
         }
         if (e.getSource() == bouton2) {
 
+            try {
+                FileInputStream fileIn = new FileInputStream("SaveGame");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                SaveGame ep = (SaveGame) in.readObject();
+                in.close();
+                fileIn.close();
+                ep.loadGame(game.thanos);
+                System.out.println("Loaded Game");
+            } catch (Exception el) {
+                System.out.println("Failed to load game");
+            }
         }
         if (e.getSource() == bouton3) {
             setVisible(false);

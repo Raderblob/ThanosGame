@@ -1,7 +1,6 @@
 package ThanosGame.weapons.player;
 
 import ThanosGame.Main;
-import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.enemies.Personnage;
 import ThanosGame.terrain.TerrainMap;
@@ -11,8 +10,8 @@ import javafx.geometry.Point2D;
 import resources.AudioSaves;
 
 public class MindStone extends SpaceStone {
-    public MindStone(Thanos owner) {
-        super(owner);
+    public MindStone() {
+        super();
         stoneType = 3;
         stoneName="Mind Stone";
         coolDown = 15000;
