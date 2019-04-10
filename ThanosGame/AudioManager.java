@@ -16,7 +16,6 @@ public class AudioManager {
     }
 
     public void runMusic(){
-        System.out.println(selectedSong);
         for(int i=0;i<musics.length;i++){
             if(i==selectedSong){
                 if(!musics[i].isPlaying()){

@@ -161,7 +161,7 @@ public class Game extends Application {
     public void gameLoop(GraphicsContext gc) { //the game loop
         lastLength=System.nanoTime()-lastTime;
         if ( lastLength> 10000000) {
-          //  System.out.println("Fps :" + 1 / (lastLength * 0.000000001));//showfps
+            System.out.println("Fps :" + 1 / (lastLength * 0.000000001));//showfps
 
             if (leftPressed) {//Player basic control
                 thanos.movingState = -1;
@@ -177,7 +177,7 @@ public class Game extends Application {
 
 
             gameWorld.renderWorld(gc, root);//render the selected world
-            gui.draw(gc, selectedWorld);
+            gui.draw(gc, gameWorld.levelBoss,selectedWorld);
             renderBackground();
 
 
