@@ -1,7 +1,6 @@
 package ThanosGame.weapons.player;
 
 import ThanosGame.Main;
-import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.enemies.Personnage;
 import ThanosGame.terrain.TerrainMap;
@@ -9,11 +8,11 @@ import ThanosGame.weapons.projectiles.FXEffect;
 import javafx.geometry.Point2D;
 import resources.AudioSaves;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
-public class Stone {
+public class Stone implements Serializable {
     protected int stoneType;
-    protected Thanos owner;
     protected String stoneName;
     protected int myPower;
     protected long coolDown;
@@ -21,9 +20,8 @@ public class Stone {
     private long lastUsage;
     private boolean usedSecondary;
 
-    public Stone(Thanos owner) {
+    public Stone() {
         stoneType = -1;
-        this.owner = owner;
         stoneName = "Empty";
         myPower = 2;
         lastUsage = System.currentTimeMillis();
@@ -75,7 +73,7 @@ public class Stone {
         Point2D destination = new Point2D(destroyAt.getX(), destroyAt.getY());
         Point2D hitDistance = destination.add(currentWorld.thanos.myPosition.multiply(-1));
 
-        hitDistance = hitDistance.normalize().multiply(owner.mySize.getX());
+        hitDistance = hitDistance.normalize().multiply(currentWorld.thanos.mySize.getX());
         destination = hitDistance.add(currentWorld.thanos.myPosition);
         LinkedList<Point2D> pointsToChange = currentTerrain.getCircleOfPointsLinked(destination, 15);
 

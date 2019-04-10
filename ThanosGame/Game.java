@@ -19,11 +19,14 @@ import javafx.stage.Stage;
 import resources.ImagesSaves;
 
 import java.awt.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 
 public class Game extends Application {
     public AudioManager myAudio = new AudioManager();
-    private Thanos thanos;
+    public Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
     public double windowScale = 1; //a window scale parameter
     private World gameWorld;
@@ -161,6 +164,7 @@ public class Game extends Application {
     public void gameLoop(GraphicsContext gc) { //the game loop
         lastLength=System.nanoTime()-lastTime;
         if ( lastLength> 10000000) {
+            lastTime=System.nanoTime();
             System.out.println("Fps :" + 1 / (lastLength * 0.000000001));//showfps
 
             if (leftPressed) {//Player basic control
@@ -182,7 +186,7 @@ public class Game extends Application {
 
 
             myAudio.runMusic();
-            lastTime=System.nanoTime();
+
         }
     }
 
@@ -218,6 +222,17 @@ public class Game extends Application {
 
     @Override
     public void stop() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("SaveGame");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            SaveGame sv = new SaveGame(thanos);
+            out.writeObject(sv);
+            out.close();
+            fileOut.close();
+            System.out.println("Saved Game");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         System.out.println("Stage is closing");
         System.exit(0);
     }

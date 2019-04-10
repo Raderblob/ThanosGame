@@ -23,16 +23,16 @@ public class StoneItem extends Item {
             AudioSaves.powerUpSound.play();
             switch (typePierre) {
                 case 0:
-                    myWorld.thanos.addStone(new PowerStone(myWorld.thanos));
+                    myWorld.thanos.addStone(new PowerStone());
                     break;
                 case 1:
-                    myWorld.thanos.addStone(new RealityStone(myWorld.thanos));
+                    myWorld.thanos.addStone(new RealityStone());
                     break;
                 case 2:
-                    myWorld.thanos.addStone(new SpaceStone(myWorld.thanos));
+                    myWorld.thanos.addStone(new SpaceStone());
                     break;
                 case 3:
-                    myWorld.thanos.addStone(new MindStone(myWorld.thanos));
+                    myWorld.thanos.addStone(new MindStone());
                     break;
             }
         }

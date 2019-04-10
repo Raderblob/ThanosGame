@@ -5,7 +5,9 @@ import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 
-public class Gant {
+import java.io.Serializable;
+
+public class Gant implements Serializable {
     public Thanos owner;
     public int selectedStone;
     public Stone[] stones;
@@ -18,7 +20,7 @@ public class Gant {
         stones = new Stone[4];
         nbAme = 0;
         for (int i = 0; i < stones.length; i++) {
-            stones[i] = new Stone(owner);
+            stones[i] = new Stone();
         }
         selectedStone = 0;
 
