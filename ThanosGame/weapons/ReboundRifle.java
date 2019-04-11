@@ -2,6 +2,7 @@ package ThanosGame.weapons;
 
 import ThanosGame.enemies.Personnage;
 import ThanosGame.weapons.projectiles.Projectile;
+import ThanosGame.weapons.projectiles.ReboundProjectile;
 import javafx.geometry.Point2D;
 import resources.AudioSaves;
 
