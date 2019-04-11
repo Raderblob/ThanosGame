@@ -13,7 +13,6 @@ public class Keyboard {
         right = KeyCode.D;
         left = KeyCode.Q;
         jump = KeyCode.SPACE;
-        KeyCode down = KeyCode.S;
         isInQWERTY = true;
     }
     public static void setAZERTY(){
