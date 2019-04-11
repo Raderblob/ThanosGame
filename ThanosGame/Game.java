@@ -64,6 +64,7 @@ public class Game extends Application {
     private void loadEvents() {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, key -> {
             if (key.getCode() == KeyCode.ESCAPE) {
+                saveMyGame();
                 hideGame();
                 Main.mainMenu.setVisible(true);
             } else if (key.getCode() == Keyboard.left) {
@@ -118,13 +119,27 @@ public class Game extends Application {
         });
     }
 
+    private void saveMyGame() {
+        try {
+            FileOutputStream fileOut = new FileOutputStream("SaveGame");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            SaveGame sv = new SaveGame(thanos);
+            out.writeObject(sv);
+            out.close();
+            fileOut.close();
+            System.out.println("Saved Game");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void loadGame() {
         root = new Group();
         windowScale = Math.min((Toolkit.getDefaultToolkit().getScreenSize().height - 100) / winParam.getY(), (Toolkit.getDefaultToolkit().getScreenSize().width - 100) / winParam.getX());
         Scale tScale = new Scale(windowScale, windowScale);//autoscale to screen size
         root.getTransforms().add(tScale);
         scene = new Scene(root, winParam.getX() * windowScale, winParam.getY() * windowScale);
-        stage.setTitle("ThanosGame.Thanos rules the world v2.0");
+        stage.setTitle("ThanosGame.Thanos rules the world v2.2");
         stage.setScene(scene);
 
         Canvas canvas = new Canvas(winParam.getX(), winParam.getY());
@@ -221,17 +236,7 @@ public class Game extends Application {
 
     @Override
     public void stop() {
-        try {
-            FileOutputStream fileOut = new FileOutputStream("SaveGame");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            SaveGame sv = new SaveGame(thanos);
-            out.writeObject(sv);
-            out.close();
-            fileOut.close();
-            System.out.println("Saved Game");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        saveMyGame();
         System.out.println("Stage is closing");
         System.exit(0);
     }
