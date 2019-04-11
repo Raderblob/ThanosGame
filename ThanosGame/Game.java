@@ -25,13 +25,12 @@ import java.io.ObjectOutputStream;
 
 
 public class Game extends Application {
-    public AudioManager myAudio = new AudioManager();
+    public final AudioManager myAudio = new AudioManager();
     public Thanos thanos;
     public static final Point2D winParam = new Point2D(800, 500);
-    public double windowScale = 1; //a window scale parameter
+    private double windowScale = 1; //a window scale parameter
     private World gameWorld;
     private int selectedWorld;
-    private long lastLength;
     private Group root;
     private boolean playing;
     private int toShow = 0;
@@ -103,9 +102,7 @@ public class Game extends Application {
             }
 
         });
-        scene.addEventHandler(MouseEvent.MOUSE_RELEASED, mouse -> {
-            thanos.desactivateSecondary();
-        });
+        scene.addEventHandler(MouseEvent.MOUSE_RELEASED, mouse -> thanos.desactivateSecondary());
         scene.addEventHandler(ScrollEvent.SCROLL, mouse -> {
             if (mouse.getDeltaY() < 0) {
                 thanos.infinity.selectNextStone();
@@ -161,33 +158,35 @@ public class Game extends Application {
         stage.setResizable(false);//Make sure they don't change something they should not
     }
 
-    public void gameLoop(GraphicsContext gc) { //the game loop
-        lastLength=System.nanoTime()-lastTime;
-        if ( lastLength> 10000000) {
-            lastTime=System.nanoTime();
-            System.out.println("Fps :" + 1 / (lastLength * 0.000000001));//showfps
+    private void gameLoop(GraphicsContext gc) { //the game loop
 
-            if (leftPressed) {//Player basic control
-                thanos.movingState = -1;
-            } else if (rightPressed) {
-                thanos.movingState = 1;
-            } else {
-                thanos.movingState = 0;
-            }
+        long lastLength= System.nanoTime() - lastTime;
+        lastTime = System.nanoTime();
+        System.out.println("Fps :" + 1 / (lastLength * 0.000000001));//showfps
 
-            gameWorld.runWorld(Math.min(lastLength * 0.000000065, 3));//run logic for the selected world
-
-            gc.clearRect(0, 0, winParam.getX() * 4, winParam.getY() * 4);//clear the game screen
-
-
-            gameWorld.renderWorld(gc, root);//render the selected world
-            gui.draw(gc, gameWorld.levelBoss,selectedWorld);
-            renderBackground();
-
-
-            myAudio.runMusic();
-
+        if (leftPressed) {//Player basic control
+            thanos.movingState = -1;
+        } else if (rightPressed) {
+            thanos.movingState = 1;
+        } else {
+            thanos.movingState = 0;
         }
+
+        gameWorld.runWorld(Math.min(lastLength * 0.000000065, 3));//run logic for the selected world
+
+        gc.clearRect(0, 0, winParam.getX() * 4, winParam.getY() * 4);//clear the game screen
+
+
+        gameWorld.renderWorld(gc, root);//render the selected world
+        gui.draw(gc, gameWorld.levelBoss, selectedWorld);
+        renderBackground();
+
+
+        myAudio.runMusic();
+
+
+
+
     }
 
     private void renderBackground() {//render the slow moving background at 20%speed
@@ -215,7 +214,7 @@ public class Game extends Application {
         toShow = 1;
     }
 
-    public void hideGame() {
+    private void hideGame() {
         playing = false;
         toShow = -1;
     }

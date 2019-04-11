@@ -20,16 +20,15 @@ import java.util.Random;
  *
  */
 
-public class SimplexOctave {  // Simplex noise in 2D, 3D and 4D
+class SimplexOctave {  // Simplex noise in 2D, 3D and 4D
 
-    public static int RANDOMSEED=0;
-    private static int NUMBEROFSWAPS=400;
+    private static final int RANDOMSEED=0;
 
-    private static Grad grad3[] = {new Grad(1,1,0),new Grad(-1,1,0),new Grad(1,-1,0),new Grad(-1,-1,0),
+    private static final Grad[] grad3 = {new Grad(1,1,0),new Grad(-1,1,0),new Grad(1,-1,0),new Grad(-1,-1,0),
             new Grad(1,0,1),new Grad(-1,0,1),new Grad(1,0,-1),new Grad(-1,0,-1),
             new Grad(0,1,1),new Grad(0,-1,1),new Grad(0,1,-1),new Grad(0,-1,-1)};
 
-    private static Grad grad4[]= {new Grad(0,1,1,1),new Grad(0,1,1,-1),new Grad(0,1,-1,1),new Grad(0,1,-1,-1),
+    private static final Grad[] grad4= {new Grad(0,1,1,1),new Grad(0,1,1,-1),new Grad(0,1,-1,1),new Grad(0,1,-1,-1),
             new Grad(0,-1,1,1),new Grad(0,-1,1,-1),new Grad(0,-1,-1,1),new Grad(0,-1,-1,-1),
             new Grad(1,0,1,1),new Grad(1,0,1,-1),new Grad(1,0,-1,1),new Grad(1,0,-1,-1),
             new Grad(-1,0,1,1),new Grad(-1,0,1,-1),new Grad(-1,0,-1,1),new Grad(-1,0,-1,-1),
@@ -38,7 +37,7 @@ public class SimplexOctave {  // Simplex noise in 2D, 3D and 4D
             new Grad(1,1,1,0),new Grad(1,1,-1,0),new Grad(1,-1,1,0),new Grad(1,-1,-1,0),
             new Grad(-1,1,1,0),new Grad(-1,1,-1,0),new Grad(-1,-1,1,0),new Grad(-1,-1,-1,0)};
 
-    private static short p_supply[] = {151,160,137,91,90,15, //this contains all the numbers between 0 and 255, these are put in a random order depending upon the seed
+    private static final short[] p_supply = {151,160,137,91,90,15, //this contains all the numbers between 0 and 255, these are put in a random order depending upon the seed
             131,13,201,95,96,53,194,233,7,225,140,36,103,30,69,142,8,99,37,240,21,10,23,
             190, 6,148,247,120,234,75,0,26,197,62,94,252,219,203,117,35,11,32,57,177,33,
             88,237,149,56,87,174,20,125,136,171,168, 68,175,74,165,71,134,139,48,27,166,
@@ -52,13 +51,11 @@ public class SimplexOctave {  // Simplex noise in 2D, 3D and 4D
             49,192,214, 31,181,199,106,157,184, 84,204,176,115,121,50,45,127, 4,150,254,
             138,236,205,93,222,114,67,29,24,72,243,141,128,195,78,66,215,61,156,180};
 
-    private short p[]=new short[p_supply.length];
-
     // To remove the need for index wrapping, double the permutation table length
-    private short perm[] = new short[512];
-    private short permMod12[] = new short[512];
+    private final short[] perm = new short[512];
+    private final short[] permMod12 = new short[512];
     public SimplexOctave(int seed) {
-        p=p_supply.clone();
+        short[] p = p_supply.clone();
 
         if (seed==RANDOMSEED){
             Random rand=new Random();
@@ -69,19 +66,20 @@ public class SimplexOctave {  // Simplex noise in 2D, 3D and 4D
         Random rand=new Random(seed);
 
         //the seed determines the swaps that occur between the default order and the order we're actually going to use
-        for(int i=0;i<NUMBEROFSWAPS;i++){
+        int NUMBEROFSWAPS = 400;
+        for(int i = 0; i< NUMBEROFSWAPS; i++){
             int swapFrom=rand.nextInt(p.length);
             int swapTo=rand.nextInt(p.length);
 
-            short temp=p[swapFrom];
-            p[swapFrom]=p[swapTo];
+            short temp= p[swapFrom];
+            p[swapFrom]= p[swapTo];
             p[swapTo]=temp;
         }
 
 
         for(int i=0; i<512; i++)
         {
-            perm[i]=p[i & 255];
+            perm[i]= p[i & 255];
             permMod12[i] = (short)(perm[i] % 12);
         }
     }
@@ -369,7 +367,10 @@ public class SimplexOctave {  // Simplex noise in 2D, 3D and 4D
     // (array access is a lot slower than member access)
     private static class Grad
     {
-        double x, y, z, w;
+        final double x;
+        final double y;
+        final double z;
+        double w;
 
         Grad(double x, double y, double z)
         {

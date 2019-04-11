@@ -12,10 +12,10 @@ import javafx.scene.transform.Rotate;
 import resources.ImagesSaves;
 
 public class Projectile extends Item {
-    public double degats;
+    public final double degats;
     protected Point2D speed;
-    protected boolean canDamage;
-    protected double maxLife;
+    private final boolean canDamage;
+    protected final double maxLife;
     public boolean enemyOwned;
     public Projectile(Point2D position, Point2D size, double degats , Point2D speed,double mLife,int projectileId){
         super(position,size,ImagesSaves.projectiles[projectileId],new Point2D(20,10),100);

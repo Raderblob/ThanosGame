@@ -18,15 +18,15 @@ public class PlayerClass {
     private boolean doubleJumped;
     public Point2D myPosition;
     public Point2D mySize;
-    public Point2D mySpeed;
-    protected Point2D destroyAt;
+    protected Point2D mySpeed;
+    Point2D destroyAt;
     protected AnimatedPerson myAnimation;
     protected int obsClear;
-    protected int recoverTime;
-    protected long lastHit;
+    int recoverTime;
+    private long lastHit;
     public int prixVie = 5;
 
-    public PlayerClass() {
+    protected PlayerClass() {
         recoverTime = 0;
 
         myPosition = new Point2D(50, 50);
@@ -45,7 +45,7 @@ public class PlayerClass {
             toRemove -= myShield;
             myShield -= amount;
         }
-        if (!recovering() && toRemove > 0) {
+        if (recovering() && toRemove > 0) {
             PV -= toRemove;
             lastHit = System.currentTimeMillis();
         }
@@ -60,13 +60,13 @@ public class PlayerClass {
     }
 
     public void draw(GraphicsContext gc) {
-        if (!recovering() || Main.numberGenerator.nextInt(10) < 5) { //use the recovery effect for rendering when needed
+        if (recovering() || Main.numberGenerator.nextInt(10) < 5) { //use the recovery effect for rendering when needed
             myAnimation.draw(gc, new Point2D(myPosition.getX() - mySize.getX() - getCameraPosition().getX(), myPosition.getY() - mySize.getY() - getCameraPosition().getY()), new Point2D(mySize.getX() * 2, mySize.getY() * 2));
         }
     }
 
     private boolean recovering() {
-        return System.currentTimeMillis() - lastHit < recoverTime;
+        return System.currentTimeMillis() - lastHit >= recoverTime;
     }
 
     public void fireAt(double fX, double fY) {
@@ -83,11 +83,11 @@ public class PlayerClass {
             myShield -= currentNanoTime * 0.04; //lower shields slowly
         }
         myShield = Math.min(Math.max(myShield, 0), maxPv); //cap shields
-        doPlayerMovement(currentTerrain, currentWorld, currentNanoTime);
+        doPlayerMovement(currentTerrain, currentNanoTime);
         myAnimation.setWalkingMode(movingState);
     }
 
-    private void doPlayerMovement(TerrainMap currentTerrain, World currentWorld, double currentNanoTime) {
+    private void doPlayerMovement(TerrainMap currentTerrain, double currentNanoTime) {
         boolean tUnderFoot = terrainUnderFoot(currentTerrain);
         boolean tooLow = playerTrimmingTerrain(currentTerrain); //check if player is in terrain
         boolean tooHigh = terrainIsObstacleOverhead(currentTerrain);
@@ -154,12 +154,9 @@ public class PlayerClass {
 
     protected boolean dangerBlockPresent(TerrainMap currentTerrain) {
 
-       if(whatTerrainIsObstacleLeft(currentTerrain)==SPIKES.getMyVal()||whatTerrainIsObstacleRight(currentTerrain)==SPIKES.getMyVal()||whatTerrainUnderFoot(currentTerrain)==SPIKES.getMyVal()){
-           return true;
-       }
+        return whatTerrainIsObstacleLeft(currentTerrain) == SPIKES.getMyVal() || whatTerrainIsObstacleRight(currentTerrain) == SPIKES.getMyVal() || whatTerrainUnderFoot(currentTerrain) == SPIKES.getMyVal();
 
 
-        return false;
     }
 
     private boolean terrainIsObstacleRight(TerrainMap currentTerrain) {

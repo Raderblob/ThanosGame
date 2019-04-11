@@ -8,12 +8,12 @@ import javafx.geometry.Point2D;
 import java.io.Serializable;
 
 public class Gant implements Serializable {
-    public Thanos owner;
+    private final Thanos owner;
     public int selectedStone;
     public Stone[] stones;
     public int nbAme;
-    public int [] prixCooldown = new int [6];
-    public int [] prixPuissance = new int [6];
+    public final int [] prixCooldown = new int [6];
+    public final int [] prixPuissance = new int [6];
 
     public Gant(Thanos owner) {
         this.owner = owner;
@@ -69,8 +69,8 @@ public class Gant implements Serializable {
 
     public int getNbPierres() {
         int nbPierres = 0;
-        for(int i=0; i<stones.length;i++){
-            if(stones[i]!=null){
+        for (Stone stone : stones) {
+            if (stone != null) {
                 nbPierres++;
             }
         }
@@ -105,10 +105,10 @@ public class Gant implements Serializable {
     public boolean hasStone(int s){
         for(int i=0;i<stones.length;i++){
             if (stones[i].myType()==s){
-                return true;
+                return false;
             }
 
         }
-        return false;
+        return true;
     }
 }

@@ -8,8 +8,8 @@ import resources.AudioSaves;
 import resources.ImagesSaves;
 
 public class Teleporter extends Item {
-    private int teleportTo;
-    private Game game;
+    private final int teleportTo;
+    private final Game game;
     public Teleporter(Point2D maPosition,int teleportTo,Game game) {
         super(maPosition, new Point2D(50,50), ImagesSaves.teleporterSprite, new Point2D(180,255), 50);
         this.teleportTo = teleportTo;

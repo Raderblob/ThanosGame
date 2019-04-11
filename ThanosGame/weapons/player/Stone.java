@@ -12,11 +12,11 @@ import java.io.Serializable;
 import java.util.LinkedList;
 
 public class Stone implements Serializable {
-    protected int stoneType;
-    protected String stoneName;
-    protected int myPower;
-    protected long coolDown;
-    protected long secondaryCoolDown;
+    int stoneType;
+    String stoneName;
+    int myPower;
+    long coolDown;
+    long secondaryCoolDown;
     private long lastUsage;
     private boolean usedSecondary;
 
@@ -65,11 +65,11 @@ public class Stone implements Serializable {
             }
         }
     }
-    protected int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
+    int doSubSecondaryAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt){
         return 0;
     }
 
-    protected int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
+    int doSubAction(TerrainMap currentTerrain, World currentWorld, Point2D destroyAt) {
         Point2D destination = new Point2D(destroyAt.getX(), destroyAt.getY());
         Point2D hitDistance = destination.add(currentWorld.thanos.myPosition.multiply(-1));
 
@@ -84,7 +84,7 @@ public class Stone implements Serializable {
         return 1;
     }
 
-    protected void doDamage(World currentWorld,Point2D destroyAt,LinkedList<Point2D> pointsToChange){
+    private void doDamage(World currentWorld, Point2D destroyAt, LinkedList<Point2D> pointsToChange){
         for(Personnage enemy:currentWorld.enemies){
             if(Main.getMagnitudeSquared(destroyAt.add(enemy.myPosition.multiply(-1)))< 1000){
                 dmgPerEnemy(enemy,pointsToChange);
@@ -101,7 +101,7 @@ public class Stone implements Serializable {
         }
     }
 
-    protected void doChanges(LinkedList<Point2D> p, byte b, TerrainMap currentTerrain) {
+    void doChanges(LinkedList<Point2D> p, byte b, TerrainMap currentTerrain) {
         Point2D[] pTD = testMyDamage(p, currentTerrain);
 
 
@@ -112,7 +112,7 @@ public class Stone implements Serializable {
         currentTerrain.changeTerrain(pTD, bTD);
     }
 
-    protected Point2D[] testMyDamage(LinkedList<Point2D> pTD, TerrainMap currentTerrain) {
+    private Point2D[] testMyDamage(LinkedList<Point2D> pTD, TerrainMap currentTerrain) {
         LinkedList<Point2D> res = new LinkedList<>();
         for (Point2D p : pTD) {
             if (Main.canDamage(currentTerrain.getTerrainVal(p), myPower)) {

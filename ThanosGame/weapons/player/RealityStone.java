@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import static ThanosGame.terrain.PixelBlockType.SPIKES;
 
 public class RealityStone extends Stone {
-    private final int SOUNDTIME =400;
     private long lastTime;
 
     public RealityStone() {
@@ -41,7 +40,8 @@ public class RealityStone extends Stone {
         if (currentTerrain.getTerrainVal(destroyAt) != 1) {
             doChanges(pointsToChange, SPIKES.getMyVal(), currentTerrain);
             currentWorld.worldExplosions.add(new FXEffect(destroyAt, new Point2D(20, 20), 4, currentTerrain));
-            if (System.currentTimeMillis() - lastTime>SOUNDTIME) {
+            int SOUNDTIME = 400;
+            if (System.currentTimeMillis() - lastTime> SOUNDTIME) {
                 AudioSaves.realityCreateSound.play();
                 lastTime=System.currentTimeMillis();
             }

@@ -1,9 +1,10 @@
 package ThanosGame.terrain;
 
-public class SimplexNoise {
-    private int numOct;
-    private double frequency,pertinance;
-    private SimplexOctave octave;
+class SimplexNoise {
+    private final int numOct;
+    private final double frequency;
+    private final double pertinance;
+    private final SimplexOctave octave;
     public SimplexNoise(int seed, int numOctanves, double f,double pert){
         octave = new SimplexOctave(seed);
         numOct = numOctanves;

@@ -10,7 +10,7 @@ import ThanosGame.weapons.Rifle;
 import javafx.geometry.Point2D;
 import resources.ImagesSaves;
 
-public class Agent extends Personnage {
+class Agent extends Personnage {
     Agent(Point2D pos, TerrainMap myTerrain, World myWorld) {
         super(pos, myTerrain, myWorld,100,ImagesSaves.agentSprites);
         int rndgen = Main.numberGenerator.nextInt(100);

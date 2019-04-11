@@ -8,11 +8,11 @@ import javafx.scene.image.Image;
 
 public class Item {
     public Point2D position;
-    public Point2D mySize;
+    protected final Point2D mySize;
     public double mylife;
-    protected AnimatedImage myAnimation;
+    protected final AnimatedImage myAnimation;
 
-    public Item(Point2D maPosition, Point2D size, Image myImg, Point2D imgSize, int imgDelay) {
+    protected Item(Point2D maPosition, Point2D size, Image myImg, Point2D imgSize, int imgDelay) {
         position = new Point2D(maPosition.getX(), maPosition.getY());
         mySize = size;
         myAnimation = new AnimatedImage(myImg, imgSize, imgDelay);

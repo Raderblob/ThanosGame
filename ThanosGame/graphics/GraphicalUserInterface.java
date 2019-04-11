@@ -10,9 +10,8 @@ import javafx.scene.paint.Color;
 import java.util.LinkedList;
 
 public class GraphicalUserInterface {
-    private Thanos thanos;
-    private LinkedList<PopupText> tutorialMessages;
-    private final long COUNTDOWNLENGTH = 5000;
+    private final Thanos thanos;
+    private final LinkedList<PopupText> tutorialMessages;
     private long countDownStart=-1;
 
     public GraphicalUserInterface(Thanos thanos) {
@@ -73,7 +72,8 @@ public class GraphicalUserInterface {
             if(countDownStart==-1){
                 countDownStart=System.currentTimeMillis();
             }
-            long timeLeft = (COUNTDOWNLENGTH-(System.currentTimeMillis()-countDownStart));
+            long COUNTDOWNLENGTH = 5000;
+            long timeLeft = (COUNTDOWNLENGTH -(System.currentTimeMillis()-countDownStart));
             gc.fillText("You Have Won the Game well Done\nSnapping fingures in : " + timeLeft,50,50);
             thanos.addHp(thanos.getMaxPv());
             if(timeLeft<0){

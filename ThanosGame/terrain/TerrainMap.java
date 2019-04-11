@@ -14,18 +14,17 @@ import resources.BuildingSaves;
 import java.util.LinkedList;
 
 public class TerrainMap {
-    private TerrainChunck chunk[];
-    private int numChunks;
-    private int maxPixelsX;
-    private int maxPixelsY;
-    public boolean terrainRendered;
-    public Point2D mySize;
-    public TerrainVType myTerrainVersion;
+    private final TerrainChunck[] chunk;
+    private final int maxPixelsX;
+    private final int maxPixelsY;
+    private final boolean terrainRendered;
+    private final Point2D mySize;
+    public final TerrainVType myTerrainVersion;
 
     public TerrainMap(int numP, boolean withBuildings, World myWorld, LinkedList<Personnage> enemyList, TerrainVType terrainVersion) {
         myTerrainVersion = terrainVersion;
         mySize = new Point2D(10, 10);
-        numChunks = (int) (numP / (TerrainChunck.chunkParam.getX() * 4)) + 1;
+        int numChunks = (int) (numP / (TerrainChunck.chunkParam.getX() * 4)) + 1;
         maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks));
         maxPixelsY = (int) (TerrainChunck.chunkParam.getY() * 4 - 1);
         terrainRendered = false;
@@ -48,7 +47,7 @@ public class TerrainMap {
                             generateCountry(a, b, x, y);
                             break;
                         case CITY:
-                            generateCity(a, b, x, y);
+                            generateCity(b, x, y);
                             break;
                     }
 
@@ -84,14 +83,14 @@ public class TerrainMap {
 
     public enum TerrainVType {
         COUNTRY(50), CITY(75);
-        private int myVal;
+        private final int myVal;
 
         TerrainVType(int i) {
             myVal = i;
         }
     }
 
-    public int getEndPos() {
+    private int getEndPos() {
         return (int) TerrainChunck.chunkParam.getX() * chunk.length * 4 - 1000;
     }
 
@@ -117,7 +116,7 @@ public class TerrainMap {
         }
     }
 
-    private void generateCity(double a, double b, int x, int y) {
+    private void generateCity(double b, int x, int y) {
         if (y > TerrainChunck.chunkParam.getY() - 4) {
             setTerrainVal(x, y, PixelBlockType.BEDROCK.getMyVal());//bedrock
         } else if (y > TerrainChunck.chunkParam.getY() - 30) {
@@ -134,7 +133,7 @@ public class TerrainMap {
     }
 
 
-    public void draw(GraphicsContext gc, Point2D pos, Group root) {
+    public void draw(Point2D pos, Group root) {
         for (int i = 0; i < chunk.length; i++) {
             double drawPos = -pos.getX() + i * TerrainChunck.chunkParam.getX() * 4;// -Math.min(pos.getX(), numChunks * TerrainChunck.chunkParam.getX() * 4 - 1000) + i * TerrainChunck.chunkParam.getX() * 4;
             if (drawPos + TerrainChunck.chunkParam.getX() * 4 >= 0 && drawPos < Game.winParam.getX() * 2) {
@@ -154,10 +153,10 @@ public class TerrainMap {
     }
 
     public void removeCanvas(Group root) {
-        for (int i = 0; i < chunk.length; i++) {
-            if (chunk[i].addedToRoot) {
-                root.getChildren().remove(chunk[i].myCanvas);
-                chunk[i].addedToRoot = false;
+        for (TerrainChunck aChunk : chunk) {
+            if (aChunk.addedToRoot) {
+                root.getChildren().remove(aChunk.myCanvas);
+                aChunk.addedToRoot = false;
             }
         }
     }
@@ -185,7 +184,7 @@ public class TerrainMap {
         return getTerrainVal(p.getX(), p.getY());
     }
 
-    public byte getTerrainValCollision(Point2D p) {
+    private byte getTerrainValCollision(Point2D p) {
         return getTerrainValCollision(p.getX(), p.getY());
     }
 
@@ -266,10 +265,10 @@ public class TerrainMap {
 
 class TerrainChunck {
     final public static Point2D chunkParam = new Point2D(500, 125);
-    private byte terrain[][];
-    public Canvas myCanvas;
+    private final byte[][] terrain;
+    public final Canvas myCanvas;
     public boolean addedToRoot = false;
-    private GraphicsContext gc;
+    private final GraphicsContext gc;
 
     public TerrainChunck() {
         terrain = new byte[(int) chunkParam.getX()][(int) chunkParam.getY()];

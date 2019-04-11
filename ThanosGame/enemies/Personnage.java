@@ -10,18 +10,15 @@ import javafx.scene.image.Image;
 
 
 public class Personnage extends PlayerClass {
-    public boolean turned;
+    public final boolean turned;
     Weapon myGun;
-    private Thanos player;
-    private TerrainMap myTerrain;
-    private final int TERRAINRANGE = 45;
-    private final int SIGHTRANGE = 350;
-    protected AiState myState;
+    private final Thanos player;
+    private final TerrainMap myTerrain;
+    AiState myState;
     private int patrolFlipper;
     private long timeKeeper;
     private long timeLapse;
     private boolean changeMind;
-    private Point2D myTarget;
 
     Personnage(Point2D pos, TerrainMap myTerrain, World myWorld, int hp, Image mySprite) {
         turned = false;
@@ -76,6 +73,7 @@ public class Personnage extends PlayerClass {
     private void moveDir(int dir) {
         movingState = dir;
         boolean shouldJump = (myState != AiState.ATTACK || player.myPosition.getY() - myPosition.getY() < 0);
+        int TERRAINRANGE = 45;
         if (obsClear == 0 || (obstacleAtDistance(dir * TERRAINRANGE) && shouldJump)) {
             jump();
         }
@@ -89,7 +87,8 @@ public class Personnage extends PlayerClass {
                 removeHp(Math.pow(1,-8)*currentNanoTime*0.5);
             }
 
-            myTarget = player.myPosition;
+            Point2D myTarget = player.myPosition;
+            int SIGHTRANGE = 350;
             for (FXEffect fx : currentWorld.worldExplosions) {
                 if (fx.myType() == 1) {
                     if (Main.getMagnitudeSquared(fx.position.add(myPosition.multiply(-1))) < Math.pow(SIGHTRANGE, 2)) {
@@ -172,7 +171,7 @@ public class Personnage extends PlayerClass {
 
     }
 
-    public void patrolMe() {
+    private void patrolMe() {
         myState = AiState.PATROL;
         timeKeeper = System.currentTimeMillis();
         timeLapse = Main.numberGenerator.nextInt(1000) + 500;
@@ -205,6 +204,6 @@ public class Personnage extends PlayerClass {
 
 
     enum AiState {
-        STATIC, PATROL, ATTACK, STUNNED;
+        STATIC, PATROL, ATTACK, STUNNED
     }
 }

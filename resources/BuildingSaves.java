@@ -10,10 +10,10 @@ import java.io.IOException;
 
 public class BuildingSaves {
     private static final int MODULEDIMENSION = 20;
-    public static byte[][][] moduleTemplates = new byte[10][MODULEDIMENSION][MODULEDIMENSION];
-    public static byte[][][] largeBases = new byte[1][][];
+    public static final byte[][][] moduleTemplates = new byte[10][MODULEDIMENSION][MODULEDIMENSION];
+    public static final byte[][][] largeBases = new byte[1][][];
 
-    public static byte[][] pal;
+    private static byte[][] pal;
     public static byte[][] thanosBase;
     public static byte[][] ironManBase;
     public static byte[][] captainBase;
@@ -84,7 +84,7 @@ public class BuildingSaves {
                         res[x][y] = PixelBlockType.STONE.getMyVal();
                         break;
                     case -8355712:
-                        res[x][y] = (byte) -PixelBlockType.STONE.getMyVal();;
+                        res[x][y] = (byte) -PixelBlockType.STONE.getMyVal();
                         break;
                     default:
                         res[x][y] =0;

@@ -5,16 +5,16 @@ import ThanosGame.Main;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 
-public class PopupText {
+class PopupText {
     private final int TRIGGERDISTANCE = (int) Math.pow(500, 2);
-    public String myText;
-    private Point2D myPosition;
+    private final String myText;
+    private final Point2D myPosition;
     private long showTime;
-    private long lifeSpan;
+    private final long lifeSpan;
     private boolean shown;
     private boolean visible;
-    private Point2D myTrigger;
-    private int worldTrigger;
+    private final Point2D myTrigger;
+    private final int worldTrigger;
 
     public PopupText(String mText, Point2D mPosition, long lifeSpan, Point2D myTrigger, int worldTrigger) {
         myText = mText;

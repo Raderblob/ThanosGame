@@ -7,8 +7,8 @@ public class ImagesSaves {
     public static Image thanosSprites;
     public static Image teleporterSprite;
     public static Image shieldSprite;
-    public static Image projectiles[] = new Image[6];
-    public static Image explosions[] = new Image[1];
+    public static final Image[] projectiles = new Image[6];
+    public static final Image[] explosions = new Image[1];
     public static Image agentSprites;
     public static Image wakandaisSprites;
     public static Image thorSprite;

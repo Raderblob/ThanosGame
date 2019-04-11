@@ -5,11 +5,11 @@ import ThanosGame.weapons.player.Stone;
 import java.io.Serializable;
 
 public class SaveGame implements Serializable {
-    boolean finishedGame;
-    int unlockedWorld;
-    int selectedStone;
-    Stone[] stones;
-    int nbAme;
+    private final boolean finishedGame;
+    private final int unlockedWorld;
+    private final int selectedStone;
+    private final Stone[] stones;
+    private final int nbAme;
     public SaveGame(Thanos player){
         selectedStone=player.infinity.selectedStone;
         nbAme=player.infinity.nbAme;

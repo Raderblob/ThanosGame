@@ -9,17 +9,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 
-public class MenuOption extends JFrame implements ActionListener {
+class MenuOption extends JFrame implements ActionListener {
     // FENETRE
 
-    private MenuPrincipal myMenu;
-    private JLabel Titan;
-    private JPanel option;
-    private JButton clavier, son, niveau, cancel, valid;
-    private JSlider volume;
-    private JRadioButton azerty, qwerty, up;
+    private final MenuPrincipal myMenu;
+    private final JButton clavier;
+    private final JButton son;
+    private final JButton niveau;
+    private final JButton cancel;
+    private final JButton valid;
+    private final JSlider volume;
+    private final JRadioButton azerty;
+    private final JRadioButton qwerty;
+    private final JRadioButton up;
     private ButtonGroup bg, bg2;
-    private JRadioButton easy, hard, normal, space;
+    private final JRadioButton easy;
+    private final JRadioButton hard;
+    private final JRadioButton normal;
+    private final JRadioButton space;
     private Keyboard touches = new Keyboard();
 
     public MenuOption(MenuPrincipal mMenu) {
@@ -27,8 +34,8 @@ public class MenuOption extends JFrame implements ActionListener {
         myMenu = mMenu;
         Font f = new Font("Arial", Font.BOLD, 28);
         Font g = new Font("Arial", Font.BOLD, 20);
-        Titan = new JLabel();
-        option = new JPanel();
+        JLabel titan = new JLabel();
+        JPanel option = new JPanel();
         clavier = new JButton("KEYBOARD");
         son = new JButton("SOUND");
         niveau = new JButton("LEVEL");
@@ -42,16 +49,16 @@ public class MenuOption extends JFrame implements ActionListener {
         setTitle("MenuOption");
         setSize(1500, 800);
         setLocationRelativeTo(null);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         //CONTENEUR
         option.setBounds(0, 0, getWidth(), getHeight());
         option.setLayout(null);
         //FOND
-        Titan.setIcon(new ImageIcon(ImagesSaves.class.getResource("menus/OptionsMenu/Titan.png")));
-        Titan.setSize(1500, 800);
-        Titan.setLocation(0, 0);
+        titan.setIcon(new ImageIcon(ImagesSaves.class.getResource("menus/OptionsMenu/Titan.png")));
+        titan.setSize(1500, 800);
+        titan.setLocation(0, 0);
 
 
         // BOUTON CLAVIER
@@ -212,7 +219,7 @@ public class MenuOption extends JFrame implements ActionListener {
         valid.setFont(f);
 
         // AJOUT
-        option.add(Titan);
+        option.add(titan);
         add(option);
         setVisible(false);
 

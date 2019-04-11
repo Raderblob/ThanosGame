@@ -9,9 +9,9 @@ import resources.ImagesSaves;
 import java.util.LinkedList;
 
 public class StoneItem extends Item {
-    public int typePierre;
+    private final int typePierre;
 
-    public StoneItem(Point2D position, Point2D Size, int type) {
+    private StoneItem(Point2D position, Point2D Size, int type) {
         super(position, Size, ImagesSaves.stoneSprite, new Point2D(20, 20), 1000);
         typePierre = type;
         mylife = 1;
@@ -38,11 +38,9 @@ public class StoneItem extends Item {
         }
     }
 
-    public static boolean addStone(Point2D pos, int type, LinkedList<StoneItem> stones, Gant infinity) {
-        if (!infinity.hasStone(type)) {
+    public static void addStone(Point2D pos, int type, LinkedList<StoneItem> stones, Gant infinity) {
+        if (infinity.hasStone(type)) {
             stones.add(new StoneItem(pos, new Point2D(5, 5), type));
-            return true;
         }
-        return false;
     }
 }

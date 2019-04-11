@@ -12,10 +12,10 @@ import resources.ImagesSaves;
 public class Thanos extends PlayerClass {
     public int unlockedWorld = 1; //You start off with level 1 world unlocked
     public boolean finishedGame=false;
-    public Gant infinity ;
-    private AnimatedImage animatedShield;
+    public final Gant infinity ;
+    private final AnimatedImage animatedShield;
     private boolean secondaryActive;
-    public boolean secondary;
+    private boolean secondary;
     private Point2D secAim;
     public Thanos(int PV){
         super();

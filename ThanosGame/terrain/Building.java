@@ -9,12 +9,11 @@ import resources.BuildingSaves;
 import java.util.LinkedList;
 import java.util.Objects;
 
-public class Building {
-    BuildingModule myModules[];
-    private Point2D myPosition;
+class Building {
+    private final BuildingModule[] myModules;
 
     public Building(Point2D mPos, LinkedList<Personnage> enemyList, World myWorld, TerrainMap myTerrain) {
-        myPosition = mPos;
+        Point2D myPosition = mPos;
         Point2D cPos = new Point2D(myPosition.getX(), Math.max(myPosition.getY() - 80, 1));
 
 
@@ -180,7 +179,7 @@ public class Building {
 class BuildingModule {
     public byte blocks[][];
     public boolean canRight, canLeft, canUp, canDown, shouldCover;
-    public Point2D myPosition;
+    public final Point2D myPosition;
     private int myModel;
 
     public BuildingModule(Point2D mPos) {
@@ -189,7 +188,7 @@ class BuildingModule {
 
     }
 
-    public BuildingModule(Point2D mPos, boolean cR, boolean cL, boolean cD, boolean cU, boolean sC) {
+    BuildingModule(Point2D mPos, boolean cR, boolean cL, boolean cD, boolean cU, boolean sC) {
         myPosition = mPos;
         canRight = cR;
         canLeft = cL;
@@ -227,90 +226,90 @@ class BuildingModule {
         return res;
     }
 
-    protected void setModule(int[] indexes) {
+    void setModule(int[] indexes) {
         myModel = indexes[Main.numberGenerator.nextInt(indexes.length)];
         blocks = readModule(myModel);
     }
 }
 
 class EntranceModule extends BuildingModule {
-    private final int[] indexes = {1};
 
     public EntranceModule(Point2D mPos) {
         super(mPos, true, false, false, false, false);
+        int[] indexes = {1};
         setModule(indexes);
     }
 
 }
 
 class CorridorModule extends BuildingModule {
-    private final int[] indexes = {0};
 
     public CorridorModule(Point2D mPos) {
         super(mPos, true, true, false, false, false);
+        int[] indexes = {0};
         setModule(indexes);
     }
 }
 
 class TrapDoorModule extends BuildingModule {
-    private final int[] indexes = {4};
 
     public TrapDoorModule(Point2D mPos) {
         super(mPos, true, true, true, false, false);
+        int[] indexes = {4};
         setModule(indexes);
     }
 }
 
 class LadderModule extends BuildingModule {
-    private final int[] indexes = {2};
 
     public LadderModule(Point2D mPos) {
         super(mPos, true, true, false, true, false);
+        int[] indexes = {2};
         setModule(indexes);
     }
 }
 
 class OpenModule extends BuildingModule {
-    private final int[] indexes = {5};
 
     public OpenModule(Point2D mPos) {
         super(mPos, true, true, true, true, true);
+        int[] indexes = {5};
         setModule(indexes);
     }
 }
 
 class CeilingModule extends BuildingModule {
-    private final int[] indexes = {6};
 
     public CeilingModule(Point2D mPos) {
         super(mPos, false, false, false, false, false);
+        int[] indexes = {6};
         setModule(indexes);
     }
 }
 
 class WallLeftModule extends BuildingModule {
-    private final int[] indexes = {7};
 
     public WallLeftModule(Point2D mPos) {
         super(mPos, false, false, false, false, false);
+        int[] indexes = {7};
         setModule(indexes);
     }
 }
 
 class WallRightModule extends BuildingModule {
-    private final int[] indexes = {8};
 
     public WallRightModule(Point2D mPos) {
         super(mPos, false, false, false, false, false);
+        int[] indexes = {8};
         setModule(indexes);
     }
 }
 
 class FloorModule extends BuildingModule {
-    private final int[] indexes = {9};
 
     public FloorModule(Point2D mPos) {
         super(mPos, false, false, false, false, false);
+        int[] indexes = {9};
         setModule(indexes);
     }
 }

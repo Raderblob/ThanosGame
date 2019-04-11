@@ -21,19 +21,19 @@ import resources.ImagesSaves;
 import java.util.LinkedList;
 
 public class World {
-    public Game myGame;
-    public Thanos thanos;
+    public final Game myGame;
+    public final Thanos thanos;
     private TerrainMap terrain;
-    public LinkedList<Personnage> enemies;
-    public LinkedList<FXEffect> worldExplosions;
-    public LinkedList<Projectile> worldProjectiles;
-    public LinkedList<Heal> worldHeal;
-    public LinkedList<StoneItem> worldStoneItem;
+    public final LinkedList<Personnage> enemies;
+    public final LinkedList<FXEffect> worldExplosions;
+    public final LinkedList<Projectile> worldProjectiles;
+    private final LinkedList<Heal> worldHeal;
+    private final LinkedList<StoneItem> worldStoneItem;
     public Boss levelBoss;
 
-    private Point2D starterPos;
+    private final Point2D starterPos;
     private int unlockLevel;
-    public LinkedList<Teleporter> teleporters;
+    public final LinkedList<Teleporter> teleporters;
     private double myDifficulty;
     public Image myBackground;
 
@@ -223,7 +223,7 @@ public class World {
 
 
     public void renderWorld(GraphicsContext gc, Group root) {
-        terrain.draw(gc, new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain
+        terrain.draw(new Point2D((float) thanos.getCameraPosition().getX(), 0f), root);//draw terrain
         thanos.draw(gc);//draw the player
         for (Personnage enemy : enemies) {
             enemy.draw(gc);//draw ai

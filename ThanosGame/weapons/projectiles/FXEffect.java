@@ -12,10 +12,10 @@ import javafx.scene.transform.Scale;
 import resources.ImagesSaves;
 
 public class FXEffect extends Item {
-    protected double explosionRadius;
-    protected Point2D[] explosionPoints;
-    private double maxLife;
-    protected int type;
+    final double explosionRadius;
+    final Point2D[] explosionPoints;
+    private final double maxLife;
+    int type;
 
     public FXEffect(Point2D maPosition, Point2D Size,double myL,TerrainMap mTerrain) {
         super(maPosition, Size,ImagesSaves.explosions[0],new Point2D(15,14),100);
@@ -31,7 +31,7 @@ public class FXEffect extends Item {
         mylife -= nanoTime;
     }
 
-    protected double getScale(){
+    double getScale(){
         return 1- (mylife/maxLife);
     }
 

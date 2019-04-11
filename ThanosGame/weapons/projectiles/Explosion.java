@@ -7,9 +7,9 @@ import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
 
 public class Explosion extends FXEffect { //does the damage
-    private double damagePerTick;
+    private final double damagePerTick;
     private boolean damaged;
-    private boolean enemyOwned;
+    private final boolean enemyOwned;
 
     public Explosion(Point2D maPosition, double myL, double damageT, TerrainMap mTerrain,boolean eOwned) {
         super(maPosition, new Point2D(Math.tanh((damageT-10)*0.005)*70+10,Math.tanh((damageT-10)*0.005)*70+10), myL, mTerrain);

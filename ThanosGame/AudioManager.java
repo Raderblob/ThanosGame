@@ -3,7 +3,7 @@ package ThanosGame;
 import resources.AudioSaves;
 
 public class AudioManager {
-    private SoundEffect musics[] = new SoundEffect[2];
+    private final SoundEffect[] musics = new SoundEffect[2];
     private int selectedSong;
     public AudioManager(){
         musics[0] = AudioSaves.mainMusic;
@@ -31,9 +31,9 @@ public class AudioManager {
     }
 
     public void restartAll(){
-        for(int i=0;i<musics.length;i++){
-            if(musics[i].isPlaying()){
-                musics[i].stop();
+        for (SoundEffect music : musics) {
+            if (music.isPlaying()) {
+                music.stop();
             }
         }
         runMusic();

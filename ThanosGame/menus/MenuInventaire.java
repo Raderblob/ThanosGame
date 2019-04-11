@@ -10,28 +10,35 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MenuInventaire extends JFrame implements ActionListener {
-    private JButton bRouge, bVert, bBleu, bViolet, bOrange, bJaune;
-    private JButton b2Rouge, b2Vert, b2Bleu, b2Violet, b2Orange, b2Jaune, moreLife;
-    private JLabel fond,perso,PV,Ame, AmeTxt, Puissance, Cooldown;
-    private JPanel conteneurMain, conteneurPerso,Pv1,Pv2, Ame1, Puissance1, Cooldown1;
-    private int longueurBouton = 150;
-    private int hauteurBouton = 50;
-    private int x1Bouton = 500;
-    private int x2Bouton = 700;
-    private String texteTitre = "INVENTAIRE";
-    private int nbPierres;
-    private Thanos thanos;
+    private final JButton bRouge;
+    private final JButton bVert;
+    private final JButton bBleu;
+    private final JButton bViolet;
+    private final JButton bOrange;
+    private final JButton bJaune;
+    private final JButton b2Rouge;
+    private final JButton b2Vert;
+    private final JButton b2Bleu;
+    private final JButton b2Violet;
+    private final JButton b2Orange;
+    private final JButton b2Jaune;
+    private final JButton moreLife;
+    private final JLabel PV;
+    private final JLabel Ame;
+    private final JPanel Pv2;
+    private final Thanos thanos;
 
 
     public MenuInventaire(Thanos thanos) {
         this.thanos = thanos;
         //nbPierres = 6;
-        nbPierres = thanos.infinity.getNbPierres();
+        int nbPierres = thanos.infinity.getNbPierres();
 
 
 
         //Création de la fenêtre et son en-tête
         {
+            String texteTitre = "INVENTAIRE";
             setTitle(texteTitre);
             setLayout(null);//c null
             setSize(960, 720);
@@ -40,24 +47,30 @@ public class MenuInventaire extends JFrame implements ActionListener {
         }
 
         //Texte
+        int x2Bouton = 700;
+        int x1Bouton = 500;
+        int hauteurBouton = 50;
+        int longueurBouton = 150;
+        JPanel cooldown1;
+        JPanel puissance1;
         {
-            Puissance = new JLabel("Puissance :");
-            Puissance.setBounds(40,0,longueurBouton,hauteurBouton);
-            Puissance.setForeground(Color.WHITE);
-            Puissance1 = new JPanel();
-            Puissance1.setLayout(null);
-            Puissance1.setBounds(x1Bouton,15,longueurBouton,hauteurBouton);
-            Puissance1.setBackground(Color.black);
-            Puissance1.add(Puissance);
+            JLabel puissance = new JLabel("Puissance :");
+            puissance.setBounds(40,0, longueurBouton, hauteurBouton);
+            puissance.setForeground(Color.WHITE);
+            puissance1 = new JPanel();
+            puissance1.setLayout(null);
+            puissance1.setBounds(x1Bouton,15, longueurBouton, hauteurBouton);
+            puissance1.setBackground(Color.black);
+            puissance1.add(puissance);
 
-            Cooldown = new JLabel("Cooldown :");
-            Cooldown.setBounds(40,0,longueurBouton,hauteurBouton);
-            Cooldown.setForeground(Color.WHITE);
-            Cooldown1 = new JPanel();
-            Cooldown1.setLayout(null);
-            Cooldown1.setBounds(x2Bouton,15,longueurBouton,hauteurBouton);
-            Cooldown1.setBackground(Color.black);
-            Cooldown1.add(Cooldown);
+            JLabel cooldown = new JLabel("Cooldown :");
+            cooldown.setBounds(40,0, longueurBouton, hauteurBouton);
+            cooldown.setForeground(Color.WHITE);
+            cooldown1 = new JPanel();
+            cooldown1.setLayout(null);
+            cooldown1.setBounds(x2Bouton,15, longueurBouton, hauteurBouton);
+            cooldown1.setBackground(Color.black);
+            cooldown1.add(cooldown);
 
         }
 
@@ -175,6 +188,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         }
 
         //Photo du personnage
+        JLabel perso;
         {
             perso = new JLabel();
             perso.setIcon(new ImageIcon(ImagesSaves.class.getResource("menus/thanos.jpg")));
@@ -183,6 +197,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         }
 
         //Cadre perso
+        JPanel conteneurPerso;
         {
             int x1, y1;
             x1 = 350;
@@ -195,6 +210,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         }
 
         //Fond
+        JLabel fond;
         {
             fond = new JLabel();
             fond.setIcon(new ImageIcon(ImagesSaves.class.getResource("menus/th2.jpg")));
@@ -203,6 +219,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
         }
 
         //Barre de vie
+        JPanel pv1;
         {
             PV = new JLabel("" + thanos.getPV() + "/" + thanos.getMaxPv());
             PV.setBounds(300/2, 0, 350, 50);
@@ -210,31 +227,33 @@ public class MenuInventaire extends JFrame implements ActionListener {
             Pv2 = new JPanel();
             Pv2.setBounds(0,0,(int)(350*thanos.getHp()),50);
             Pv2.setBackground(Color.RED);
-            Pv1 = new JPanel();
-            Pv1.setLayout(null);
-            Pv1.setBounds(75,getHeight() / 2 - 220,350,50);
-            Pv1.setBackground(Color.BLACK);
-            Pv1.add(PV);
-            Pv1.add(Pv2);
+            pv1 = new JPanel();
+            pv1.setLayout(null);
+            pv1.setBounds(75,getHeight() / 2 - 220,350,50);
+            pv1.setBackground(Color.BLACK);
+            pv1.add(PV);
+            pv1.add(Pv2);
         }
 
         //Ame
+        JPanel ame1;
         {
             Ame = new JLabel(""+thanos.infinity.nbAme);
             Ame.setBounds(250,0,350,50);
             Ame.setForeground(Color.WHITE);
-            AmeTxt = new JLabel("Âmes :");
-            AmeTxt.setBounds(50,0,350,50);
-            AmeTxt.setForeground(Color.WHITE);
-            Ame1 = new JPanel();
-            Ame1.setLayout(null);
-            Ame1.setBounds(75,getHeight() / 2 - 270,350,50);
-            Ame1.setBackground(Color.BLACK);
-            Ame1.add(Ame);
-            Ame1.add(AmeTxt);
+            JLabel ameTxt = new JLabel("Âmes :");
+            ameTxt.setBounds(50,0,350,50);
+            ameTxt.setForeground(Color.WHITE);
+            ame1 = new JPanel();
+            ame1.setLayout(null);
+            ame1.setBounds(75,getHeight() / 2 - 270,350,50);
+            ame1.setBackground(Color.BLACK);
+            ame1.add(Ame);
+            ame1.add(ameTxt);
         }
 
         //Conteneur Main
+        JPanel conteneurMain;
         {
             conteneurMain = new JPanel();
             conteneurMain.setLayout(null);
@@ -251,10 +270,10 @@ public class MenuInventaire extends JFrame implements ActionListener {
             conteneurMain.add(b2Jaune);
             conteneurMain.add(b2Orange);
             conteneurMain.add(conteneurPerso);
-            conteneurMain.add(Puissance1);
-            conteneurMain.add(Cooldown1);
-            conteneurMain.add(Pv1);
-            conteneurMain.add(Ame1);
+            conteneurMain.add(puissance1);
+            conteneurMain.add(cooldown1);
+            conteneurMain.add(pv1);
+            conteneurMain.add(ame1);
             conteneurMain.add(moreLife);
             conteneurMain.add(fond);
             conteneurMain.setBounds(0, 0, getWidth(), getHeight());
@@ -316,21 +335,21 @@ public class MenuInventaire extends JFrame implements ActionListener {
             b2Jaune.setText("Lvl max");
         }
 
-        if(!thanos.infinity.hasStone(0)){
+        if(thanos.infinity.hasStone(0)){
             bViolet.setVisible(false);
             b2Violet.setVisible(false);
         }else{
             bViolet.setVisible(true);
             b2Violet.setVisible(true);
         }
-        if(!thanos.infinity.hasStone(1)){
+        if(thanos.infinity.hasStone(1)){
             bRouge.setVisible(false);
             b2Rouge.setVisible(false);
         }else{
             bRouge.setVisible(true);
             b2Rouge.setVisible(true);
         }
-        if(!thanos.infinity.hasStone(2)){
+        if(thanos.infinity.hasStone(2)){
             bBleu.setVisible(false);
             b2Bleu.setVisible(false);
         }
@@ -338,7 +357,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
             bBleu.setVisible(true);
             b2Bleu.setVisible(true);
         }
-        if(!thanos.infinity.hasStone(3)){
+        if(thanos.infinity.hasStone(3)){
             bJaune.setVisible(false);
             b2Jaune.setVisible(false);
         }
