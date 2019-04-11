@@ -6,7 +6,7 @@ import ThanosGame.weapons.projectiles.Projectile;
 import javafx.geometry.Point2D;
 import resources.AudioSaves;
 
-public class PowerStone extends Stone {
+class PowerStone extends Stone {
     public PowerStone() {
         super();
         stoneType = 0;

@@ -9,7 +9,7 @@ import ThanosGame.weapons.projectiles.Tnt;
 import javafx.geometry.Point2D;
 import resources.AudioSaves;
 
-public class SpaceStone extends Stone {
+class SpaceStone extends Stone {
     public SpaceStone() {
         super();
         stoneType = 2;

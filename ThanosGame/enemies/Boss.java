@@ -8,6 +8,7 @@ import javafx.scene.image.Image;
 
 public class Boss extends Personnage {
     private int myMusic;
+
     Boss(Point2D pos, TerrainMap myTerrain, World myWorld, int hp, Image mySprite, int myMusic) {
         super(pos, myTerrain, myWorld, hp, mySprite);
         this.myMusic=myMusic;

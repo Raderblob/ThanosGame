@@ -32,7 +32,7 @@ public class MenuInventaire extends JFrame implements ActionListener {
     public MenuInventaire(Thanos thanos) {
         this.thanos = thanos;
         //nbPierres = 6;
-        int nbPierres = thanos.infinity.getNbPierres();
+
 
 
 

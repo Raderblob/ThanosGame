@@ -23,7 +23,7 @@ public class Thanos extends PlayerClass {
         myShield = 0;
         this.PV = PV ;
         maxPv = PV;
-        this.infinity = new Gant(this);
+        this.infinity = new Gant();
         animatedShield = new AnimatedImage(ImagesSaves.shieldSprite,new Point2D(556,556),1000);
         secondary = false;
     }

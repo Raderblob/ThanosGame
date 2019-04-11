@@ -13,8 +13,7 @@ class Building {
     private final BuildingModule[] myModules;
 
     public Building(Point2D mPos, LinkedList<Personnage> enemyList, World myWorld, TerrainMap myTerrain) {
-        Point2D myPosition = mPos;
-        Point2D cPos = new Point2D(myPosition.getX(), Math.max(myPosition.getY() - 80, 1));
+        Point2D cPos = new Point2D(mPos.getX(), Math.max(mPos.getY() - 80, 1));
 
 
         int potentialBuildingHeight = (int) ((TerrainChunck.chunkParam.getY() * 4) / 80);
@@ -182,12 +181,6 @@ class BuildingModule {
     public final Point2D myPosition;
     private int myModel;
 
-    public BuildingModule(Point2D mPos) {
-        myPosition = mPos;
-        blocks = getModule();
-
-    }
-
     BuildingModule(Point2D mPos, boolean cR, boolean cL, boolean cD, boolean cU, boolean sC) {
         myPosition = mPos;
         canRight = cR;
@@ -197,25 +190,6 @@ class BuildingModule {
         shouldCover = sC;
     }
 
-
-    private byte[][] getModule() {
-        byte res[][];
-
-        switch (Main.numberGenerator.nextInt(2)) {
-            case 0:
-                myModel = 0;
-                break;
-            case 1:
-                myModel = 1;
-                break;
-            default:
-                System.out.println("Error module not known");
-        }
-
-
-        res = readModule(myModel);
-        return res;
-    }
 
     private byte[][] readModule(int i) {
         byte res[][] = new byte[BuildingSaves.moduleTemplates[0].length][BuildingSaves.moduleTemplates[0][0].length];

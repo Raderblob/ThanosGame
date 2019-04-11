@@ -13,7 +13,6 @@ public class BuildingSaves {
     public static final byte[][][] moduleTemplates = new byte[10][MODULEDIMENSION][MODULEDIMENSION];
     public static final byte[][][] largeBases = new byte[1][][];
 
-    private static byte[][] pal;
     public static byte[][] thanosBase;
     public static byte[][] ironManBase;
     public static byte[][] captainBase;
@@ -27,7 +26,6 @@ public class BuildingSaves {
         }
         //load largeBase
         largeBases[0] = readModule("largeBase0.png");
-        pal = readModule("pal.png");
         thanosBase = readModule("ThanosBase.png");
         ironManBase = readModule("Base_Iron_man.png");
         captainBase = readModule("Captain_america.png");

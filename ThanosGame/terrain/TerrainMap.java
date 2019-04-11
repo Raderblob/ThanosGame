@@ -17,17 +17,15 @@ public class TerrainMap {
     private final TerrainChunck[] chunk;
     private final int maxPixelsX;
     private final int maxPixelsY;
-    private final boolean terrainRendered;
-    private final Point2D mySize;
     public final TerrainVType myTerrainVersion;
 
     public TerrainMap(int numP, boolean withBuildings, World myWorld, LinkedList<Personnage> enemyList, TerrainVType terrainVersion) {
         myTerrainVersion = terrainVersion;
-        mySize = new Point2D(10, 10);
+        Point2D mySize = new Point2D(10, 10);
         int numChunks = (int) (numP / (TerrainChunck.chunkParam.getX() * 4)) + 1;
         maxPixelsX = (int) (TerrainChunck.chunkParam.getX() * 4 * (numChunks));
         maxPixelsY = (int) (TerrainChunck.chunkParam.getY() * 4 - 1);
-        terrainRendered = false;
+        boolean terrainRendered = false;
         SimplexNoise geny = new SimplexNoise((int) System.nanoTime(), 8, 0.0035, 0.5);
         SimplexNoise biomeGeny = new SimplexNoise((int) System.nanoTime() + 1, 8, 0.0035, 0.7);
 

@@ -6,7 +6,6 @@ public class Keyboard {
     public static KeyCode right;
     public static KeyCode left;
     public static KeyCode jump;
-    private static KeyCode down;
     private static boolean isInQWERTY;
     public static double difficulty=2;
     public static double gameVolume =1;
@@ -14,7 +13,7 @@ public class Keyboard {
         right = KeyCode.D;
         left = KeyCode.Q;
         jump = KeyCode.SPACE;
-        down = KeyCode.S;
+        KeyCode down = KeyCode.S;
         isInQWERTY = true;
     }
     public static void setAZERTY(){

@@ -1,6 +1,5 @@
 package ThanosGame.weapons.player;
 
-import ThanosGame.Thanos;
 import ThanosGame.World;
 import ThanosGame.terrain.TerrainMap;
 import javafx.geometry.Point2D;
@@ -8,15 +7,13 @@ import javafx.geometry.Point2D;
 import java.io.Serializable;
 
 public class Gant implements Serializable {
-    private final Thanos owner;
     public int selectedStone;
     public Stone[] stones;
     public int nbAme;
     public final int [] prixCooldown = new int [6];
     public final int [] prixPuissance = new int [6];
 
-    public Gant(Thanos owner) {
-        this.owner = owner;
+    public Gant() {
         stones = new Stone[4];
         nbAme = 0;
         for (int i = 0; i < stones.length; i++) {

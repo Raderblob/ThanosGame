@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 import static ThanosGame.terrain.PixelBlockType.SPIKES;
 
-public class RealityStone extends Stone {
+class RealityStone extends Stone {
     private long lastTime;
 
     public RealityStone() {
