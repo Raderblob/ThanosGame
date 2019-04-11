@@ -77,25 +77,25 @@ public class Gant implements Serializable {
     public void niveauCooldown(int n){
         if(prixCooldown[n]<=25 && prixCooldown[n]>0){
             prixCooldown[n]=(prixCooldown[n]*5);
-            stones[n].coolDown =  stones[n].coolDown/2;
+            stones[n].coolDown =  stones[n].coolDown/(long)(1.5);
             if(stones[n].secondaryCoolDown!=1) {
-                stones[n].secondaryCoolDown = stones[n].secondaryCoolDown / 2;
+                stones[n].secondaryCoolDown = stones[n].secondaryCoolDown / (long)(1.5);
             }
         }else if (prixCooldown[n]==125){
             prixCooldown[n]= 0;
-            stones[n].coolDown =  stones[n].coolDown/2;
+            stones[n].coolDown =  stones[n].coolDown/(long)(1.5);
             if(stones[n].secondaryCoolDown!=1) {
-                stones[n].secondaryCoolDown = stones[n].secondaryCoolDown / 2;
+                stones[n].secondaryCoolDown = stones[n].secondaryCoolDown / (long)(1.5);
             }
         }
     }
     public void niveauPuissance(int n){
         if(prixPuissance[n]<=25 && prixPuissance[n]>0){
             prixPuissance[n]=(prixPuissance[n]*5);
-            stones[n].myPower =  stones[n].myPower*2;
+            stones[n].myPower =  (int)(stones[n].myPower*1.5);
         }else if (prixPuissance[n]==125){
             prixPuissance[n]= 0;
-            stones[n].myPower =  stones[n].myPower*2;
+            stones[n].myPower =  (int)(stones[n].myPower*1.5);
         }
     }
 
